@@ -64,6 +64,12 @@ var chatHandlers = {
 	"processinfo": function (bot) {
 		var info = process.memoryUsage()
 		bot.sendChatMsg("Heap total: " + info["heapTotal"] + " Heap used: " + info["heapUsed"])
+	},
+
+	"ask": function (bot, username, msg) {
+		var answers = ["Yes", "No"]
+		var answer = answers[Math.floor(Math.random() * 2)]
+		bot.sendChatMsg("[" + msg + "] " + answer)
 	}
 }
 
