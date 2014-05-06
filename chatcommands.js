@@ -69,7 +69,7 @@ var chatHandlers = {
 	"ask": function (bot, username, msg) {
 		var answers = ["Yes", "No"]
 		var answer = answers[Math.floor(Math.random() * 2)]
-		bot.sendChatMsg("[" + msg + "] " + answer)
+		bot.sendChatMsg("[Ask: " + msg + "] " + answer)
 	}
 }
 
