@@ -59,6 +59,11 @@ var chatHandlers = {
 			else
 				bot.sendChatMsg("WolframAlpha query failed")
 		})
+	},
+
+	"processinfo": function (bot) {
+		var info = process.memoryUsage()
+		bot.sendChatMsg("Heap total: " + info["heapTotal"] + " Heap used: " + info["heapUsed"])
 	}
 }
 
