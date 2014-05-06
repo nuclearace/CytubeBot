@@ -1,4 +1,5 @@
 var io = require("socket.io-client")
+var commands = require("./chatcommands")
 
 module.exports = {
 	init: function(cfg) {
@@ -9,14 +10,27 @@ module.exports = {
 }
 
 function CytubeBot(config) {
-	socket = io.connect(config["server"]);
+	this.socket = io.connect(config["server"]);
 	this.username = config["username"];
 	this.pw = config["pw"];
 	this.room = config["room"];
+	this.userlist = {};
+};
+
+CytubeBot.prototype.handleChatMsg = function(data) {
+	var username = data.username
+	var msg = data.msg
+	if (msg.indexOf("$") === 0) {
+		commands.handle(this, msg);
+	}
+};
+
+CytubeBot.prototype.sendChatMsg = function(message) {
+	this.socket.emit("chatMsg", {msg: message});
 };
 
 CytubeBot.prototype.start = function() {
-	socket.emit("initChannelCallbacks");
-	socket.emit("joinChannel", {name: this.room});
-	socket.emit("login", {name: this.username, pw: this.pw})
+	this.socket.emit("initChannelCallbacks");
+	this.socket.emit("joinChannel", {name: this.room});
+	this.socket.emit("login", {name: this.username, pw: this.pw})
 };
