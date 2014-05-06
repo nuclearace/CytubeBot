@@ -16,6 +16,7 @@ function CytubeBot(config) {
 	this.pw = config["pw"];
 	this.room = config["room"];
 	this.userlist = {};
+	this.muted = false;
 };
 
 CytubeBot.prototype.handleAddUser = function(data) {
@@ -38,7 +39,7 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 		return
 
 	if (msg.indexOf("$") === 0 && username != this.username) {
-		commands.handle(this, msg);
+		commands.handle(this, username, msg);
 	}
 };
 
@@ -56,7 +57,8 @@ CytubeBot.prototype.handleUserlist = function(userlistData) {
 };
 
 CytubeBot.prototype.sendChatMsg = function(message) {
-	this.socket.emit("chatMsg", {msg: message});
+	if (!this.muted)
+		this.socket.emit("chatMsg", {msg: message});
 };
 
 CytubeBot.prototype.start = function() {

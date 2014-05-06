@@ -1,12 +1,13 @@
 var api = require("./apiclient")
+var utils = require("./utils")
 
 var chatHandlers = {
-	"test": function (bot, msg) {
+	"test": function (bot, username, msg) {
 		console.log(bot + " " + msg);
 		bot.sendChatMsg(msg);
 	},
 
-	"anagram": function (bot, msg) {
+	"anagram": function (bot, username, msg) {
 		if (msg.length < 7) {
 			bot.sendChatMsg("Message too short")
 			return
@@ -24,10 +25,23 @@ var chatHandlers = {
 		});
 	},
 
-	"talk": function (bot, msg) {
+	"talk": function (bot, username, msg) {
 		api.APICall(msg, "talk", function (resp) {
 			bot.sendChatMsg(resp["message"])
 		})
+	},
+	
+	"mute": function (bot, username) {
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (rank >= 2) {
+			if (bot.muted) {
+				bot.muted = !bot.muted
+				console.log(username + " unmuted bot")
+			} else {
+				bot.muted = !bot.muted
+				console.log(username + " muted bot")
+			}
+		}
 	}
 }
 
@@ -39,7 +53,7 @@ for (var key in chatHandlers) {
 	});
 }
 
-function handle(bot, msg) {
+function handle(bot, username, msg) {
 	for (var i = 0; i < handlerList.length; i++) {
 		var h = handlerList[i];
 		if (msg.match(h.re)) {
@@ -49,7 +63,7 @@ function handle(bot, msg) {
 			} else {
 				rest = "";
 			}
-			return h.fn(bot, rest);
+			return h.fn(bot, username, rest);
 		}
 	}
 }

@@ -7,6 +7,14 @@ var utilHandlers = {
 				return u
 			}
 		}
+	},
+
+	"getUser": function (bot, user) {
+		for (var u in bot.userlist) {
+			if (bot.userlist[u]["name"] == user) {
+				return bot.userlist[u]
+			}
+		}
 	}
 }
 
