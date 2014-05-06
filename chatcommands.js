@@ -10,10 +10,17 @@ var chatHandlers = {
 		if (msg.length < 7) {
 			bot.sendChatMsg("Message too short")
 			return
+		} else if (msg.length > 30) {
+			bot.sendChatMsg("Message too long")
+			return
 		}
 
 		api.APICall(msg, "anagram", function (resp) {
-			bot.sendChatMsg("[" + msg + "] -> " + resp[1])
+			try {
+				bot.sendChatMsg("[" + msg + "] -> " + resp[1])
+			} catch (e) {
+				bot.sendChatMsg("There was a problem with the request");
+			}
 		});
 	},
 
