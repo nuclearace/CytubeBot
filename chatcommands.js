@@ -12,9 +12,15 @@ var chatHandlers = {
 			return
 		}
 
-		api.APICall(msg, "anagram", function (e) {
-			bot.sendChatMsg("[" + msg + "] -> " + e[1])
+		api.APICall(msg, "anagram", function (resp) {
+			bot.sendChatMsg("[" + msg + "] -> " + resp[1])
 		});
+	},
+
+	"talk": function (bot, msg) {
+		api.APICall(msg, "talk", function (resp) {
+			bot.sendChatMsg(resp["message"])
+		})
 	}
 }
 

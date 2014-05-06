@@ -1,6 +1,7 @@
 var http = require("http");
 var https = require("https");
 var domain = require("domain");
+var Cleverbot = require("./cleverbot-node")
 
 var APIs = {
 	anagram: function (msg, callback) {
@@ -14,6 +15,14 @@ var APIs = {
 			data = data.match(/.*<span class=\"black-18\">'(.*)'<\/span>/)
 			callback(data)
 		});
+	},
+	
+	talk: function (msg, callback) {
+		var bot = new Cleverbot
+		var msg = {message: msg}
+		bot.write(msg["message"], function(resp) {
+			callback(resp)
+		})
 	}
 }
 
