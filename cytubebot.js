@@ -17,6 +17,6 @@ function CytubeBot(config) {
 
 CytubeBot.prototype.start = function() {
 	socket.emit("initChannelCallbacks");
-	socket.emit("joinChannel", {name: "mlp"});
+	socket.emit("joinChannel", {name: this.room});
 	socket.emit("login", {name: this.username, pw: this.pw})
 };
