@@ -1,0 +1,6 @@
+{
+  "author": "nuclearace",
+  "dependencies": {
+    "socket.io-client": ">=0.9"
+  }
+}
