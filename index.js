@@ -1,6 +1,6 @@
-var CytubeBot = require("./CytubeBot");
-var Config = require("./config");
-var fs = require("fs");
+var CytubeBot = require("./cytubebot")
+var Config = require("./config")
+var fs = require("fs")
 
 Config.load(function (config) {
 	bot = CytubeBot.init(config);
