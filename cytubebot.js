@@ -18,8 +18,15 @@ function CytubeBot(config) {
 };
 
 CytubeBot.prototype.handleChatMsg = function(data) {
-	var username = data.username
-	var msg = data.msg
+	var username = data.username;
+	var msg = data.msg;
+	var time = data.time + 5000;
+	var timeNow = new Date().getTime();
+
+	// Try to avoid old commands from playback
+	if (time < timeNow)
+		return
+
 	if (msg.indexOf("$") === 0 && username != this.username) {
 		commands.handle(this, msg);
 	}

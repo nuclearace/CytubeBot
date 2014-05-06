@@ -1,7 +1,20 @@
+var api = require("./apiclient")
+
 var chatHandlers = {
-	"test": function (bot, data) {
-		console.log(bot + " " + data);
-		bot.sendChatMsg(data);
+	"test": function (bot, msg) {
+		console.log(bot + " " + msg);
+		bot.sendChatMsg(msg);
+	},
+
+	"anagram": function (bot, msg) {
+		if (msg.length < 7) {
+			bot.sendChatMsg("Message too short")
+			return
+		}
+
+		api.APICall(msg, "anagram", function (e) {
+			bot.sendChatMsg("[" + msg + "] -> " + e[1])
+		});
 	}
 }
 
