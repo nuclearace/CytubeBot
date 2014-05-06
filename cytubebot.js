@@ -1,6 +1,7 @@
 var io = require("socket.io-client")
 var commands = require("./chatcommands")
 var utils = require("./utils")
+var Database = require("./database")
 
 module.exports = {
 	init: function(cfg) {
@@ -18,10 +19,13 @@ function CytubeBot(config) {
 	this.userlist = {};
 	this.wolfram = config["wolfram"]
 	this.muted = false;
+
+	this.db = Database.init();
 };
 
 CytubeBot.prototype.handleAddUser = function(data) {
 	var index = utils.handle(this, "findUser", data["name"])
+	this.db.insertUser(data["name"])
 	if (!index) {
 		this.userlist.push(data);
 		console.log("Added User: " + data["name"])
@@ -41,7 +45,10 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 
 	if (msg.indexOf("$") === 0 && username != this.username) {
 		commands.handle(this, username, msg);
+		return
 	}
+
+	this.db.insertChat(data, this.room)
 };
 
 CytubeBot.prototype.handleUserLeave = function(user) {

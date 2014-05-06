@@ -2,6 +2,7 @@
   "author": "nuclearace",
   "dependencies": {
     "socket.io-client": ">=0.9",
-    "wolfram-alpha": ""
+    "wolfram-alpha": "",
+    "sqlite3": ""
   }
 }
