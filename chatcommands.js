@@ -33,14 +33,17 @@ var chatHandlers = {
 	
 	"mute": function (bot, username) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank >= 2) {
-			if (bot.muted) {
-				bot.muted = !bot.muted
-				console.log(username + " unmuted bot")
-			} else {
-				bot.muted = !bot.muted
-				console.log(username + " muted bot")
-			}
+		if (rank >= 2 && !bot.muted) {
+			bot.muted = !bot.muted
+			console.log(username + " muted bot")
+		}
+	},
+
+	"unmute": function (bot, username) {
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (rank >= 2 && bot.muted) {
+			bot.muted = !bot.muted
+			console.log(username + " unmuted bot")
 		}
 	}
 }
