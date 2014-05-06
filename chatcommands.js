@@ -2,10 +2,6 @@ var api = require("./apiclient")
 var utils = require("./utils")
 
 var chatHandlers = {
-	"test": function (bot, username, msg) {
-		console.log(bot + " " + msg);
-		bot.sendChatMsg(msg);
-	},
 
 	"anagram": function (bot, username, msg) {
 		if (msg.length < 7) {
@@ -16,7 +12,7 @@ var chatHandlers = {
 			return
 		}
 
-		api.APICall(msg, "anagram", function (resp) {
+		api.APICall(msg, "anagram", null, function (resp) {
 			try {
 				bot.sendChatMsg("[" + msg + "] -> " + resp[1])
 			} catch (e) {
@@ -26,7 +22,7 @@ var chatHandlers = {
 	},
 
 	"talk": function (bot, username, msg) {
-		api.APICall(msg, "talk", function (resp) {
+		api.APICall(msg, "talk", null, function (resp) {
 			bot.sendChatMsg(resp["message"])
 		})
 	},
@@ -50,6 +46,19 @@ var chatHandlers = {
 	"dubs": function (bot, username) {
 		var num = Math.floor((Math.random() * 100000000) + 1)
 		bot.sendChatMsg(username + ": " + num)
+	},
+
+	"wolfram": function (bot, username, query) {
+		if (!bot.wolfram) {
+			console.log("### No wolfram API key!")
+			return
+		}
+		api.APICall(query, "wolfram", bot.wolfram, function (results) {
+			if (typeof results[0] !== 'undefined')
+				bot.sendChatMsg("[" + query + "] " + results[1]["subpods"][0]["text"])
+			else
+				bot.sendChatMsg("WolframAlpha query failed")
+		})
 	}
 }
 

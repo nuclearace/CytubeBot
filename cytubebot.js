@@ -16,6 +16,7 @@ function CytubeBot(config) {
 	this.pw = config["pw"];
 	this.room = config["room"];
 	this.userlist = {};
+	this.wolfram = config["wolfram"]
 	this.muted = false;
 };
 

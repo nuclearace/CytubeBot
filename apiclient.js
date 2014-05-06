@@ -1,10 +1,11 @@
-var http = require("http");
-var https = require("https");
-var domain = require("domain");
+var http = require("http")
+var https = require("https")
+var domain = require("domain")
+var wolfram = require("wolfram-alpha")
 var Cleverbot = require("./cleverbot-node")
 
 var APIs = {
-	anagram: function (msg, callback) {
+	anagram: function (msg, apikey, callback) {
 		var options = {
 			host: "anagramgenius.com",
 			path: "/server.php?" + "source_text=" + encodeURI(msg) + "&vulgar=1",
@@ -17,12 +18,20 @@ var APIs = {
 		});
 	},
 	
-	talk: function (msg, callback) {
+	talk: function (msg, apikey, callback) {
 		var bot = new Cleverbot
 		var msg = {message: msg}
 		bot.write(msg["message"], function(resp) {
 			callback(resp)
 		})
+	},
+
+	wolfram: function (query, apikey, callback) {
+		var client = wolfram.createClient(apikey);
+		client.query(query, function (err, result) {
+			if (err) throw err
+			callback(result)
+		});
 	}
 }
 
@@ -52,9 +61,9 @@ var urlRetrieve = function (transport, options, callback) {
 
 module.exports = {
 	APIs: APIs,
-	APICall: function (msg, type, callback) {
+	APICall: function (msg, type, apikey, callback) {
 		if (type in this.APIs)
-			this.APIs[type](msg, callback)
+			this.APIs[type](msg, apikey, callback)
 		else {
 			console.log("Unknown api");
 		}

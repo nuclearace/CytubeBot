@@ -1,6 +1,7 @@
 {
   "author": "nuclearace",
   "dependencies": {
-    "socket.io-client": ">=0.9"
+    "socket.io-client": ">=0.9",
+    "wolfram-alpha": ""
   }
 }
