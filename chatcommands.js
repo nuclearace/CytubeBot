@@ -45,6 +45,11 @@ var chatHandlers = {
 			bot.muted = !bot.muted
 			console.log(username + " unmuted bot")
 		}
+	},
+
+	"dubs": function (bot, username) {
+		var num = Math.floor((Math.random() * 100000000) + 1)
+		bot.sendChatMsg(username + ": " + num)
 	}
 }
 
