@@ -1,5 +1,6 @@
 var io = require("socket.io-client")
 var commands = require("./chatcommands")
+var utils = require("./utils")
 
 module.exports = {
 	init: function(cfg) {
@@ -17,6 +18,15 @@ function CytubeBot(config) {
 	this.userlist = {};
 };
 
+CytubeBot.prototype.handleAddUser = function(data) {
+	var index = utils.handle(this, "findUser", data["name"])
+	if (!index) {
+		this.userlist.push(data);
+		console.log("Added User: " + data["name"])
+		console.log("Userlist has : " + bot.userlist.length + " users")
+	}
+};
+
 CytubeBot.prototype.handleChatMsg = function(data) {
 	var username = data.username;
 	var msg = data.msg;
@@ -30,6 +40,19 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	if (msg.indexOf("$") === 0 && username != this.username) {
 		commands.handle(this, msg);
 	}
+};
+
+CytubeBot.prototype.handleUserLeave = function(user) {
+	var index = utils.handle(this, "findUser", user)
+	if (index) {
+		this.userlist.splice(index, 1);
+		console.log("Removed user: " + user)
+		console.log("Userlist has : " + bot.userlist.length + " users")
+	}
+};
+
+CytubeBot.prototype.handleUserlist = function(userlistData) {
+	this.userlist = userlistData;
 };
 
 CytubeBot.prototype.sendChatMsg = function(message) {

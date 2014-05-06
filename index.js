@@ -7,6 +7,18 @@ Config.load(function (config) {
 	bot.start();
 
 	bot.socket.on("chatMsg", function (data) {
-		bot.handleChatMsg(data);
+		bot.handleChatMsg(data)
+	});
+
+	bot.socket.on("userlist", function (data) {
+		bot.handleUserlist(data)
+	});
+
+	bot.socket.on("userLeave", function (data) {
+		bot.handleUserLeave(data["name"])
+	});
+
+	bot.socket.on("addUser", function (data) {
+		bot.handleAddUser(data)
 	});
 });
