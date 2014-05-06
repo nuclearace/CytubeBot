@@ -20,7 +20,7 @@ function CytubeBot(config) {
 CytubeBot.prototype.handleChatMsg = function(data) {
 	var username = data.username
 	var msg = data.msg
-	if (msg.indexOf("$") === 0) {
+	if (msg.indexOf("$") === 0 && username != this.username) {
 		commands.handle(this, msg);
 	}
 };
