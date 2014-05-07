@@ -108,7 +108,7 @@ CytubeBot.prototype.sendChatMsg = function(message) {
 		});
 };
 
-CytubeBot.prototype.sendStatus = function(first_argument) {
+CytubeBot.prototype.sendStatus = function() {
 	var status = "Muted: "
 	status += this.muted
 
