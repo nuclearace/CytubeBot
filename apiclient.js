@@ -1,8 +1,10 @@
 var http = require("http")
 var https = require("https")
 var domain = require("domain")
+var URL = require('url')
 var wolfram = require("wolfram-alpha")
 var Cleverbot = require("./cleverbot-node")
+var WunderNodeClient = require("wundernode")
 
 var APIs = {
 	anagram: function (msg, apikey, callback) {
@@ -30,8 +32,95 @@ var APIs = {
 		var client = wolfram.createClient(apikey);
 		client.query(query, function (err, result) {
 			if (err) throw err
-			callback(result)
+				callback(result)
 		});
+	},
+
+	weather: function (data, apikey, callback) {
+		var wunder = new WunderNodeClient(apikey, true,  10, 'seconds')
+
+		if (data.split(" ").length == 0) {
+			var query = data
+			wunder.conditions(data, function (err, resp) {
+				if (err) {
+					console.log(err)
+				} else {
+					callback(resp)
+					return
+				}
+			})
+		}
+
+		try {
+			var stringData = data.split(" ")
+
+			// Strip off the country
+			var country = stringData[stringData.length - 1]
+			stringData.splice(stringData.length - 1, 1)
+
+			var fixedString = ""
+			// Put the location together for the query
+			for (var k in stringData) {
+				fixedString += stringData[k] + "_"
+			} 
+
+			// Trim off the last _
+			fixedString = fixedString.slice(0, fixedString.lastIndexOf("_"))
+
+			var query = country + "/" + fixedString
+			wunder.conditions(query, function (err, resp) {
+				if (err) {
+					console.log(err)
+					return
+				}
+				callback(resp)
+			})
+		} catch (e) {
+			console.log(e)
+		}
+	}, // end weather
+
+	"forecast": function (data, apikey, callback) {
+		var wunder = new WunderNodeClient(apikey, true,  10, 'seconds')
+		if (data.split(" ").length == 0) {
+			var query = data
+			wunder.forecast(data, function (err, resp) {
+				if (err) {
+					console.log(err)
+				} else {
+					callback(resp)
+					return
+				}
+			})
+		}
+		try {
+			var stringData = data.split(" ")
+
+			// Strip off the country
+			var country = stringData[stringData.length - 1]
+			stringData.splice(stringData.length - 1, 1)
+
+			var fixedString = ""
+			// Put the location together for the query
+			for (var k in stringData) {
+				fixedString += stringData[k] + "_"
+			} 
+
+			// Trim off the last _
+			fixedString = fixedString.slice(0, fixedString.lastIndexOf("_"))
+
+			var query = country + "/" + fixedString
+			wunder.forecast(query, function (err, resp) {
+				if (err) {
+					console.log(err)
+					return
+				}
+				callback(resp)
+			})
+		} catch (e) {
+			console.log(e)
+		}
+
 	}
 }
 

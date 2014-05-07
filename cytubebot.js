@@ -18,6 +18,7 @@ function CytubeBot(config) {
 	this.room = config["room"];
 	this.userlist = {};
 	this.wolfram = config["wolfram"]
+	this.weatherunderground = config["weatherunderground"]
 	this.muted = false;
 
 	this.db = Database.init();
@@ -30,15 +31,15 @@ CytubeBot.prototype.getQuote = function(nick) {
 			return
 		var nick = row["username"]
 		var msg = row["msg"]
-		msg = msg.replace(/&#39;/, "'")
-		msg = msg.replace(/&amp;/, "&")
-		msg = msg.replace(/&lt;/, "<")
-		msg = msg.replace(/&gt;/, ">")
-		msg = msg.replace(/&quot;/, "\"")
-		msg = msg.replace(/&#40;/, "\(")
-		msg = msg.replace(/&#41;/, "\)")
-		msg = msg.replace(/(<([^>]+)>)/ig, "")
-		msg = msg.replace(/^[ \t]+/, "")
+		msg = msg.replace(/&#39;/g, "'")
+		msg = msg.replace(/&amp;/g, "&")
+		msg = msg.replace(/&lt;/g, "<")
+		msg = msg.replace(/&gt;/g, ">")
+		msg = msg.replace(/&quot;/g, "\"")
+		msg = msg.replace(/&#40;/g, "\(")
+		msg = msg.replace(/&#41;/g, "\)")
+		msg = msg.replace(/(<([^>]+)>)/g, "")
+		msg = msg.replace(/^[ \t]+/g, "")
 		var time = row["timestamp"]
 		var timestamp = new Date(time).toDateString() + " " +
 		 new Date(time).toTimeString().split(" ")[0]

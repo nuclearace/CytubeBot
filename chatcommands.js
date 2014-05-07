@@ -74,6 +74,29 @@ var chatHandlers = {
 
 	"quote": function (bot, username, nick) {
 		bot.getQuote(nick)
+	},
+
+	"weather": function (bot, username, data) {
+		if (!data)
+			return
+		api.APICall(data, "weather", bot.weatherunderground, function (resp) {
+			var parsedJSON = JSON.parse(resp)
+			if (parsedJSON['response']['error']) {
+				bot.sendChatMsg("Error")
+				return
+			}
+			var location = parsedJSON['current_observation']['display_location']['full']
+			var temp_f = parsedJSON['current_observation']['temp_f']
+			var temp_c = parsedJSON['current_observation']['temp_c']
+			var date = parsedJSON['current_observation']['observation_time']
+			var weather = parsedJSON['current_observation']['weather']
+
+			bot.sendChatMsg("Currently " +
+				weather + " and " +
+				temp_f + "F " + "(" +
+				temp_c + "C) in " +
+				location + ". " + date)
+		})
 	}
 }
 
