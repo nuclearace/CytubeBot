@@ -23,6 +23,21 @@ function CytubeBot(config) {
 	this.db = Database.init();
 };
 
+CytubeBot.prototype.getQuote = function(nick) {
+	var bot = this
+	this.db.getQuote(nick, function (row) {
+		if (row === 0)
+			return
+		console.log(row)
+		var nick = row["username"]
+		var msg = row["msg"]
+		var time = row["timestamp"]
+		console.log(typeof time)
+		var timestamp = new Date(time).toTimeString().split(" ")
+		bot.sendChatMsg("[" + nick + " " + timestamp[0] + " " + timestamp[2] + "] " + msg)
+	})
+};
+
 CytubeBot.prototype.handleAddUser = function(data) {
 	var index = utils.handle(this, "findUser", data["name"])
 	this.db.insertUser(data["name"])
@@ -38,6 +53,20 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	var msg = data.msg;
 	var time = data.time + 5000;
 	var timeNow = new Date().getTime();
+	
+	msg = msg.replace(/&#39;/, "'")
+	msg = msg.replace(/&amp;/, "&")
+	msg = msg.replace(/&lt;/, "<")
+	msg = msg.replace(/&gt;/, ">")
+	msg = msg.replace(/&quot;/, "\"")
+	msg = msg.replace(/&#40;/, "\(")
+		msg = msg.replace(/&#41;/, "\)")
+
+		msg = msg.replace( /(<([^>]+)>)/ig, "")
+		msg = msg.replace(/^[ \t]+/, "")
+		if (!msg)
+			return
+		console.log("Chat Message: " + username + ": " + msg)
 
 	// Try to avoid old commands from playback
 	if (time < timeNow)
@@ -48,7 +77,7 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 		return
 	}
 
-	this.db.insertChat(data, this.room)
+	this.db.insertChat(msg, time, username, this.room)
 };
 
 CytubeBot.prototype.handleUserLeave = function(user) {

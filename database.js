@@ -24,9 +24,35 @@ Database.prototype.insertUser = function(username) {
 	stmt.finalize()
 };
 
-Database.prototype.insertChat = function(data, room) {
-	var stmt = this.db.prepare("INSERT INTO chat VALUES(?, ?, ?, ?)", [data["time"], data["username"], data["msg"], room])
+Database.prototype.insertChat = function(msg, time, nick, room) {
+	var stmt = this.db.prepare("INSERT INTO chat VALUES(?, ?, ?, ?)", [time, nick, msg, room])
 	stmt.run()
 
 	stmt.finalize()
+};
+
+Database.prototype.getQuote = function(nick, callback) {
+	var nick = nick.split(" ")[0]
+	if (nick) {
+		var stmt = this.db.prepare("SELECT username, msg, timestamp FROM chat WHERE " + 
+		"username = ? COLLATE NOCASE ORDER BY RANDOM() LIMIT 1", [nick])
+		stmt.get(function (err, row) {
+			console.log("db: " + row)
+			if (row) {
+				callback(row)
+				return
+			}
+		})
+		callback(0)
+		return
+	}
+
+	var stmt = "SELECT username, msg, timestamp FROM chat WHERE msg NOT LIKE '/me%' " +
+	"AND msg NOT LIKE '$%' ORDER BY RANDOM() LIMIT 1"
+	this.db.get(stmt, function (err, row) {
+		console.log(row)
+		if (row)
+			callback(row)
+	})
+
 };
