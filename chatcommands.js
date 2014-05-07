@@ -70,6 +70,10 @@ var chatHandlers = {
 		var answers = ["Yes", "No"]
 		var answer = answers[Math.floor(Math.random() * 2)]
 		bot.sendChatMsg("[Ask: " + msg + "] " + answer)
+	},
+
+	"quote": function (bot, username, nick) {
+		bot.getQuote(nick)
 	}
 }
 

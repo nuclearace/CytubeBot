@@ -1,6 +1,7 @@
 var io = require("socket.io-client")
 var commands = require("./chatcommands")
 var utils = require("./utils")
+var Database = require("./database")
 
 module.exports = {
 	init: function(cfg) {
@@ -18,10 +19,26 @@ function CytubeBot(config) {
 	this.userlist = {};
 	this.wolfram = config["wolfram"]
 	this.muted = false;
+
+	this.db = Database.init();
+};
+
+CytubeBot.prototype.getQuote = function(nick) {
+	var bot = this
+	this.db.getQuote(nick, function (row) {
+		if (row === 0)
+			return
+		var nick = row["username"]
+		var msg = row["msg"]
+		var time = row["timestamp"]
+		var timestamp = new Date(time).toTimeString().split(" ")
+		bot.sendChatMsg("[" + nick + " " + timestamp[0] + " " + timestamp[2] + "] " + msg)
+	})
 };
 
 CytubeBot.prototype.handleAddUser = function(data) {
 	var index = utils.handle(this, "findUser", data["name"])
+	this.db.insertUser(data["name"])
 	if (!index) {
 		this.userlist.push(data);
 		console.log("Added User: " + data["name"])
@@ -34,6 +51,20 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	var msg = data.msg;
 	var time = data.time + 5000;
 	var timeNow = new Date().getTime();
+	
+	msg = msg.replace(/&#39;/, "'")
+	msg = msg.replace(/&amp;/, "&")
+	msg = msg.replace(/&lt;/, "<")
+	msg = msg.replace(/&gt;/, ">")
+	msg = msg.replace(/&quot;/, "\"")
+	msg = msg.replace(/&#40;/, "\(")
+		msg = msg.replace(/&#41;/, "\)")
+
+		msg = msg.replace( /(<([^>]+)>)/ig, "")
+		msg = msg.replace(/^[ \t]+/, "")
+		if (!msg)
+			return
+		console.log("Chat Message: " + username + ": " + msg)
 
 	// Try to avoid old commands from playback
 	if (time < timeNow)
@@ -41,7 +72,10 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 
 	if (msg.indexOf("$") === 0 && username != this.username) {
 		commands.handle(this, username, msg);
+		return
 	}
+
+	this.db.insertChat(msg, time, username, this.room)
 };
 
 CytubeBot.prototype.handleUserLeave = function(user) {
