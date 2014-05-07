@@ -156,11 +156,11 @@ var chatHandlers = {
 
 		api.APICall(data, "forecast", bot.weatherunderground, function(resp) {
 			var parsedJSON = JSON.parse(resp)
-			if (parsedJSON['response']['error']) {
+			if (parsedJSON['response']['error'] || parsedJSON['response']['results']) {
 				bot.sendChatMsg("Error")
 				return
 			}
-
+			console.log(parsedJSON)
 			var forecast = {
 				"todayDay": parsedJSON['forecast']['txt_forecast']['forecastday'][0],
 				"todayNight": parsedJSON['forecast']['txt_forecast']['forecastday'][1],
