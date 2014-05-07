@@ -28,11 +28,9 @@ CytubeBot.prototype.getQuote = function(nick) {
 	this.db.getQuote(nick, function (row) {
 		if (row === 0)
 			return
-		console.log(row)
 		var nick = row["username"]
 		var msg = row["msg"]
 		var time = row["timestamp"]
-		console.log(typeof time)
 		var timestamp = new Date(time).toTimeString().split(" ")
 		bot.sendChatMsg("[" + nick + " " + timestamp[0] + " " + timestamp[2] + "] " + msg)
 	})

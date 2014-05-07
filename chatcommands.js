@@ -73,7 +73,6 @@ var chatHandlers = {
 	},
 
 	"quote": function (bot, username, nick) {
-		console.log("commands: " + nick)
 		bot.getQuote(nick)
 	}
 }
