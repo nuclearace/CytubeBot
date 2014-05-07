@@ -27,7 +27,7 @@ CytubeBot.prototype.getQuote = function(nick) {
 	var bot = this
 	this.db.getQuote(nick, function (row) {
 		if (row === 0)
-			returna
+			return
 		var nick = row["username"]
 		var msg = row["msg"]
 		var time = row["timestamp"]
