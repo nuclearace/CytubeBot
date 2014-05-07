@@ -81,7 +81,7 @@ var chatHandlers = {
 			return
 		api.APICall(data, "weather", bot.weatherunderground, function(resp) {
 			var parsedJSON = JSON.parse(resp)
-			if (parsedJSON['response']['error']) {
+			if (parsedJSON['response']['error'] || parsedJSON['response']['results']) {
 				bot.sendChatMsg("Error")
 				return
 			}
