@@ -59,7 +59,7 @@ CytubeBot.prototype.handleAddUser = function(data) {
 CytubeBot.prototype.handleChatMsg = function(data) {
 	var username = data.username;
 	var msg = data.msg;
-	var time = data.time + 5000;
+	var time = data.time;
 	var timeNow = new Date().getTime();
 	
 	msg = msg.replace(/&#39;/, "'")
@@ -76,7 +76,7 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	console.log("Chat Message: " + username + ": " + msg)
 
 	// Try to avoid old commands from playback
-	if (time < timeNow)
+	if (time + 5000 < timeNow)
 		return
 
 	if (msg.indexOf("$") === 0 && username != this.username) {
