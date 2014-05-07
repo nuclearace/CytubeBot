@@ -3,7 +3,7 @@ var utils = require("./utils")
 
 var chatHandlers = {
 
-	"anagram": function (bot, username, msg) {
+	"anagram": function(bot, username, msg) {
 		if (msg.length < 7) {
 			bot.sendChatMsg("Message too short")
 			return
@@ -12,7 +12,7 @@ var chatHandlers = {
 			return
 		}
 
-		api.APICall(msg, "anagram", null, function (resp) {
+		api.APICall(msg, "anagram", null, function(resp) {
 			try {
 				bot.sendChatMsg("[" + msg + "] -> " + resp[1])
 			} catch (e) {
@@ -21,13 +21,13 @@ var chatHandlers = {
 		});
 	},
 
-	"talk": function (bot, username, msg) {
-		api.APICall(msg, "talk", null, function (resp) {
+	"talk": function(bot, username, msg) {
+		api.APICall(msg, "talk", null, function(resp) {
 			bot.sendChatMsg(resp["message"])
 		})
 	},
-	
-	"mute": function (bot, username) {
+
+	"mute": function(bot, username) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
 		if (rank >= 2 && !bot.muted) {
 			bot.muted = !bot.muted
@@ -35,7 +35,7 @@ var chatHandlers = {
 		}
 	},
 
-	"unmute": function (bot, username) {
+	"unmute": function(bot, username) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
 		if (rank >= 2 && bot.muted) {
 			bot.muted = !bot.muted
@@ -43,17 +43,17 @@ var chatHandlers = {
 		}
 	},
 
-	"dubs": function (bot, username) {
+	"dubs": function(bot, username) {
 		var num = Math.floor((Math.random() * 100000000) + 1)
 		bot.sendChatMsg(username + ": " + num)
 	},
 
-	"wolfram": function (bot, username, query) {
+	"wolfram": function(bot, username, query) {
 		if (!bot.wolfram) {
 			console.log("### No wolfram API key!")
 			return
 		}
-		api.APICall(query, "wolfram", bot.wolfram, function (results) {
+		api.APICall(query, "wolfram", bot.wolfram, function(results) {
 			if (typeof results[0] !== 'undefined')
 				bot.sendChatMsg("[" + query + "] " + results[1]["subpods"][0]["text"])
 			else
@@ -61,25 +61,25 @@ var chatHandlers = {
 		})
 	},
 
-	"processinfo": function (bot) {
+	"processinfo": function(bot) {
 		var info = process.memoryUsage()
 		bot.sendChatMsg("Heap total: " + info["heapTotal"] + " Heap used: " + info["heapUsed"])
 	},
 
-	"ask": function (bot, username, msg) {
+	"ask": function(bot, username, msg) {
 		var answers = ["Yes", "No"]
 		var answer = answers[Math.floor(Math.random() * 2)]
 		bot.sendChatMsg("[Ask: " + msg + "] " + answer)
 	},
 
-	"quote": function (bot, username, nick) {
+	"quote": function(bot, username, nick) {
 		bot.getQuote(nick)
 	},
 
-	"weather": function (bot, username, data) {
+	"weather": function(bot, username, data) {
 		if (!data)
 			return
-		api.APICall(data, "weather", bot.weatherunderground, function (resp) {
+		api.APICall(data, "weather", bot.weatherunderground, function(resp) {
 			var parsedJSON = JSON.parse(resp)
 			if (parsedJSON['response']['error']) {
 				bot.sendChatMsg("Error")
@@ -96,6 +96,80 @@ var chatHandlers = {
 				temp_f + "F " + "(" +
 				temp_c + "C) in " +
 				location + ". " + date)
+		})
+	},
+
+	"forecast": function(bot, username, data) {
+		var tomorrow = data.match("tomorrow")
+		if (tomorrow) {
+			data = data.replace(/tomorrow/ig, "")
+		}
+
+		var postForecast = function(forecast) {
+			api.APICall(data, "weather", bot.weatherunderground, function(resp) {
+				var parsedJSON = JSON.parse(resp)
+				if (parsedJSON['response']['error']) {
+					bot.sendChatMsg("Error")
+					return
+				}
+
+				var location = parsedJSON['current_observation']['display_location']['full']
+
+				if (tomorrow) {
+					if ((location.split(", ")[1]).length != 2) {
+						bot.sendChatMsg("Location: " +
+							location + " Tomorrow: " +
+							forecast['tomorrowDay']['fcttext_metric'])
+
+						bot.sendChatMsg("Tomorrow Night: " +
+							forecast['tomorrowNight']['fcttext_metric'])
+						return
+					} else {
+						bot.sendChatMsg("Location: " +
+							location + " Tomorrow: " +
+							forecast['tomorrowDay']['fcttext'])
+
+						bot.sendChatMsg("Tomorrow Night: " +
+							forecast['tomorrowNight']['fcttext'])
+					}
+				} else {
+					if ((location.split(", ")[1]).length != 2) {
+						bot.sendChatMsg("Location: " +
+							location + " Today: " +
+							forecast['todayDay']['fcttext_metric'])
+
+						bot.sendChatMsg("Tonight: " +
+							forecast['todayNight']['fcttext_metric'])
+						return
+					} else {
+						bot.sendChatMsg("Location: " +
+							location + " Today: " +
+							forecast['todayDay']['fcttext'])
+
+						bot.sendChatMsg("Tonight: " +
+							forecast['todayNight']['fcttext'])
+					}
+				}
+
+			})
+		}
+
+		api.APICall(data, "forecast", bot.weatherunderground, function(resp) {
+			var parsedJSON = JSON.parse(resp)
+			if (parsedJSON['response']['error']) {
+				bot.sendChatMsg("Error")
+				return
+			}
+
+			var forecast = {
+				"todayDay": parsedJSON['forecast']['txt_forecast']['forecastday'][0],
+				"todayNight": parsedJSON['forecast']['txt_forecast']['forecastday'][1],
+				"tomorrowDay": parsedJSON['forecast']['txt_forecast']['forecastday'][2],
+				"tomorrowNight": parsedJSON['forecast']['txt_forecast']['forecastday'][3]
+			}
+
+			// Send forecast data to function to get location
+			postForecast(forecast)
 		})
 	}
 }
