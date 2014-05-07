@@ -160,7 +160,7 @@ var chatHandlers = {
 				bot.sendChatMsg("Error")
 				return
 			}
-			console.log(parsedJSON)
+
 			var forecast = {
 				"todayDay": parsedJSON['forecast']['txt_forecast']['forecastday'][0],
 				"todayNight": parsedJSON['forecast']['txt_forecast']['forecastday'][1],
@@ -171,6 +171,10 @@ var chatHandlers = {
 			// Send forecast data to function to get location
 			postForecast(forecast)
 		})
+	},
+
+	"status": function(bot, username, data) {
+		bot.sendStatus()
 	}
 }
 

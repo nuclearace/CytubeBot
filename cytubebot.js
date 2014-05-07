@@ -108,6 +108,15 @@ CytubeBot.prototype.sendChatMsg = function(message) {
 		});
 };
 
+CytubeBot.prototype.sendStatus = function(first_argument) {
+	var status = "Muted: "
+	status += this.muted
+
+	this.socket.emit("chatMsg", {
+		msg: status
+	})
+};
+
 CytubeBot.prototype.start = function() {
 	this.socket.emit("initChannelCallbacks");
 	this.socket.emit("joinChannel", {
