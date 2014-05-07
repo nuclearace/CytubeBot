@@ -40,9 +40,10 @@ CytubeBot.prototype.getQuote = function(nick) {
 		msg = msg.replace(/(<([^>]+)>)/ig, "")
 		msg = msg.replace(/^[ \t]+/, "")
 		var time = row["timestamp"]
-		var timestamp = new Date(time).toTimeString().split(" ")
-		bot.sendChatMsg("[" + nick + " " + timestamp[0] + " " + timestamp[2] + "] " + msg)
-		})
+		var timestamp = new Date(time).toDateString() + " " +
+		 new Date(time).toTimeString().split(" ")[0]
+		bot.sendChatMsg("[" + nick + " " + timestamp + "] " + msg)
+	})
 };
 
 CytubeBot.prototype.handleAddUser = function(data) {

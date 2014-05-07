@@ -37,7 +37,6 @@ Database.prototype.getQuote = function(nick, callback) {
 		var stmt = this.db.prepare("SELECT username, msg, timestamp FROM chat WHERE " + 
 		"username = ? COLLATE NOCASE ORDER BY RANDOM() LIMIT 1", [nick])
 		stmt.get(function (err, row) {
-			console.log("db: " + row)
 			if (row) {
 				callback(row)
 				return
