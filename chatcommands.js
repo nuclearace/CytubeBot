@@ -171,7 +171,7 @@ var chatHandlers = {
 			// Send forecast data to function to get location
 			postForecast(forecast)
 		})
-	},
+	}
 
 	"status": function(bot, username, data) {
 		bot.sendStatus()
