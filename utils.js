@@ -1,19 +1,16 @@
 var utilHandlers = {
 
-	"findUser": function (bot, user) {
+	"findUser": function(bot, user) {
 		for (var u in bot.userlist) {
-			if (bot.userlist[u]["name"] == user) {
-				console.log("Userlist has : " + bot.userlist.length + " users")
+			if (bot.userlist[u]["name"] == user)
 				return u
-			}
 		}
 	},
 
-	"getUser": function (bot, user) {
+	"getUser": function(bot, user) {
 		for (var u in bot.userlist) {
-			if (bot.userlist[u]["name"] == user) {
+			if (bot.userlist[u]["name"] == user)
 				return bot.userlist[u]
-			}
 		}
 	}
 }

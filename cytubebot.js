@@ -11,37 +11,38 @@ module.exports = {
 	}
 }
 
-function CytubeBot(config) {
-	this.socket = io.connect(config["server"]);
-	this.username = config["username"];
-	this.pw = config["pw"];
-	this.room = config["room"];
-	this.userlist = {};
-	this.wolfram = config["wolfram"]
-	this.muted = false;
+	function CytubeBot(config) {
+		this.socket = io.connect(config["server"]);
+		this.username = config["username"];
+		this.pw = config["pw"];
+		this.room = config["room"];
+		this.userlist = {};
+		this.wolfram = config["wolfram"]
+		this.weatherunderground = config["weatherunderground"]
+		this.muted = false;
 
-	this.db = Database.init();
-};
+		this.db = Database.init();
+	};
 
 CytubeBot.prototype.getQuote = function(nick) {
 	var bot = this
-	this.db.getQuote(nick, function (row) {
+	this.db.getQuote(nick, function(row) {
 		if (row === 0)
 			return
 		var nick = row["username"]
 		var msg = row["msg"]
-		msg = msg.replace(/&#39;/, "'")
-		msg = msg.replace(/&amp;/, "&")
-		msg = msg.replace(/&lt;/, "<")
-		msg = msg.replace(/&gt;/, ">")
-		msg = msg.replace(/&quot;/, "\"")
-		msg = msg.replace(/&#40;/, "\(")
-		msg = msg.replace(/&#41;/, "\)")
-		msg = msg.replace(/(<([^>]+)>)/ig, "")
-		msg = msg.replace(/^[ \t]+/, "")
+		msg = msg.replace(/&#39;/g, "'")
+		msg = msg.replace(/&amp;/g, "&")
+		msg = msg.replace(/&lt;/g, "<")
+		msg = msg.replace(/&gt;/g, ">")
+		msg = msg.replace(/&quot;/g, "\"")
+		msg = msg.replace(/&#40;/g, "\(")
+		msg = msg.replace(/&#41;/g, "\)")
+		msg = msg.replace(/(<([^>]+)>)/g, "")
+		msg = msg.replace(/^[ \t]+/g, "")
 		var time = row["timestamp"]
 		var timestamp = new Date(time).toDateString() + " " +
-		 new Date(time).toTimeString().split(" ")[0]
+			new Date(time).toTimeString().split(" ")[0]
 		bot.sendChatMsg("[" + nick + " " + timestamp + "] " + msg)
 	})
 };
@@ -59,9 +60,9 @@ CytubeBot.prototype.handleAddUser = function(data) {
 CytubeBot.prototype.handleChatMsg = function(data) {
 	var username = data.username;
 	var msg = data.msg;
-	var time = data.time + 5000;
+	var time = data.time;
 	var timeNow = new Date().getTime();
-	
+
 	msg = msg.replace(/&#39;/, "'")
 	msg = msg.replace(/&amp;/, "&")
 	msg = msg.replace(/&lt;/, "<")
@@ -76,7 +77,7 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	console.log("Chat Message: " + username + ": " + msg)
 
 	// Try to avoid old commands from playback
-	if (time < timeNow)
+	if (time + 5000 < timeNow)
 		return
 
 	if (msg.indexOf("$") === 0 && username != this.username) {
@@ -102,11 +103,18 @@ CytubeBot.prototype.handleUserlist = function(userlistData) {
 
 CytubeBot.prototype.sendChatMsg = function(message) {
 	if (!this.muted)
-		this.socket.emit("chatMsg", {msg: message});
+		this.socket.emit("chatMsg", {
+			msg: message
+		});
 };
 
 CytubeBot.prototype.start = function() {
 	this.socket.emit("initChannelCallbacks");
-	this.socket.emit("joinChannel", {name: this.room});
-	this.socket.emit("login", {name: this.username, pw: this.pw})
+	this.socket.emit("joinChannel", {
+		name: this.room
+	});
+	this.socket.emit("login", {
+		name: this.username,
+		pw: this.pw
+	})
 };
