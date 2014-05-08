@@ -164,7 +164,6 @@ CytubeBot.prototype.handleMoveMedia = function(data) {
 
 CytubeBot.prototype.handleAddUser = function(data) {
 	var inList = utils.handle(this, "userInUserlist", data["name"])
-	console.log(inList)
 	this.db.insertUser(data["name"])
 	if (!inList) {
 		this.userlist.push(data);
