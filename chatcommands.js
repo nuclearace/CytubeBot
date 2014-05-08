@@ -175,6 +175,14 @@ var chatHandlers = {
 
 	"status": function(bot, username, data) {
 		bot.sendStatus()
+	},
+
+	"playlistdebug": function(bot, username, data) {
+		if (data) {
+			console.log(bot.playlist[data])
+			return
+		}
+		console.log(bot.playlist);
 	}
 }
 

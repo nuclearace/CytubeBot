@@ -122,7 +122,7 @@ var APIs = {
 			console.log(e)
 		}
 
-	}
+	} // End forecast
 }
 
 var urlRetrieve = function(transport, options, callback) {

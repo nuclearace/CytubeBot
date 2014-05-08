@@ -17,6 +17,9 @@ module.exports = {
 		this.pw = config["pw"];
 		this.room = config["room"];
 		this.userlist = {};
+		this.playlist = [];
+		this.currentMedia = {};
+		this.playlistlock = false
 		this.wolfram = config["wolfram"]
 		this.weatherunderground = config["weatherunderground"]
 		this.muted = false;
@@ -47,10 +50,63 @@ CytubeBot.prototype.getQuote = function(nick) {
 	})
 };
 
+CytubeBot.prototype.handleAddMedia = function(data) {
+	//console.log(data)
+	if (utils.handle(this, "isOnPlaylist", data)) {
+		console.log("### Video is on playlist")
+		console.log("### video is at: " + utils.handle(this, "findIndexOfVideoFromVideo", data))
+		return
+	} else if (!this.playlist) {
+		this.playlist = [data["item"]]
+	} else {
+		var uid = data["after"]
+		var index = utils.handle(this, "findIndexOfVideoFromUID", uid)
+		console.log("### Adding video after: " + index)
+		this.playlist.splice(index + 1, 0, data["item"])
+	}
+};
+
+CytubeBot.prototype.handleChangeMedia = function(data) {
+	this.currentMedia = data
+	console.log("### Current Video now " + this.currentMedia["title"])
+};
+
+CytubeBot.prototype.handleDeleteMedia = function(data) {
+	var index = utils.handle(this, "findIndexOfVideoFromUID", data["uid"])
+
+	console.log("### Deleting media at index: " + index)
+	if (typeof index !== undefined)
+		this.playlist.splice(index, 1)
+};
+
+CytubeBot.prototype.handleMediaUpdate = function(data) {
+	console.log("Current video time: " + data["currentTime"] + " Paused: " + data["paused"])
+
+	if ((this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length == 1) {
+		console.log("Shit son, we gotta do something, the video is ending")
+	}
+};
+
+CytubeBot.prototype.handleMoveMedia = function(data) {
+	var from = data["from"]
+	var after = data["after"]
+	var fromIndex = utils.handle(this, "findIndexOfVideoFromUID", from)
+
+	// Remove video
+	var removedVideo = this.playlist.splice(fromIndex, 1)
+	var afterIndex = utils.handle(this, "findIndexOfVideoFromUID", after)
+
+	// And add it in the new position
+	this.playlist.splice(afterIndex + 1, 0, removedVideo[0])
+
+	console.log("### Moving video from: " + fromIndex + " after " + afterIndex)
+
+};
+
 CytubeBot.prototype.handleAddUser = function(data) {
 	var index = utils.handle(this, "findUser", data["name"])
 	this.db.insertUser(data["name"])
-	if (!index) {
+	if (typeof index !== undefined) {
 		this.userlist.push(data);
 		console.log("Added User: " + data["name"])
 		console.log("Userlist has : " + bot.userlist.length + " users")
@@ -86,6 +142,10 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	}
 
 	this.db.insertChat(msg, time, username, this.room)
+};
+
+CytubeBot.prototype.handlePlaylist = function(playlist) {
+	this.playlist = playlist
 };
 
 CytubeBot.prototype.handleUserLeave = function(user) {
