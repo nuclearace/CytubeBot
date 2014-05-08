@@ -21,6 +21,7 @@ module.exports = {
 		this.currentMedia = {};
 		this.wolfram = config["wolfram"]
 		this.weatherunderground = config["weatherunderground"]
+		this.timeSinceLastWeather = 0
 		this.muted = false;
 
 		this.db = Database.init();

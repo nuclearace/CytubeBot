@@ -77,9 +77,18 @@ var chatHandlers = {
 	},
 
 	"weather": function(bot, username, data) {
+		if (!bot.weatherunderground) {
+			console.log("### No weatherunderground API key!")
+			return
+		}
+
 		if (!data || bot.muted)
 			return
 
+		if ((new Date().getTime() - bot.timeSinceLastWeather) / 1000 < 10) {
+			bot.sendChatMsg("Weather Cooldown")
+			return
+		}
 		api.APICall(data, "weather", bot.weatherunderground, function(resp) {
 			var parsedJSON = JSON.parse(resp)
 			if (parsedJSON['response']['error'] || parsedJSON['response']['results']) {
@@ -98,11 +107,19 @@ var chatHandlers = {
 				temp_c + "C) in " +
 				location + ". " + date)
 		})
+
+		bot.timeSinceLastWeather = new Date().getTime()
 	},
 
 	"forecast": function(bot, username, data) {
-		if (bot.muted)
+		if (bot.muted || !bot.weatherunderground)
 			return
+
+		if ((new Date().getTime() - bot.timeSinceLastWeather) / 1000 < 10) {
+			bot.sendChatMsg("Weather Cooldown")
+			return
+		}
+
 		var tomorrow = data.match("tomorrow")
 		if (tomorrow) {
 			data = data.replace(/tomorrow/ig, "")
@@ -155,6 +172,7 @@ var chatHandlers = {
 				}
 
 			})
+			bot.timeSinceLastWeather = new Date().getTime()
 		}
 
 		api.APICall(data, "forecast", bot.weatherunderground, function(resp) {
