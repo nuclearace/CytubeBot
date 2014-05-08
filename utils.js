@@ -30,10 +30,17 @@ var utilHandlers = {
 		}
 	},
 
-	"findIndexOfVideoFromUID": function(bot, id) {
+	"findIndexOfVideoFromUID": function(bot, uid) {
 		for (var i = 0; i < bot.playlist.length; i++) {
-			if (bot.playlist[i]['uid'] == id) 
+			if (bot.playlist[i]['uid'] == uid) 
 				return i
+		}
+	},
+
+	"findIndexOfVideoFromID": function(bot, id) {
+		for (var i = 0; i < bot.playlist.length; i++) {
+			if (bot.playlist[i]['media']["id"] === id) 
+				return bot.playlist[i]["uid"]
 		}
 	}
 }

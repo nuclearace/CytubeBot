@@ -66,18 +66,17 @@ CytubeBot.prototype.blacklistVideo = function() {
 CytubeBot.prototype.blockVideo = function() {
 	var type = this.currentMedia["type"]
 	var id = this.currentMedia["id"]
+	var uid = utils.handle(this, "findIndexOfVideoFromID", id)
+	console.log(uid)
 	var flags = 2
 	var title = this.currentMedia["title"]
 
 	this.db.blockVideo(type, id, flags, title)
+	this.deleteVideo(uid)
 };
 
 CytubeBot.prototype.deleteVideo = function(uid) {
-	var index = utils.handle(this, "findIndexOfVideoFromUID", uid)
-	if (typeof index !== undefined) {
-		this.playlist.splice(index, 1)
 		this.socket.emit("delete", uid)
-	}
 };
 
 CytubeBot.prototype.getQuote = function(nick) {
