@@ -185,8 +185,10 @@ var chatHandlers = {
 		console.log(bot.playlist);
 	},
 
-	"testgetvideos": function(bot, username, data) {
-		bot.addRandomVideos(data, username)
+	"addrandom": function(bot, username, data) {
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (data <= 20 && rank > 2)
+			bot.addRandomVideos(data, username)
 	}
 }
 

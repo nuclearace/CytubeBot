@@ -118,7 +118,7 @@ CytubeBot.prototype.handleMediaUpdate = function(data) {
 
 	if ((this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length == 1) {
 		console.log("Shit son, we gotta do something, the video is ending\nAdding a video")
-
+		this.addRandomVideos()
 	}
 };
 
@@ -135,7 +135,6 @@ CytubeBot.prototype.handleMoveMedia = function(data) {
 	this.playlist.splice(afterIndex + 1, 0, removedVideo[0])
 
 	console.log("### Moving video from: " + fromIndex + " after " + afterIndex)
-
 };
 
 CytubeBot.prototype.handleAddUser = function(data) {
