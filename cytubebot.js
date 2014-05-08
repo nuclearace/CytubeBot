@@ -118,9 +118,9 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 		this.playlist.splice(index + 1, 0, data["item"])
 	}
 
-	this.validateVideo(data["item"], function(block) {
+	this.validateVideo(data["item"], function(block, uid) {
 		if (block) {
-			bot.deleteVideo(data["item"]["uid"])
+			bot.deleteVideo(uid)
 			return
 		}
 	})
