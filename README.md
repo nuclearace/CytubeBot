@@ -19,5 +19,5 @@ Commands
 - `$forecast (US zip code | city/town country) [tomorrow]` Looks up forecast for that doy, or if tomorrow is given, the next day. [Requires WeatherUnderground API key](http://www.wunderground.com/weather/api/)
 - `$status` Sends status ie. if the bot is muted
 - `$addrandom [n]` Adds n random videos from database. Requires mod on channel
-- `$blacklist` Blacklists currently playing video so that the bot doesn't add it randomly. Users can still add video. See $autodelete Unreversable without going into database.
-- `$autodelete` Makes it so non-mods users cannot add currently playing video. Unreversable without going into database.
+- `$blacklist` Blacklists currently playing video so that the bot doesn't add it randomly. Users can still add video. See $autodelete. Irreversible  without going into database.
+- `$autodelete` Makes it so non-mods users cannot add currently playing video. Irreversible without going into database.
