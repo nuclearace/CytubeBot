@@ -20,4 +20,4 @@ Commands
 - `$status` Sends status ie. if the bot is muted
 - `$addrandom [n]` Adds n random videos from database. Requires mod on channel
 - `$blacklist` Blacklists currently playing video so that the bot doesn't add it randomly. Users can still add video. See $autodelete. Irreversible  without going into database.
-- `$autodelete` Makes it so non-mods users cannot add currently playing video. Irreversible without going into database.
+- `$autodelete` Makes it so non-mods cannot add currently playing video. Irreversible without going into database.
