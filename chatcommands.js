@@ -183,6 +183,10 @@ var chatHandlers = {
 			return
 		}
 		console.log(bot.playlist);
+	},
+
+	"testgetvideos": function(bot, username, data) {
+		bot.addRandomVideos(data, username)
 	}
 }
 

@@ -19,13 +19,40 @@ module.exports = {
 		this.userlist = {};
 		this.playlist = [];
 		this.currentMedia = {};
-		this.playlistlock = false
 		this.wolfram = config["wolfram"]
 		this.weatherunderground = config["weatherunderground"]
 		this.muted = false;
 
 		this.db = Database.init();
 	};
+
+CytubeBot.prototype.addRandomVideos = function(num, username) {
+	var bot = this
+	this.db.getVideos(num, function(rows) {
+		for (var i in rows) {
+			var type = rows[i]["type"]
+			var id = rows[i]["id"]
+			var duration = rows[i]["duration_ms"] / 1000
+			bot.addVideo(type, id, duration)
+		}
+	})
+};
+
+CytubeBot.prototype.addVideo = function(type, id, duration, temp, link) {
+	if (!temp) {
+		temp = false
+	}
+	if (!link) {
+		var json = {
+			"id": id,
+			"type": type,
+			"pos": "end",
+			"duration": 0,
+			"temp": temp
+		}
+		this.socket.emit("queue", json)
+	}
+};
 
 CytubeBot.prototype.getQuote = function(nick) {
 	var bot = this
@@ -64,6 +91,13 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 		console.log("### Adding video after: " + index)
 		this.playlist.splice(index + 1, 0, data["item"])
 	}
+	var site = data["item"]["media"]["type"]
+	var vid = data["item"]["media"]["id"]
+	var title = data["item"]["media"]["title"]
+	var dur = data["item"]["media"]["seconds"]
+	var nick = data["item"]["queueby"]
+
+	this.db.insertVideo(site, vid, title, dur, nick)
 };
 
 CytubeBot.prototype.handleChangeMedia = function(data) {
@@ -83,7 +117,8 @@ CytubeBot.prototype.handleMediaUpdate = function(data) {
 	console.log("Current video time: " + data["currentTime"] + " Paused: " + data["paused"])
 
 	if ((this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length == 1) {
-		console.log("Shit son, we gotta do something, the video is ending")
+		console.log("Shit son, we gotta do something, the video is ending\nAdding a video")
+
 	}
 };
 
