@@ -175,6 +175,20 @@ var chatHandlers = {
 
 	"status": function(bot, username, data) {
 		bot.sendStatus()
+	},
+
+	"playlistdebug": function(bot, username, data) {
+		if (data) {
+			console.log(bot.playlist[data])
+			return
+		}
+		console.log(bot.playlist);
+	},
+
+	"addrandom": function(bot, username, data) {
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (data <= 20 && rank > 2)
+			bot.addRandomVideos(data, username)
 	}
 }
 

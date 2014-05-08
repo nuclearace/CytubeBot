@@ -12,6 +12,29 @@ var utilHandlers = {
 			if (bot.userlist[u]["name"] == user)
 				return bot.userlist[u]
 		}
+	},
+
+	"isOnPlaylist": function(bot, video) {
+		for (var i = 0; i < bot.playlist.length; i++) {
+			if (bot.playlist[i]['media']["id"] == video["item"]["media"]["id"]) {
+				return true
+			}
+		}
+	},
+
+	"findIndexOfVideoFromVideo": function(bot, video) {
+		for (var i = 0; i < bot.playlist.length; i++) {
+			if (bot.playlist[i]['media']["id"] == video["item"]["media"]["id"]) {
+				return i
+			}
+		}
+	},
+
+	"findIndexOfVideoFromUID": function(bot, id) {
+		for (var i = 0; i < bot.playlist.length; i++) {
+			if (bot.playlist[i]['uid'] == id) 
+				return i
+		}
 	}
 }
 

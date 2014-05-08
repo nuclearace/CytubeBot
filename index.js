@@ -4,8 +4,8 @@ var fs = require("fs")
 
 Config.load(function(config) {
 	bot = CytubeBot.init(config);
-	bot.start();
 
+	// Socket handlers
 	bot.socket.on("chatMsg", function(data) {
 		bot.handleChatMsg(data)
 	});
@@ -21,4 +21,30 @@ Config.load(function(config) {
 	bot.socket.on("addUser", function(data) {
 		bot.handleAddUser(data)
 	});
+
+	bot.socket.on("playlist", function(data) {
+		bot.handlePlaylist(data)
+	})
+
+	bot.socket.on("queue", function(data) {
+		bot.handleAddMedia(data)
+	})
+
+	bot.socket.on("delete", function(data) {
+		bot.handleDeleteMedia(data)
+	})
+
+	bot.socket.on("moveVideo", function(data) {
+		bot.handleMoveMedia(data)
+	})
+
+	bot.socket.on("changeMedia", function(data) {
+		bot.handleChangeMedia(data)
+	})
+
+	bot.socket.on("mediaUpdate", function(data) {
+		bot.handleMediaUpdate(data)
+	})
+
+	bot.start();
 });
