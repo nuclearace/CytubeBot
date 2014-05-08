@@ -67,7 +67,6 @@ CytubeBot.prototype.blockVideo = function() {
 	var type = this.currentMedia["type"]
 	var id = this.currentMedia["id"]
 	var uid = utils.handle(this, "findIndexOfVideoFromID", id)
-	console.log(uid)
 	var flags = 2
 	var title = this.currentMedia["title"]
 
@@ -76,7 +75,7 @@ CytubeBot.prototype.blockVideo = function() {
 };
 
 CytubeBot.prototype.deleteVideo = function(uid) {
-		this.socket.emit("delete", uid)
+	this.socket.emit("delete", uid)
 };
 
 CytubeBot.prototype.getQuote = function(nick) {
