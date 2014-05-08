@@ -2,6 +2,10 @@ var CytubeBot = require("./cytubebot")
 var Config = require("./config")
 var fs = require("fs")
 
+process.on("exit", function() {
+	console.log("\n!~~~! CytubeBot is shutting down\n")
+})
+
 Config.load(function(config) {
 	bot = CytubeBot.init(config);
 
@@ -44,6 +48,10 @@ Config.load(function(config) {
 
 	bot.socket.on("mediaUpdate", function(data) {
 		bot.handleMediaUpdate(data)
+	})
+
+	bot.socket.on("needPassword", function(data) {
+		bot.handleNeedPassword(data)
 	})
 
 	bot.start();

@@ -16,6 +16,7 @@ module.exports = {
 		this.username = config["username"];
 		this.pw = config["pw"];
 		this.room = config["room"];
+		this.roomPassword = config["roompassword"]
 		this.userlist = {};
 		this.playlist = [];
 		this.currentMedia = {};
@@ -212,6 +213,18 @@ CytubeBot.prototype.handlePlaylist = function(playlist) {
 				bot.deleteVideo(uid)
 			}
 		})
+	}
+};
+
+CytubeBot.prototype.handleNeedPassword = function(data) {
+	if (this.roomPassword) {
+		console.log("!~~~! Room has password, sending password")
+		this.socket.emit("channelPassword", this.roomPassword)
+		this.roomPassword = null
+	}
+	else {
+		console.log("\n!~~~! No room password in config.json or password is wrong. Killing bot!\n")
+		process.exit(1);
 	}
 };
 

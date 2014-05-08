@@ -1,8 +1,9 @@
 {
-	"server": "",
-	"username": "",
-	"pw": "",
-	"room": "",
-	"wolfram": "",
-	"weatherunderground": ""
+        "server": "",
+        "username": "",
+        "pw": "",
+        "room": "",
+        "roompassword": "",
+        "wolfram": "",
+        "weatherunderground": ""
 }
