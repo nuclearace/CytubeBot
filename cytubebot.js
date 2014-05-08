@@ -272,13 +272,16 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 	}
 
 	this.db.getVideoFlag(type, id, function(row) {
-		if (row["flags"] === 2 && rank < 2) {
-			bot.sendChatMsg("*** Video blocked: " + title)
-			callback(true, uid)
+		if (row["flags"] === 2) {
+			if (rank < 2) {
+				bot.sendChatMsg("*** Video blocked: " + title)
+				callback(true, uid)
+				return
+			}
 			return
-		} else {
-			if (nick !== this.username)
-				bot.db.insertVideo(type, id, title, dur, nick)
 		}
 	})
+
+	if (nick !== this.username)
+		bot.db.insertVideo(type, id, title, dur, nick)
 };
