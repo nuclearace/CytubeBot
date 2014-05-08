@@ -192,6 +192,22 @@ var chatHandlers = {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
 		if (data <= 20 && rank > 2)
 			bot.addRandomVideos(data, username)
+	},
+
+	"blacklist": function(bot, username, data) {
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (rank < 3)
+			return
+
+		bot.blacklistVideo()
+	},
+
+	"autodelete": function(bot, username, data) {
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (rank < 4)
+			return
+
+		bot.blockVideo()
 	}
 }
 
