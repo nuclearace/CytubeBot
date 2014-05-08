@@ -221,8 +221,7 @@ CytubeBot.prototype.handleNeedPassword = function(data) {
 		console.log("!~~~! Room has password, sending password")
 		this.socket.emit("channelPassword", this.roomPassword)
 		this.roomPassword = null
-	}
-	else {
+	} else {
 		console.log("\n!~~~! No room password in config.json or password is wrong. Killing bot!\n")
 		process.exit(1);
 	}
