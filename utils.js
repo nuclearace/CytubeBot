@@ -1,5 +1,13 @@
 var utilHandlers = {
 
+	"userInUserlist": function(bot, user) {
+		for (var u in bot.userlist) {
+			if (bot.userlist[u]["name"] == user)
+				return true
+		}
+		return false
+	},
+
 	"findUser": function(bot, user) {
 		for (var u in bot.userlist) {
 			if (bot.userlist[u]["name"] == user)
@@ -32,14 +40,14 @@ var utilHandlers = {
 
 	"findIndexOfVideoFromUID": function(bot, uid) {
 		for (var i = 0; i < bot.playlist.length; i++) {
-			if (bot.playlist[i]['uid'] == uid) 
+			if (bot.playlist[i]['uid'] == uid)
 				return i
 		}
 	},
 
 	"findIndexOfVideoFromID": function(bot, id) {
 		for (var i = 0; i < bot.playlist.length; i++) {
-			if (bot.playlist[i]['media']["id"] === id) 
+			if (bot.playlist[i]['media']["id"] === id)
 				return bot.playlist[i]["uid"]
 		}
 	}
