@@ -77,8 +77,9 @@ var chatHandlers = {
 	},
 
 	"weather": function(bot, username, data) {
-		if (!data)
+		if (!data || bot.muted)
 			return
+
 		api.APICall(data, "weather", bot.weatherunderground, function(resp) {
 			var parsedJSON = JSON.parse(resp)
 			if (parsedJSON['response']['error'] || parsedJSON['response']['results']) {
@@ -100,6 +101,8 @@ var chatHandlers = {
 	},
 
 	"forecast": function(bot, username, data) {
+		if (bot.muted)
+			return
 		var tomorrow = data.match("tomorrow")
 		if (tomorrow) {
 			data = data.replace(/tomorrow/ig, "")

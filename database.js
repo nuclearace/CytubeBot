@@ -34,6 +34,8 @@ Database.prototype.insertChat = function(msg, time, nick, room) {
 };
 
 Database.prototype.insertVideo = function(site, vid, title, dur, nick) {
+	console.log("*** Inserting: " + title + " into the database")
+
 	var stmt1 = this.db.prepare("INSERT OR IGNORE INTO videos VALUES(?, ?, ?, ?, ?, ?)", [site, vid, dur * 1000, title, 0, 'false'])
 	var stmt2 = this.db.prepare("INSERT INTO video_stats VALUES(?, ?, ?)", [site, vid, nick])
 

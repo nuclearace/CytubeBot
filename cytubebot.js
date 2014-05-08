@@ -180,6 +180,15 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 
 CytubeBot.prototype.handlePlaylist = function(playlist) {
 	this.playlist = playlist
+	for (var i in playlist) {
+		var site = playlist[i]["media"]["type"]
+		var vid = playlist[i]["media"]["id"]
+		var title = playlist[i]["media"]["title"]
+		var dur = playlist[i]["media"]["seconds"]
+		var nick = playlist["queueby"]
+
+		this.db.insertVideo(site, vid, title, dur, nick)
+	}
 };
 
 CytubeBot.prototype.handleUserLeave = function(user) {
