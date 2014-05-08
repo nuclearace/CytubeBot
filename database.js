@@ -15,8 +15,27 @@ module.exports = {
 Database.prototype.createTables = function() {
 	this.db.run("CREATE TABLE IF NOT EXISTS users(uname TEXT, blacklisted TEXT, block TEXT, primary key(uname))")
 	this.db.run("CREATE TABLE IF NOT EXISTS chat(timestamp INTEGER, username TEXT, msg TEXT, channel TEXT)")
-	this.db.run("CREATE TABLE IF NOT EXISTS videos(type TEXT, id TEXT, duration_ms INTEGER, title TEXT, flags INTEGER, autodelete TEXT, primary key(type, id))")
+	this.db.run("CREATE TABLE IF NOT EXISTS " +
+		"videos(type TEXT, id TEXT, duration_ms INTEGER, title TEXT, flags INTEGER, primary key(type, id))")
 	this.db.run("CREATE TABLE IF NOT EXISTS video_stats(type TEXT, id TEXT, uname TEXT)")
+};
+
+Database.prototype.blacklistVideo = function(type, id, flags, title) {
+	console.log("*** Blacklisting video: " + title)
+
+	stmt = this.db.prepare("UPDATE videos SET flags=(flags | ?) WHERE type = ? AND id = ?", [flags, type, id])
+	stmt.run()
+
+	stmt.finalize()
+};
+
+Database.prototype.blockVideo = function(type, id, flags, title) {
+	console.log("*** Setting block on video " + title)
+
+	stmt = this.db.prepare("UPDATE videos SET flags=(flags | ?) WHERE type = ? AND id = ?", [flags, type, id])
+	stmt.run()
+
+	stmt.finalize()
 };
 
 Database.prototype.insertUser = function(username) {
@@ -36,7 +55,7 @@ Database.prototype.insertChat = function(msg, time, nick, room) {
 Database.prototype.insertVideo = function(site, vid, title, dur, nick) {
 	console.log("*** Inserting: " + title + " into the database")
 
-	var stmt1 = this.db.prepare("INSERT OR IGNORE INTO videos VALUES(?, ?, ?, ?, ?, ?)", [site, vid, dur * 1000, title, 0, 'false'])
+	var stmt1 = this.db.prepare("INSERT OR IGNORE INTO videos VALUES(?, ?, ?, ?, ?)", [site, vid, dur * 1000, title, 0])
 	var stmt2 = this.db.prepare("INSERT INTO video_stats VALUES(?, ?, ?)", [site, vid, nick])
 
 	stmt1.run()
@@ -74,9 +93,19 @@ Database.prototype.getQuote = function(nick, callback) {
 Database.prototype.getVideos = function(num, callback) {
 	if (!num)
 		num = 1
-	var stmt = this.db.prepare("SELECT type, id, duration_ms FROM videos WHERE flags = 0 AND duration_ms < 600000 ORDER BY RANDOM() LIMIT ?", [num])
+	var stmt = this.db.prepare("SELECT type, id, duration_ms FROM videos " +
+		"WHERE flags = 0 AND duration_ms < 600000 ORDER BY RANDOM() LIMIT ?", [num])
 
 	stmt.all(function(err, rows) {
 		callback(rows)
+	})
+};
+
+Database.prototype.getVideoFlag = function(type, id, callback) {
+	stmt = this.db.prepare("SELECT flags FROM videos videos WHERE type = ? AND id = ?", [type, id])
+
+	stmt.get(function(err, row) {
+		if (row)
+			callback(row)
 	})
 };

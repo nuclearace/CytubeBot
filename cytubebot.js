@@ -54,6 +54,32 @@ CytubeBot.prototype.addVideo = function(type, id, duration, temp, link) {
 	}
 };
 
+CytubeBot.prototype.blacklistVideo = function() {
+	var type = this.currentMedia["type"]
+	var id = this.currentMedia["id"]
+	var flags = 1
+	var title = this.currentMedia["title"]
+
+	this.db.blacklistVideo(type, id, flags, title)
+};
+
+CytubeBot.prototype.blockVideo = function() {
+	var type = this.currentMedia["type"]
+	var id = this.currentMedia["id"]
+	var flags = 2
+	var title = this.currentMedia["title"]
+
+	this.db.blockVideo(type, id, flags, title)
+};
+
+CytubeBot.prototype.deleteVideo = function(uid) {
+	var index = utils.handle(this, "findIndexOfVideoFromUID", uid)
+	if (typeof index !== undefined) {
+		this.playlist.splice(index, 1)
+		this.socket.emit("delete", uid)
+	}
+};
+
 CytubeBot.prototype.getQuote = function(nick) {
 	var bot = this
 	this.db.getQuote(nick, function(row) {
@@ -78,7 +104,7 @@ CytubeBot.prototype.getQuote = function(nick) {
 };
 
 CytubeBot.prototype.handleAddMedia = function(data) {
-	//console.log(data)
+	var bot = this
 	if (utils.handle(this, "isOnPlaylist", data)) {
 		console.log("### Video is on playlist")
 		console.log("### video is at: " + utils.handle(this, "findIndexOfVideoFromVideo", data))
@@ -91,13 +117,13 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 		console.log("### Adding video after: " + index)
 		this.playlist.splice(index + 1, 0, data["item"])
 	}
-	var site = data["item"]["media"]["type"]
-	var vid = data["item"]["media"]["id"]
-	var title = data["item"]["media"]["title"]
-	var dur = data["item"]["media"]["seconds"]
-	var nick = data["item"]["queueby"]
 
-	this.db.insertVideo(site, vid, title, dur, nick)
+	this.validateVideo(data["item"], function(block) {
+		if (block) {
+			bot.deleteVideo(data["item"]["uid"])
+			return
+		}
+	})
 };
 
 CytubeBot.prototype.handleChangeMedia = function(data) {
@@ -179,15 +205,14 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 };
 
 CytubeBot.prototype.handlePlaylist = function(playlist) {
+	var bot = this
 	this.playlist = playlist
 	for (var i in playlist) {
-		var site = playlist[i]["media"]["type"]
-		var vid = playlist[i]["media"]["id"]
-		var title = playlist[i]["media"]["title"]
-		var dur = playlist[i]["media"]["seconds"]
-		var nick = playlist["queueby"]
-
-		this.db.insertVideo(site, vid, title, dur, nick)
+		this.validateVideo(playlist[i], function(block, uid) {
+			if (block) {
+				bot.deleteVideo(uid)
+			}
+		})
 	}
 };
 
@@ -228,5 +253,34 @@ CytubeBot.prototype.start = function() {
 	this.socket.emit("login", {
 		name: this.username,
 		pw: this.pw
+	})
+};
+
+CytubeBot.prototype.validateVideo = function(video, callback) {
+	var bot = this
+	var type = video["media"]["type"]
+	var id = video["media"]["id"]
+	var title = video["media"]["title"]
+	var dur = video["media"]["seconds"]
+	var nick = video["queueby"]
+	var uid = video["uid"]
+
+	try {
+		var rank = utils.handle(this, "getUser", nick)["rank"]
+	} catch (e) {
+		console.log("!~~~! Error looking up user rank for validate video\n" +
+			"      Probably from a user not on the list")
+		var rank = 0
+	}
+
+	this.db.getVideoFlag(type, id, function(row) {
+		if (row["flags"] === 2 && rank < 2) {
+			bot.sendChatMsg("*** Video blocked: " + title)
+			callback(true, uid)
+			return
+		} else {
+			if (nick !== this.username)
+				bot.db.insertVideo(type, id, title, dur, nick)
+		}
 	})
 };
