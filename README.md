@@ -24,3 +24,5 @@ Commands
 - `$blacklist` Blacklists currently playing video so that the bot doesn't add it randomly. Users can still add video. See $autodelete. Irreversible  without going into database.
 - `$autodelete` Makes it so non-mods cannot add currently playing video. Irreversible without going into database.
 - `$skip` Skips the current video. Requires mod on channel.
+- `$delete username [all | n]` Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video.
+- `$add link` Adds link, requires mod because of potential for media limit abuse.
