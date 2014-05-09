@@ -41,14 +41,23 @@ CytubeBot.prototype.addRandomVideos = function(num, username) {
 	})
 };
 
-CytubeBot.prototype.addVideo = function(type, id, duration, temp, link) {
+CytubeBot.prototype.addVideo = function(type, id, duration, temp, parsedLink) {
 	if (!temp) {
 		temp = false
 	}
-	if (!link) {
+	if (!parsedLink) {
 		var json = {
 			"id": id,
 			"type": type,
+			"pos": "end",
+			"duration": 0,
+			"temp": temp
+		}
+		this.socket.emit("queue", json)
+	} else {
+		var json = {
+			"id": parsedLink["id"],
+			"type": parsedLink["type"],
 			"pos": "end",
 			"duration": 0,
 			"temp": temp
@@ -78,6 +87,7 @@ CytubeBot.prototype.blockVideo = function() {
 };
 
 CytubeBot.prototype.deleteVideo = function(uid) {
+	console.log("!~~~! Sending delete frame for uid: " + uid)
 	this.socket.emit("delete", uid)
 };
 

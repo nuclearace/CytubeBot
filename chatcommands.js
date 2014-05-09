@@ -232,7 +232,7 @@ var chatHandlers = {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
 		if (rank < 2)
 			return
-		
+
 		var id = bot.currentMedia["id"]
 		var uid = utils.handle(bot, "findIndexOfVideoFromID", id)
 
@@ -251,6 +251,46 @@ var chatHandlers = {
 		}
 		bot.sendChatMsg(squeeString.substring(0, squeeString.length - 1))
 		bot.timeSinceLastSquee = new Date().getTime()
+	},
+
+	"add": function(bot, username, data) {
+		if (!data)
+			return
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (rank > 2)
+			bot.addVideo(null, null, null, null, utils.handle(bot, "parseMediaLink", data))
+	},
+
+	"delete": function(bot, username, data) {
+		if (!data)
+			return
+		data = data.split(" ")
+
+		if (!data[0])
+			return
+
+		var name = data[0]
+		var num = data[data.length - 1]
+		var uids = utils.handle(bot, "findVideosAddedByUser", name)
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+
+		if (!num) {
+			num = 1
+		} else if (num === "all") {
+			num = uids.length
+		}
+
+		if (username.toLowerCase() === name.toLowerCase()) {
+			uids.reverse()
+			for (var i = 0; i < num; i++) {
+				bot.deleteVideo(uids[i])
+			}
+		} else if (rank >= 2) {
+			uids.reverse()
+			for (var i = 0; i < num; i++) {
+				bot.deleteVideo(uids[i])
+			}
+		}
 	}
 }
 
