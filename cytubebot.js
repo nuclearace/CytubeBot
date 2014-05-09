@@ -27,7 +27,7 @@ module.exports = {
 		this.muted = false;
 		this.flair = config["usemodflair"]
 		this.startTime = new Date().getTime()
-		this.handleCommands = false
+		this.doneInit = false
 
 		this.db = Database.init();
 	};
@@ -209,7 +209,7 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	if (time < this.startTime)
 		return
 
-	if (msg.indexOf("$") === 0 && username != this.username) {
+	if (msg.indexOf("$") === 0 && username != this.username && this.doneInit) {
 		commands.handle(this, username, msg);
 		return
 	}
@@ -254,10 +254,10 @@ CytubeBot.prototype.handleUserlist = function(userlistData) {
 };
 
 CytubeBot.prototype.sendChatMsg = function(message) {
-	if (!this.handleCommands)
-		return
+	var rank = 0
+	if (this.doneInit)
+		rank = utils.handle(bot, "getUser", this.username.toLowerCase())["rank"]
 
-	var rank = utils.handle(bot, "getUser", this.username.toLowerCase())["rank"]
 	if (!this.muted) {
 		if (!this.flair)
 			this.socket.emit("chatMsg", {
@@ -297,7 +297,7 @@ CytubeBot.prototype.start = function() {
 	// Wait 5 seconds before we accept chat commands
 	setTimeout(function() {
 		console.log("!~~~! Now handling commands")
-		bot.handleCommands = true
+		bot.doneInit = true
 	}, 5000)
 };
 
