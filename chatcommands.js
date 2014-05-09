@@ -226,6 +226,13 @@ var chatHandlers = {
 			return
 
 		bot.blockVideo()
+	},
+
+	"skip": function(bot, username, data) {
+		var id = bot.currentMedia["id"]
+		var uid = utils.handle(bot, "findIndexOfVideoFromID", id)
+
+		bot.deleteVideo(uid)
 	}
 }
 
