@@ -27,3 +27,8 @@ Commands
 - `$delete username [all | n]` Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video.
 - `$add link` Adds link, requires mod because of potential for media limit abuse.
 - `$choose (choice1 choice2...)` Chooses a random item from the choices given.
+
+
+Custom Commands
+---------------
+You can add custom commands inside custom.js, this will help you avoid merge conflicts when I update the bot.
