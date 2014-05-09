@@ -180,15 +180,15 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	var time = data.time;
 	var timeNow = new Date().getTime();
 
-	msg = msg.replace(/&#39;/, "'")
-	msg = msg.replace(/&amp;/, "&")
-	msg = msg.replace(/&lt;/, "<")
-	msg = msg.replace(/&gt;/, ">")
-	msg = msg.replace(/&quot;/, "\"")
-	msg = msg.replace(/&#40;/, "\(")
-	msg = msg.replace(/&#41;/, "\)")
+	msg = msg.replace(/&#39;/g, "'")
+	msg = msg.replace(/&amp;/g, "&")
+	msg = msg.replace(/&lt;/g, "<")
+	msg = msg.replace(/&gt;/g, ">")
+	msg = msg.replace(/&quot;/g, "\"")
+	msg = msg.replace(/&#40;/g, "\(")
+	msg = msg.replace(/&#41;/g, "\)")
 	msg = msg.replace(/(<([^>]+)>)/ig, "")
-	msg = msg.replace(/^[ \t]+/, "")
+	msg = msg.replace(/^[ \t]+/g, "")
 	if (!msg)
 		return
 	console.log("Chat Message: " + username + ": " + msg)
