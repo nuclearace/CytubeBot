@@ -4,6 +4,7 @@
     "socket.io-client": ">=0.9",
     "wolfram-alpha": "",
     "sqlite3": "",
-    "wundernode": ""
+    "wundernode": "",
+    "cleverbot-node": ""
   }
 }
