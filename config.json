@@ -1,18 +1,8 @@
-/*
-	server: Socket IO port. Use http://somehost.com/sioconfig  And copy IO_URL
-	username: Name of the bot
-	pw: Password of the bot, blank logs in as guest
-	room: Room for the bot to join
-	roompassword: Password for the room, if it has one
-	wolfram: WolframAlpha API key
-	weatherunderground: WeatherUnderground API key
-*/
-
 {
         "server": "",
         "username": "",
         "pw": "",
-        "room": "",
+        "room": "horsefuckers",
         "roompassword": "",
         "wolfram": "",
         "weatherunderground": ""
