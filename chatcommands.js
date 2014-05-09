@@ -229,6 +229,10 @@ var chatHandlers = {
 	},
 
 	"skip": function(bot, username, data) {
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (rank < 2)
+			return
+		
 		var id = bot.currentMedia["id"]
 		var uid = utils.handle(bot, "findIndexOfVideoFromID", id)
 
