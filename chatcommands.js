@@ -257,7 +257,7 @@ var chatHandlers = {
 		if (!data)
 			return
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank > 2)
+		if (rank >= 2)
 			bot.addVideo(null, null, null, null, utils.handle(bot, "parseMediaLink", data))
 	},
 
