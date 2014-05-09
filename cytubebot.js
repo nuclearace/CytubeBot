@@ -26,6 +26,8 @@ module.exports = {
 		this.timeSinceLastSquee = 0
 		this.muted = false;
 		this.flair = config["usemodflair"]
+		this.startTime = new Date().getTime()
+		this.handleCommands = false
 
 		this.db = Database.init();
 	};
@@ -189,7 +191,6 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	var username = data.username;
 	var msg = data.msg;
 	var time = data.time;
-	var timeNow = new Date().getTime();
 
 	msg = msg.replace(/&#39;/g, "'")
 	msg = msg.replace(/&amp;/g, "&")
@@ -205,7 +206,7 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	console.log("Chat Message: " + username + ": " + msg)
 
 	// Try to avoid old commands from playback
-	if (time + 5000 < timeNow)
+	if (time < this.startTime)
 		return
 
 	if (msg.indexOf("$") === 0 && username != this.username) {
@@ -253,6 +254,9 @@ CytubeBot.prototype.handleUserlist = function(userlistData) {
 };
 
 CytubeBot.prototype.sendChatMsg = function(message) {
+	if (!this.handleCommands)
+		return
+
 	var rank = utils.handle(bot, "getUser", this.username.toLowerCase())["rank"]
 	if (!this.muted) {
 		if (!this.flair)
@@ -280,6 +284,7 @@ CytubeBot.prototype.sendStatus = function() {
 };
 
 CytubeBot.prototype.start = function() {
+	var bot = this
 	this.socket.emit("initChannelCallbacks");
 	this.socket.emit("joinChannel", {
 		name: this.room
@@ -288,6 +293,12 @@ CytubeBot.prototype.start = function() {
 		name: this.username,
 		pw: this.pw
 	})
+
+	// Wait 5 seconds before we accept chat commands
+	setTimeout(function() {
+		console.log("!~~~! Now handling commands")
+		bot.handleCommands = true
+	}, 5000)
 };
 
 CytubeBot.prototype.validateVideo = function(video, callback) {
