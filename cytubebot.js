@@ -25,7 +25,7 @@ module.exports = {
 		this.timeSinceLastWeather = 0
 		this.timeSinceLastSquee = 0
 		this.muted = false;
-		this.flair = config["useModFlair"]
+		this.flair = config["usemodflair"]
 
 		this.db = Database.init();
 	};
@@ -258,14 +258,14 @@ CytubeBot.prototype.sendChatMsg = function(message) {
 		if (!this.flair)
 			this.socket.emit("chatMsg", {
 				msg: message
-			});
+			})
 		else {
 			this.socket.emit("chatMsg", {
 				msg: message,
 				meta: {
 					"modflair": rank
 				}
-			});
+			})
 		}
 	}
 };
