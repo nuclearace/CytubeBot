@@ -12,7 +12,7 @@ module.exports = {
 }
 
 	function CytubeBot(config) {
-		this.socket = io.connect(config["server"]);
+		this.socket = io.connect(config["serverio"]);
 		this.username = config["username"];
 		this.pw = config["pw"];
 		this.room = config["room"];
