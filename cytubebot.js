@@ -12,10 +12,10 @@ module.exports = {
 }
 
 	function CytubeBot(config) {
-		this.socket = io.connect(config["serverio"]);
-		this.username = config["username"];
-		this.pw = config["pw"];
-		this.room = config["room"];
+		this.socket = io.connect(config["serverio"])
+		this.username = config["username"]
+		this.pw = config["pw"]
+		this.room = config["room"]
 		this.roomPassword = config["roompassword"]
 		this.userlist = {};
 		this.playlist = [];
@@ -25,6 +25,7 @@ module.exports = {
 		this.timeSinceLastWeather = 0
 		this.timeSinceLastSquee = 0
 		this.muted = false;
+		this.flair = config["useModFlair"]
 
 		this.db = Database.init();
 	};
@@ -252,10 +253,21 @@ CytubeBot.prototype.handleUserlist = function(userlistData) {
 };
 
 CytubeBot.prototype.sendChatMsg = function(message) {
-	if (!this.muted)
-		this.socket.emit("chatMsg", {
-			msg: message
-		});
+	var rank = utils.handle(bot, "getUser", this.username.toLowerCase())["rank"]
+	if (!this.muted) {
+		if (!this.flair)
+			this.socket.emit("chatMsg", {
+				msg: message
+			});
+		else {
+			this.socket.emit("chatMsg", {
+				msg: message,
+				meta: {
+					"modflair": rank
+				}
+			});
+		}
+	}
 };
 
 CytubeBot.prototype.sendStatus = function() {
