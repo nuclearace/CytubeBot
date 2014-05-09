@@ -2,7 +2,7 @@ var http = require("http")
 var https = require("https")
 var domain = require("domain")
 var wolfram = require("wolfram-alpha")
-var Cleverbot = require("./cleverbot-node")
+var Cleverbot = require("cleverbot-node")
 var WunderNodeClient = require("wundernode")
 
 var APIs = {
