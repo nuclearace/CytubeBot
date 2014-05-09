@@ -233,6 +233,20 @@ var chatHandlers = {
 		var uid = utils.handle(bot, "findIndexOfVideoFromID", id)
 
 		bot.deleteVideo(uid)
+	},
+
+	// https://www.youtube.com/watch?v=O1adNgZl_3Q
+	"squee": function(bot, username, data) {
+		var squeeString = ""
+		if ((new Date().getTime() - bot.timeSinceLastSquee) / 1000 < 120)
+			return
+
+		for (var i in bot.userlist) {
+			if (bot.userlist[i]["name"].toLowerCase() !== bot.username.toLowerCase())
+				squeeString += bot.userlist[i]["name"] + " "
+		}
+		bot.sendChatMsg(squeeString.substring(0, squeeString.length - 1))
+		bot.timeSinceLastSquee = new Date().getTime()
 	}
 }
 
