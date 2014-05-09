@@ -1,5 +1,6 @@
 var api = require("./apiclient")
 var utils = require("./utils")
+var custom = require("./custom") 
 
 var chatHandlers = {
 
@@ -324,6 +325,9 @@ function handle(bot, username, msg) {
 			return h.fn(bot, username, rest);
 		}
 	}
+
+	// Goto custom commands if we can't find one here
+	return custom.handle(bot, username, msg)
 }
 
 exports.handle = handle;
