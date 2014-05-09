@@ -5,6 +5,8 @@ Requires [node.js](http://nodejs.org/)
 
 Add required info into config.json
 
+You can find the server IO port by typing http://nameofcytubeserver.com/sioconfig and copying the IO_URL
+
 run `npm install` then `node index.js`
 
 Commands
