@@ -26,3 +26,4 @@ Commands
 - `$skip` Skips the current video. Requires mod on channel.
 - `$delete username [all | n]` Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video.
 - `$add link` Adds link, requires mod because of potential for media limit abuse.
+- `$choose (choice1 choice2...)` Chooses a random item from the choices given.
