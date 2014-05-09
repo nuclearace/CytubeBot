@@ -209,7 +209,7 @@ var chatHandlers = {
 
 	"addrandom": function(bot, username, data) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (data <= 20 && rank > 2)
+		if (data <= 20 && rank >= 2)
 			bot.addRandomVideos(data, username)
 	},
 
