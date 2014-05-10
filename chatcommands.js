@@ -339,8 +339,10 @@ var chatHandlers = {
 				secret: bot.mstranslatesecret
 			}
 			api.APICall(query, "translate", apikeys, function(data) {
-				if (!from)
+				if (!from) {
 					bot.sendChatMsg("[" + to + "] " + data)
+					return
+				}
 				bot.sendChatMsg("[" + from + "->" + to + "] " + data)
 			})
 		}
