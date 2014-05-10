@@ -94,7 +94,8 @@ Database.prototype.getVideos = function(num, callback) {
 	if (!num)
 		num = 1
 	var stmt = this.db.prepare("SELECT type, id, duration_ms FROM videos " +
-		"WHERE flags = 0 AND duration_ms < 600000 ORDER BY RANDOM() LIMIT ?", [num])
+		"WHERE flags = 0 AND duration_ms < 600000 AND (type = 'yt' OR type = 'dm' OR type = 'vm') " +
+		"ORDER BY RANDOM() LIMIT ?", [num])
 
 	stmt.all(function(err, rows) {
 		callback(rows)
