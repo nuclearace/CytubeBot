@@ -5,6 +5,11 @@ var custom = require("./custom")
 var chatHandlers = {
 
 	"anagram": function(bot, username, msg) {
+		if ((new Date().getTime() - bot.timeSinceLastAnagram) / 1000 < 5) {
+			console.log("!~~~! Anagram cooldown")
+			return
+		}
+		bot.timeSinceLastAnagram = new Date().getTime()
 		if (msg.length < 7) {
 			bot.sendChatMsg("Message too short")
 			return
