@@ -17,7 +17,7 @@ var utilHandlers = {
 
 	"getUser": function(bot, user) {
 		for (var u in bot.userlist) {
-			if (bot.userlist[u]["name"].toLowerCase() == user)
+			if (bot.userlist[u]["name"].toLowerCase() == user.toLowerCase())
 				return bot.userlist[u]
 		}
 	},
