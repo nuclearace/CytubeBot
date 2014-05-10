@@ -115,16 +115,8 @@ CytubeBot.prototype.deleteVideo = function(uid) {
 
 CytubeBot.prototype.deleteVideosFromDatabase = function(like) {
 	var bot = this
-	var before = 0
-	var post = function() {
-		bot.db.getVideosCount(function(after) {
-			console.log(before)
-			console.log(after)
-		})
-	}
 	this.db.deleteVideos(like, function(num) {
-		before = num
-		setTimeout(post, 100)
+		bot.sendChatMsg("Deleted: " + num + " videos")
 	})
 };
 

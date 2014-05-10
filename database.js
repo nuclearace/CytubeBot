@@ -42,7 +42,15 @@ Database.prototype.deleteVideos = function(like, callback) {
 	var db = this
 	console.log("!~~~! Deleting videos where title like " + like)
 	var before = 0
+	var after = 0
 	var videoIds = {}
+
+	var getAfter = function() {
+		db.getVideosCount(function(num) {
+			after = num
+			callback(before - after)
+		})
+	}
 
 	var deleteVideos = function() {
 		console.log("Entering deleteVideos")
@@ -56,7 +64,7 @@ Database.prototype.deleteVideos = function(like, callback) {
 		}
 		stmt1.finalize()
 		stmt2.finalize()
-		callback(before)
+		getAfter()
 	}
 
 	var getVideoIds = function() {
@@ -77,7 +85,8 @@ Database.prototype.deleteVideos = function(like, callback) {
 		})
 	}
 
-	start()
+	// Lets get on the ride
+	this.db.serialize(start())
 };
 
 Database.prototype.insertUser = function(username) {
