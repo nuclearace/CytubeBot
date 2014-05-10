@@ -20,7 +20,7 @@ module.exports = {
 		this.userlist = {};
 		this.playlist = [];
 		this.currentMedia = {};
-		this.wolfram = config["wolfram"]
+		this.wolfram = config["wolfram"].toLowerCase()
 		this.weatherunderground = config["weatherunderground"]
 		this.timeSinceLastWeather = 0
 		this.timeSinceLastSquee = 0
@@ -261,6 +261,7 @@ CytubeBot.prototype.sendChatMsg = function(message) {
 		rank = utils.handle(bot, "getUser", this.username.toLowerCase())["rank"]
 
 	if (!this.muted) {
+		console.log("!~~~! Sending chatMsg: " + message)
 		if (!this.flair)
 			this.socket.emit("chatMsg", {
 				msg: message
