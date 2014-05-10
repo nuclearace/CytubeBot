@@ -311,6 +311,34 @@ var chatHandlers = {
 		var choices = data.split(" ")
 		var choice = choices[Math.floor(Math.random() * choices.length)]
 		bot.sendChatMsg("[Choose: " + choices.join(" ") + "] " + choice)
+	},
+
+	"translate": function(bot, username, data) {
+		if (data && bot.mstranslateclient && bot.mstranslatesecret) {
+			var groups = data.match(/^(\[(([A-z]{2})|([A-z]{2}) ?-?> ?([A-z]{2}))\] ?)?(.+)$/)
+
+			var from = groups[4]
+			var to = groups[5]
+			var text = groups[6]
+			if (!from) {
+				from = null
+				to = "en"
+			}
+			var query = {
+				from: from,
+				to: to,
+				text: text
+			}
+			var apikeys = {
+				clientid: bot.mstranslateclient,
+				secret: bot.mstranslatesecret
+			}
+			api.APICall(query, "translate", apikeys, function(data) {
+				if (!from)
+					bot.sendChatMsg("[" + to + "] " + data)
+				bot.sendChatMsg("[" + from + "->" + to + "] " + data)
+			})
+		}
 	}
 }
 

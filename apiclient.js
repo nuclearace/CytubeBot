@@ -1,9 +1,9 @@
 var http = require("http")
-var https = require("https")
 var domain = require("domain")
 var wolfram = require("wolfram-alpha")
 var Cleverbot = require("cleverbot-node")
 var WunderNodeClient = require("wundernode")
+var MsTranslator = require('mstranslator')
 
 var APIs = {
 	anagram: function(msg, apikey, callback) {
@@ -122,30 +122,49 @@ var APIs = {
 			console.log(e)
 		}
 
-	} // End forecast
+	}, // End forecast
+
+	"translate": function(query, apiKeys, callback) {
+		var mst_id = apiKeys["clientid"]
+		var mst_secret = apiKeys["secret"]
+		var client = new MsTranslator({
+			client_id: mst_id,
+			client_secret: mst_secret
+		})
+
+		client.initialize_token(function(keys) {
+			client.translate(query, function(err, data) {
+				if (err) {
+					console.log(err)
+					return
+				}
+				callback(data)
+			});
+		});
+	}
 }
 
 var urlRetrieve = function(transport, options, callback) {
-	var dom = domain.create();
+	var dom = domain.create()
 	dom.on("error", function(err) {
-		console.log(err.stack);
-		console.log("urlRetrieve failed: " + err);
-		console.log("Request was: " + options.host + options.path);
-		callback(503, err);
+		console.log(err.stack)
+		console.log("urlRetrieve failed: " + err)
+		console.log("Request was: " + options.host + options.path)
+		callback(503, err)
 	});
 	dom.run(function() {
 		var req = transport.request(options, function(res) {
-			var buffer = "";
-			res.setEncoding("utf-8");
+			var buffer = ""
+			res.setEncoding("utf-8")
 			res.on("data", function(chunk) {
-				buffer += chunk;
-			});
+				buffer += chunk
+			})
 			res.on("end", function() {
-				callback(res.statusCode, buffer);
-			});
-		});
+				callback(res.statusCode, buffer)
+			})
+		})
 
-		req.end();
+		req.end()
 	});
 };
 

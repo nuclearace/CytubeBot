@@ -1,10 +1,12 @@
 {
-        "serverio": "",
-        "username": "",
-        "pw": "",
-        "room": "",
-        "roompassword": "",
-        "wolfram": "",
-        "weatherunderground": "",
-        "usemodflair": true
+	"serverio": "",
+	"username": "",
+	"pw": "",
+	"room": "",
+	"roompassword": "",
+	"wolfram": "",
+	"weatherunderground": "",
+	"mstranslateclient": "",
+	"mstranslatesecret": "",
+	"usemodflair": true
 }
