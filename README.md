@@ -28,9 +28,9 @@ Commands
 - `$status` Sends status ie. if the bot is muted
 - `$addrandom [n]` Adds n random videos from database. Requires mod on channel
 - `$blacklist` Blacklists currently playing video so that the bot doesn't add it randomly. Users can still add video. See $autodelete. Irreversible  without going into database. Requires admin on the channel.
-- `$autodelete` Makes it so non-mods cannot add currently playing video. Irreversible without going into database.
-- `$skip` Skips the current video. Requires mod on channel. Requires owner on channel.
-- `$delete username [all | n]` Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video.
+- `$autodelete` Makes it so non-mods cannot add currently playing video. Irreversible without going into database. Requires owner on channel.
+- `$skip` Skips the current video. Requires mod on channel. 
+- `$delete username [all | n]` Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video. Requires mod on channel
 - `$add link` Adds link, requires mod because of potential for media limit abuse.
 - `$choose (choice1 choice2...)` Chooses a random item from the choices given.
 - `translate [[bb] | [aa>bb] | [aa->bb]] string`
