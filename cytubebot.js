@@ -37,7 +37,7 @@ module.exports = {
 		this.db = Database.init();
 	};
 
-CytubeBot.prototype.addRandomVideos = function(num, username) {
+CytubeBot.prototype.addRandomVideos = function(num) {
 	var bot = this
 	this.db.getVideos(num, function(rows) {
 		for (var i in rows) {
@@ -335,6 +335,6 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 		}
 	})
 
-	if (nick !== this.username)
+	if (nick.toLowerCase() !== this.username)
 		bot.db.insertVideo(type, id, title, dur, nick)
 };

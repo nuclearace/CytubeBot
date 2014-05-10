@@ -89,7 +89,7 @@ var chatHandlers = {
 
 	"weather": function(bot, username, data) {
 		if (!bot.weatherunderground) {
-			console.log("### No weatherunderground API key!")
+			console.log("!~~~! No weatherunderground API key!")
 			return
 		}
 
@@ -220,7 +220,7 @@ var chatHandlers = {
 	"addrandom": function(bot, username, data) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
 		if (data <= 20 && rank >= 2)
-			bot.addRandomVideos(data, username)
+			bot.addRandomVideos(data)
 	},
 
 	"blacklist": function(bot, username, data) {
