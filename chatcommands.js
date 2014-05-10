@@ -40,17 +40,19 @@ var chatHandlers = {
 
 	"mute": function(bot, username) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank >= 2 && !bot.muted) {
-			bot.muted = !bot.muted
+		if (rank >= 2 && !bot.stats["muted"]) {
+			bot.stats["muted"] = !bot.stats["muted"]
 			console.log(username + " muted bot")
+			bot.writePersistantSettings()
 		}
 	},
 
 	"unmute": function(bot, username) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank >= 2 && bot.muted) {
-			bot.muted = !bot.muted
+		if (rank >= 2 && bot.stats["muted"]) {
+			bot.stats["muted"] = !bot.stats["muted"]
 			console.log(username + " unmuted bot")
+			bot.writePersistantSettings()
 		}
 	},
 
@@ -345,6 +347,19 @@ var chatHandlers = {
 				}
 				bot.sendChatMsg("[" + from + "->" + to + "] " + data)
 			})
+		}
+	}, // End translate
+
+	"management": function(bot, username, data) {
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (rank >= 2 && data.indexOf("on") == 0) {
+			console.log("!~~~! Bot is now managing the playlist")
+			bot.stats["managing"] = true
+			bot.writePersistantSettings()
+		} else if (rank >= 2 && data.indexOf("off") == 0) {
+			console.log("!~~~! The bot is no longer managing the playlist")
+			bot.stats["managing"] = false
+			bot.writePersistantSettings()
 		}
 	}
 }

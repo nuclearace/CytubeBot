@@ -30,6 +30,13 @@ var utilHandlers = {
 		}
 	},
 
+	"getVideoFromUID": function(bot, uid) {
+		for (var i = 0; i < bot.playlist.length; i++) {
+			if (bot.playlist[i]['uid'] == uid)
+				return bot.playlist[i]
+		}
+	},
+
 	"findIndexOfVideoFromVideo": function(bot, video) {
 		for (var i = 0; i < bot.playlist.length; i++) {
 			if (bot.playlist[i]['media']["id"] == video["item"]["media"]["id"]) {
@@ -45,7 +52,7 @@ var utilHandlers = {
 		}
 	},
 
-	"findIndexOfVideoFromID": function(bot, id) {
+	"findUIDOfVideoFromID": function(bot, id) {
 		for (var i = 0; i < bot.playlist.length; i++) {
 			if (bot.playlist[i]['media']["id"] === id)
 				return bot.playlist[i]["uid"]

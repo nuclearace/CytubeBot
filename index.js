@@ -54,5 +54,9 @@ Config.load(function(config) {
 		bot.handleNeedPassword(data)
 	})
 
+	bot.socket.on("setTemp", function(data) {
+		bot.handleSetTemp(data)
+	})
+
 	bot.start();
 });

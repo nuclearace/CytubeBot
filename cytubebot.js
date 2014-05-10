@@ -2,6 +2,7 @@ var io = require("socket.io-client")
 var commands = require("./chatcommands")
 var utils = require("./utils")
 var Database = require("./database")
+var fs = require("fs")
 
 module.exports = {
 	init: function(cfg) {
@@ -12,6 +13,7 @@ module.exports = {
 }
 
 	function CytubeBot(config) {
+		var bot = this
 		this.socket = io.connect(config["serverio"])
 		this.username = config["username"]
 		this.pw = config["pw"]
@@ -29,10 +31,19 @@ module.exports = {
 		this.timeSinceLastTalk = 0
 		this.timeSinceLastAnagram = 0
 		this.timeSinceLastTranslate = 0
-		this.muted = false;
 		this.flair = config["usemodflair"]
 		this.startTime = new Date().getTime()
 		this.doneInit = false
+		this.stats = {
+			"managing": false,
+			"muted": false
+		}
+
+		this.readPersistantSettings(function(err) {
+			if (err)
+				bot.writePersistantSettings()
+		})
+
 
 		this.db = Database.init();
 	};
@@ -61,6 +72,7 @@ CytubeBot.prototype.addVideo = function(type, id, duration, temp, parsedLink) {
 			"duration": 0,
 			"temp": temp
 		}
+		console.log("!~~~! Adding a video " + json["id"])
 		this.socket.emit("queue", json)
 	} else {
 		var json = {
@@ -70,6 +82,7 @@ CytubeBot.prototype.addVideo = function(type, id, duration, temp, parsedLink) {
 			"duration": 0,
 			"temp": temp
 		}
+		console.log("!~~~! Adding a video " + json["id"])
 		this.socket.emit("queue", json)
 	}
 };
@@ -86,7 +99,7 @@ CytubeBot.prototype.blacklistVideo = function() {
 CytubeBot.prototype.blockVideo = function() {
 	var type = this.currentMedia["type"]
 	var id = this.currentMedia["id"]
-	var uid = utils.handle(this, "findIndexOfVideoFromID", id)
+	var uid = utils.handle(this, "findUIDOfVideoFromID", id)
 	var flags = 2
 	var title = this.currentMedia["title"]
 
@@ -146,6 +159,15 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 };
 
 CytubeBot.prototype.handleChangeMedia = function(data) {
+	if (this.stats["managing"] && this.doneInit) {
+		var id = this.currentMedia["id"]
+		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
+		var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
+		if (!temp) {
+			this.deleteVideo(uid)
+		}
+
+	}
 	this.currentMedia = data
 	console.log("### Current Video now " + this.currentMedia["title"])
 };
@@ -159,10 +181,12 @@ CytubeBot.prototype.handleDeleteMedia = function(data) {
 };
 
 CytubeBot.prototype.handleMediaUpdate = function(data) {
-	console.log("Current video time: " + data["currentTime"] + " Paused: " + data["paused"])
+	console.log("### Current video time: " + data["currentTime"] + " Paused: " + data["paused"])
+	var doSomething = (this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length == 1
+		&& this.stats["managing"];
 
-	if ((this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length == 1) {
-		console.log("Shit son, we gotta do something, the video is ending\nAdding a video")
+	if (doSomething) {
+		console.log("Shit son, we gotta do something, the video is ending")
 		this.addRandomVideos()
 	}
 };
@@ -245,6 +269,15 @@ CytubeBot.prototype.handleNeedPassword = function(data) {
 	}
 };
 
+CytubeBot.prototype.handleSetTemp = function(data) {
+	var temp = data["temp"]
+	var uid = data["uid"]
+
+	var index = utils.handle(this, "findIndexOfVideoFromUID", uid)
+	console.log("### Setting temp: " + temp + " on video at index " + index)
+	this.playlist[index]["temp"] = temp
+};
+
 CytubeBot.prototype.handleUserLeave = function(user) {
 	var index = utils.handle(this, "findUser", user)
 	if (index) {
@@ -258,12 +291,22 @@ CytubeBot.prototype.handleUserlist = function(userlistData) {
 	this.userlist = userlistData;
 };
 
+CytubeBot.prototype.readPersistantSettings = function(callback) {
+	var bot = this
+	fs.readFile("persistant.json", function(err, data) {
+		if (err)
+			return callback(true)
+		bot.stats = JSON.parse(data)
+		console.log("!~~~! Read persistant settings")
+	})
+};
+
 CytubeBot.prototype.sendChatMsg = function(message) {
 	var rank = 0
 	if (this.doneInit)
 		rank = utils.handle(bot, "getUser", this.username.toLowerCase())["rank"]
 
-	if (!this.muted) {
+	if (!this.stats["muted"]) {
 		console.log("!~~~! Sending chatMsg: " + message)
 		if (!this.flair)
 			this.socket.emit("chatMsg", {
@@ -281,8 +324,10 @@ CytubeBot.prototype.sendChatMsg = function(message) {
 };
 
 CytubeBot.prototype.sendStatus = function() {
-	var status = "Muted: "
-	status += this.muted
+	var status = "[Muted: "
+	status += this.stats["muted"]
+	status += " Managing playlist: " + this.stats["managing"]
+	status += "]"
 
 	this.socket.emit("chatMsg", {
 		msg: status
@@ -337,4 +382,15 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 
 	if (nick.toLowerCase() !== this.username)
 		bot.db.insertVideo(type, id, title, dur, nick)
+}
+
+CytubeBot.prototype.writePersistantSettings = function() {
+	console.log("!~~~! Writing persistant settings")
+	var stringyJSON = JSON.stringify(this.stats)
+	fs.writeFile("persistant.json", stringyJSON, function(err) {
+		if (err) {
+			console.log(err)
+			process.exit(1)
+		}
+	})
 };
