@@ -1,6 +1,6 @@
 var api = require("./apiclient")
 var utils = require("./utils")
-var custom = require("./custom") 
+var custom = require("./custom")
 
 var chatHandlers = {
 
@@ -23,6 +23,11 @@ var chatHandlers = {
 	},
 
 	"talk": function(bot, username, msg) {
+		if ((new Date().getTime() - bot.timeSinceLastTalk) / 1000 < 5) {
+			console.log("!~~~! Talk cooldown")
+			return
+		}
+		bot.timeSinceLastTalk = new Date().getTime()
 		api.APICall(msg, "talk", null, function(resp) {
 			bot.sendChatMsg(resp["message"])
 		})
