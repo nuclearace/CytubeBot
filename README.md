@@ -1,13 +1,19 @@
 CytubeBot
 =========
 
-Requires [node.js](http://nodejs.org/)
+Install
+-------
+1. Install [node.js](http://nodejs.org/)
+2. Either use `git clone https://github.com/nuclearace/CytubeBot` if you have git or download the zip file. (git is better since it allows easier updates via `git pull`
+3. cd into the CytubeBot directory and run `npm install`
+4. Add required info into config.json (You can find the server IO port by typing http://nameofcytubeserver.com/sioconfig and copying the IO_URL)
+5. run `node index.js`
 
-Add required info into config.json
+You can make it persistant with `screen node index.js`. To have it restart should it crash make run.sh executable and do `[screen] sh run.sh`
 
-You can find the server IO port by typing http://nameofcytubeserver.com/sioconfig and copying the IO_URL
 
-run `npm install` then `node index.js`
+
+
 
 Commands
 --------
