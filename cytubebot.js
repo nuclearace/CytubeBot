@@ -162,7 +162,12 @@ CytubeBot.prototype.handleChangeMedia = function(data) {
 	if (this.stats["managing"] && this.doneInit) {
 		var id = this.currentMedia["id"]
 		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
-		var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
+		try {
+			var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
+		} catch (err) {
+			console.log("!~~~! ERROR: handleChangeMedia temp lookup failed")
+			var temp = true
+		}
 		if (!temp) {
 			this.deleteVideo(uid)
 		}
@@ -182,9 +187,7 @@ CytubeBot.prototype.handleDeleteMedia = function(data) {
 
 CytubeBot.prototype.handleMediaUpdate = function(data) {
 	console.log("### Current video time: " + data["currentTime"] + " Paused: " + data["paused"])
-	var doSomething = (this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length == 1
-		&& this.stats["managing"];
-
+	var doSomething = (this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length == 1 && this.stats["managing"];
 	if (doSomething) {
 		console.log("Shit son, we gotta do something, the video is ending")
 		this.addRandomVideos()
