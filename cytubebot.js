@@ -26,6 +26,7 @@ module.exports = {
 		this.weatherunderground = config["weatherunderground"]
 		this.mstranslateclient = config["mstranslateclient"]
 		this.mstranslatesecret = config["mstranslatesecret"]
+		this.firstChangeMedia = true
 		this.timeSinceLastWeather = 0
 		this.timeSinceLastSquee = 0
 		this.timeSinceLastTalk = 0
@@ -159,21 +160,15 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 };
 
 CytubeBot.prototype.handleChangeMedia = function(data) {
-	if (this.stats["managing"] && this.doneInit) {
+	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia) {
 		var id = this.currentMedia["id"]
 		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
-		try {
-			var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
-		} catch (err) {
-			console.log("!~~~! ERROR: handleChangeMedia temp lookup failed")
-			var temp = true
-		}
-		if (!temp) {
+		var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
+		if (!temp)
 			this.deleteVideo(uid)
-		}
-
 	}
 	this.currentMedia = data
+	this.firstChangeMedia = false
 	console.log("### Current Video now " + this.currentMedia["title"])
 };
 
