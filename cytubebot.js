@@ -39,9 +39,9 @@ module.exports = {
 			"muted": false
 		}
 
-		this.readPersistantSettings(function(err) {
+		this.readPersistentSettings(function(err) {
 			if (err)
-				bot.writePersistantSettings()
+				bot.writePersistentSettings()
 		})
 
 
@@ -291,13 +291,13 @@ CytubeBot.prototype.handleUserlist = function(userlistData) {
 	this.userlist = userlistData;
 };
 
-CytubeBot.prototype.readPersistantSettings = function(callback) {
+CytubeBot.prototype.readPersistentSettings = function(callback) {
 	var bot = this
-	fs.readFile("persistant.json", function(err, data) {
+	fs.readFile("persistent.json", function(err, data) {
 		if (err)
 			return callback(true)
 		bot.stats = JSON.parse(data)
-		console.log("!~~~! Read persistant settings")
+		console.log("!~~~! Read persistent settings")
 	})
 };
 
@@ -384,10 +384,10 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 		bot.db.insertVideo(type, id, title, dur, nick)
 }
 
-CytubeBot.prototype.writePersistantSettings = function() {
-	console.log("!~~~! Writing persistant settings")
+CytubeBot.prototype.writePersistentSettings = function() {
+	console.log("!~~~! Writing persistent settings")
 	var stringyJSON = JSON.stringify(this.stats)
-	fs.writeFile("persistant.json", stringyJSON, function(err) {
+	fs.writeFile("persistent.json", stringyJSON, function(err) {
 		if (err) {
 			console.log(err)
 			process.exit(1)

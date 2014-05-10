@@ -43,7 +43,7 @@ var chatHandlers = {
 		if (rank >= 2 && !bot.stats["muted"]) {
 			bot.stats["muted"] = !bot.stats["muted"]
 			console.log(username + " muted bot")
-			bot.writePersistantSettings()
+			bot.writePersistentSettings()
 		}
 	},
 
@@ -52,7 +52,7 @@ var chatHandlers = {
 		if (rank >= 2 && bot.stats["muted"]) {
 			bot.stats["muted"] = !bot.stats["muted"]
 			console.log(username + " unmuted bot")
-			bot.writePersistantSettings()
+			bot.writePersistentSettings()
 		}
 	},
 
@@ -355,11 +355,11 @@ var chatHandlers = {
 		if (rank >= 2 && data.indexOf("on") == 0) {
 			console.log("!~~~! Bot is now managing the playlist")
 			bot.stats["managing"] = true
-			bot.writePersistantSettings()
+			bot.writePersistentSettings()
 		} else if (rank >= 2 && data.indexOf("off") == 0) {
 			console.log("!~~~! The bot is no longer managing the playlist")
 			bot.stats["managing"] = false
-			bot.writePersistantSettings()
+			bot.writePersistentSettings()
 		}
 	}
 }
