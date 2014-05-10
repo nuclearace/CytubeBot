@@ -139,8 +139,8 @@ var APIs = {
 					return
 				}
 				callback(data)
-			});
-		});
+			})
+		})
 	}
 }
 

@@ -315,6 +315,11 @@ var chatHandlers = {
 
 	"translate": function(bot, username, data) {
 		if (data && bot.mstranslateclient && bot.mstranslatesecret) {
+			if ((new Date().getTime() - bot.timeSinceLastTranslate) / 1000 < 5) {
+				console.log("!~~~! Translate cooldown")
+				return
+			}
+			bot.timeSinceLastTranslate = new Date().getTime()
 			var groups = data.match(/^(\[(([A-z]{2})|([A-z]{2}) ?-?> ?([A-z]{2}))\] ?)?(.+)$/)
 
 			var from = groups[4]

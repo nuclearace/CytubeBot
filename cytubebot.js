@@ -28,6 +28,7 @@ module.exports = {
 		this.timeSinceLastSquee = 0
 		this.timeSinceLastTalk = 0
 		this.timeSinceLastAnagram = 0
+		this.timeSinceLastTranslate = 0
 		this.muted = false;
 		this.flair = config["usemodflair"]
 		this.startTime = new Date().getTime()
