@@ -38,6 +38,48 @@ Database.prototype.blockVideo = function(type, id, flags, title) {
 	stmt.finalize()
 };
 
+Database.prototype.deleteVideos = function(like, callback) {
+	var db = this
+	console.log("!~~~! Deleting videos where title like " + like)
+	var before = 0
+	var videoIds = {}
+
+	var deleteVideos = function() {
+		console.log("Entering deleteVideos")
+		for (var i = 0; i < videoIds.length; i++) {
+			var stmt1 = db.db.prepare("DELETE FROM videos WHERE id = ? " +
+				"AND type = ?", [videoIds[i]["id"], videoIds[i]["type"]])
+			var stmt2 = db.db.prepare("DELETE FROM video_stats WHERE id = ? AND type = ?", [videoIds[i]["id"], videoIds[i]["type"]])
+
+			stmt1.run()
+			stmt2.run()
+		}
+		stmt1.finalize()
+		stmt2.finalize()
+		callback(before)
+	}
+
+	var getVideoIds = function() {
+		console.log("Entering videoIds")
+		db.db.all("SELECT id, type FROM videos WHERE title LIKE ? AND flags = 0", (like), function(err, rows) {
+			if (err)
+				return
+			videoIds = rows
+			deleteVideos()
+		})
+	}
+
+	var start = function() {
+		console.log("Entering start")
+		db.getVideosCount(function(num) {
+			before = num
+			getVideoIds()
+		})
+	}
+
+	start()
+};
+
 Database.prototype.insertUser = function(username) {
 	var stmt = this.db.prepare("INSERT OR IGNORE INTO users VALUES (?, 'false', 'false')", [username])
 	stmt.run()
@@ -63,6 +105,16 @@ Database.prototype.insertVideo = function(site, vid, title, dur, nick) {
 
 	stmt2.run()
 	stmt2.finalize()
+};
+
+Database.prototype.getVideosCount = function(callback) {
+	this.db.get("SELECT count(*) AS count FROM videos", function(err, row) {
+		if (err) {
+			console.log(err)
+			return
+		}
+		callback(row["count"])
+	})
 };
 
 Database.prototype.getQuote = function(nick, callback) {
