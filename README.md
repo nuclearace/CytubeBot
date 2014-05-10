@@ -27,6 +27,9 @@ Commands
 - `$delete username [all | n]` Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video.
 - `$add link` Adds link, requires mod because of potential for media limit abuse.
 - `$choose (choice1 choice2...)` Chooses a random item from the choices given.
+- `translate [[bb] | [aa>bb] | [aa->bb]] string`
+    Translates the given string from aa, which defaults to detecting the language, to bb, which defaults to en, using Microsoft Translate.
+    The languages aa and bb must be specified as an ISO two letter language code. Requires Microsoft Translate api. See  See http://www.microsofttranslator.com/dev/ and http://msdn.microsoft.com/en-us/library/hh454950.aspx 
 
 
 Custom Commands
