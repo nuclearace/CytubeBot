@@ -387,8 +387,8 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 		}
 
 		if (type === "yt" && bot.youtubeapi) {
-			api.APICall(id, "youtubelookup", bot.youtubeapi, function(err, vidInfo) {
-				if (err !== true) {
+			api.APICall(id, "youtubelookup", bot.youtubeapi, function(status, vidInfo) {
+				if (status !== true) {
 					bot.sendChatMsg("Invaled video: " + id)
 					callback(true, uid)
 					return

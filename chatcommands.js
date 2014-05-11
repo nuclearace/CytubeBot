@@ -255,7 +255,7 @@ var chatHandlers = {
 	// https://www.youtube.com/watch?v=O1adNgZl_3Q
 	"squee": function(bot, username, data) {
 		var squeeString = ""
-		if (((new Date().getTime() - bot.timeSinceLastSquee) / 1000 < 120) || !bot.doneInit)
+		if (((new Date().getTime() - bot.timeSinceLastSquee) / 1000 < 120) || !bot.doneInit || bot.stats["muted"])
 			return
 
 		for (var i in bot.userlist) {
