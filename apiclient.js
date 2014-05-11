@@ -1,4 +1,5 @@
 var http = require("http")
+var https = require("https")
 var domain = require("domain")
 var wolfram = require("wolfram-alpha")
 var Cleverbot = require("cleverbot-node")
@@ -140,6 +141,46 @@ var APIs = {
 				}
 				callback(data)
 			})
+		})
+	},
+
+	"youtubelookup": function(id, apiKey, callback) {
+		console.log("!~~~! Looking up youtube info for: " + id)
+		var params = [
+			"part=" + "id,snippet,contentDetails,status",
+			"id=" + id,
+			"key=" + apiKey
+		].join("&")
+
+		var options = {
+			host: "www.googleapis.com",
+			port: 443,
+			path: "/youtube/v3/videos?" + params,
+			method: "GET",
+			dataType: "jsonp",
+			timeout: 1000
+		}
+
+		urlRetrieve(https, options, function(status, data) {
+			if (status !== 200) {
+				callback(status, null)
+				return
+			}
+
+			data = JSON.parse(data)
+			console.log(data["items"][0]["contentDetails"])
+			if (data.pageInfo.totalResults !== 1) {
+				callback("Video not found", null)
+				return
+			}
+
+			var vidInfo = {
+				id: data["items"][0]["id"],
+				contentDetails: data["items"][0]["contentDetails"],
+				status: data["items"][0]["status"]
+			}
+
+			callback(true, vidInfo)
 		})
 	}
 }
