@@ -1,7 +1,7 @@
 var http = require("http")
 var https = require("https")
 var domain = require("domain")
-var wolfram = require("wolfram-alpha")
+var Wolfram = require("wolfram-alpha")
 var Cleverbot = require("cleverbot-node")
 var WunderNodeClient = require("wundernode")
 var MsTranslator = require('mstranslator')
@@ -31,7 +31,7 @@ var APIs = {
 	},
 
 	wolfram: function(query, apikey, callback) {
-		var client = wolfram.createClient(apikey);
+		var client = Wolfram.createClient(apikey);
 		client.query(query, function(err, result) {
 			if (err) throw err
 			callback(result)
