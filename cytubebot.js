@@ -397,11 +397,17 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 				var blocked = false
 				var allowed = {}
 				var shouldDelete = false
+				
 				try {
-					allowed = vidInfo["contentDetails"]["regionRestriction"]["allowed"]
 					blocked = vidInfo["contentDetails"]["regionRestriction"]["blocked"]
 				} catch (e) {
 					blocked = false
+				}
+
+				try {
+					allowed = vidInfo["contentDetails"]["regionRestriction"]["allowed"]
+				} catch (e) {
+					allowed = false
 				}
 
 				if (bot.deleteIfBlockedIn) {

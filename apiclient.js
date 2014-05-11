@@ -168,6 +168,7 @@ var APIs = {
 			}
 
 			data = JSON.parse(data)
+			console.log(data["items"][0]["contentDetails"])
 			if (data.pageInfo.totalResults !== 1) {
 				callback("Video not found", null)
 				return
