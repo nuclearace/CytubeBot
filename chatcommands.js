@@ -365,7 +365,7 @@ var chatHandlers = {
 
 	"deletevideos": function(bot, username, data) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank < 5)
+		if (rank <= 5)
 			return
 
 		bot.deleteVideosFromDatabase(data)
