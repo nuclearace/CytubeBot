@@ -167,7 +167,7 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 };
 
 CytubeBot.prototype.handleChangeMedia = function(data) {
-	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia) {
+	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia && this.playlist) {
 		var id = this.currentMedia["id"]
 		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
 		var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
