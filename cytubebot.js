@@ -113,6 +113,13 @@ CytubeBot.prototype.deleteVideo = function(uid) {
 	this.socket.emit("delete", uid)
 };
 
+CytubeBot.prototype.deleteVideosFromDatabase = function(like) {
+	var bot = this
+	this.db.deleteVideos(like, function(num) {
+		bot.sendChatMsg("Deleted: " + num + " videos")
+	})
+};
+
 CytubeBot.prototype.getQuote = function(nick) {
 	var bot = this
 	this.db.getQuote(nick, function(row) {
@@ -160,7 +167,7 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 };
 
 CytubeBot.prototype.handleChangeMedia = function(data) {
-	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia) {
+	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia && this.playlist) {
 		var id = this.currentMedia["id"]
 		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
 		var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
@@ -249,9 +256,8 @@ CytubeBot.prototype.handlePlaylist = function(playlist) {
 	this.playlist = playlist
 	for (var i in playlist) {
 		this.validateVideo(playlist[i], function(block, uid) {
-			if (block) {
+			if (block)
 				bot.deleteVideo(uid)
-			}
 		})
 	}
 };
