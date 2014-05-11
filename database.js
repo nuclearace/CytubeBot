@@ -53,7 +53,6 @@ Database.prototype.deleteVideos = function(like, callback) {
 	}
 
 	var deleteVideos = function() {
-		console.log("Entering deleteVideos")
 		for (var i = 0; i < videoIds.length; i++) {
 			var stmt1 = db.db.prepare("DELETE FROM videos WHERE id = ? " +
 				"AND type = ?", [videoIds[i]["id"], videoIds[i]["type"]])
@@ -62,13 +61,10 @@ Database.prototype.deleteVideos = function(like, callback) {
 			stmt1.run()
 			stmt2.run()
 		}
-		stmt1.finalize()
-		stmt2.finalize()
 		getAfter()
 	}
 
 	var getVideoIds = function() {
-		console.log("Entering videoIds")
 		db.db.all("SELECT id, type FROM videos WHERE title LIKE ? AND flags = 0", (like), function(err, rows) {
 			if (err)
 				return
@@ -78,7 +74,6 @@ Database.prototype.deleteVideos = function(like, callback) {
 	}
 
 	var start = function() {
-		console.log("Entering start")
 		db.getVideosCount(function(num) {
 			before = num
 			getVideoIds()
