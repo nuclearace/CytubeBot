@@ -74,14 +74,12 @@ var utilHandlers = {
 	"userHasPermission": function(bot, permissionData) {
 		var name = permissionData["name"]
 		var permission = permissionData["permission"]
-		if (!bot.stats["hybridMods"])
-			return {
-				hasPermission: false
-			}
-
 		var returnData = {
 			hasPermission: false
 		}
+
+		if (!bot.stats["hybridMods"])
+			return returnData
 
 		if (name in bot.stats["hybridMods"]) {
 			for (var i = 0; i < bot.stats["hybridMods"][name].length; i++) {
@@ -96,7 +94,6 @@ var utilHandlers = {
 				} else if (bot.stats["hybridMods"][name][i] === "ALL") { // User has all
 					returnData = {
 						hasPermission: true,
-						hasAll: true
 					}
 
 					return returnData

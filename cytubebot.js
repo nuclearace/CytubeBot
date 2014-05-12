@@ -239,8 +239,6 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 		if (permission === "ALL") {
 			this.stats["hybridMods"][name] = []
 			this.stats["hybridMods"][name] = [permission]
-		} else if (!hasPermission["hasAll"]) {
-			this.stats["hybridMods"][name].push(permission)
 		}
 	}
 
