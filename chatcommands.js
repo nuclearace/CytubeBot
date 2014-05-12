@@ -383,16 +383,11 @@ var chatHandlers = {
 		var match = data.trim().match(/^((\+|\-)((ALL)|(.*)) )?(.*)$/)
 		var permission = match[1]
 		var name = match[6].toLowerCase()
-		
+
 		if (permission)
 			permission = permission.toUpperCase()
 
-		if (permission === "ALL") {
-			bot.handleHybridModPermissionChange(permission, name)
-		} else {
-			bot.handleHybridModPermissionChange(permission, name)
-		}
-
+		bot.handleHybridModPermissionChange(permission, name)
 	}
 }
 
