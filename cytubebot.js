@@ -40,7 +40,8 @@ module.exports = {
 		this.doneInit = false
 		this.stats = {
 			"managing": false,
-			"muted": false
+			"muted": false,
+			"hybridMods": {}
 		}
 
 		this.readPersistentSettings(function(err) {
@@ -321,10 +322,20 @@ CytubeBot.prototype.handleUserlist = function(userlistData) {
 CytubeBot.prototype.readPersistentSettings = function(callback) {
 	var bot = this
 	fs.readFile("persistent.json", function(err, data) {
-		if (err)
+		if (err) {
 			return callback(true)
-		bot.stats = JSON.parse(data)
-		console.log("!~~~! Read persistent settings")
+		} else {
+			bot.stats = JSON.parse(data)
+			console.log(bot.stats)
+			console.log("!~~~! Read persistent settings")
+			if (!bot.stats["hybridMods"]) {
+				console.log("adding hybridmods")
+				bot.stats["hybridMods"] = {}
+				bot.writePersistentSettings()
+			}
+			console.log(bot.stats)
+			callback(false)
+		}
 	})
 };
 
