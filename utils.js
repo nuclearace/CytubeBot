@@ -47,7 +47,7 @@ var utilHandlers = {
 
 	"findIndexOfVideoFromUID": function(bot, uid) {
 		for (var i = 0; i < bot.playlist.length; i++) {
-			if (bot.playlist[i]['uid'] == uid)
+			if (bot.playlist[i]['uid'] === uid)
 				return i
 		}
 	},

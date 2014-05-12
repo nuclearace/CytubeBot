@@ -54,14 +54,15 @@ module.exports = {
 
 CytubeBot.prototype.addRandomVideos = function(num) {
 	var bot = this
-	this.db.getVideos(num, function(rows) {
-		for (var i in rows) {
-			var type = rows[i]["type"]
-			var id = rows[i]["id"]
-			var duration = rows[i]["duration_ms"] / 1000
-			bot.addVideo(type, id, duration)
-		}
-	})
+	if (this.db)
+		this.db.getVideos(num, function(rows) {
+			for (var i in rows) {
+				var type = rows[i]["type"]
+				var id = rows[i]["id"]
+				var duration = rows[i]["duration_ms"] / 1000
+				bot.addVideo(type, id, duration)
+			}
+		})
 };
 
 CytubeBot.prototype.addVideo = function(type, id, duration, temp, parsedLink) {
@@ -114,6 +115,9 @@ CytubeBot.prototype.blockVideo = function() {
 CytubeBot.prototype.deleteVideo = function(uid) {
 	console.log("!~~~! Sending delete frame for uid: " + uid)
 	this.socket.emit("delete", uid)
+	if (this.playlist.length === 0 && this.stats["managing"]) {
+		this.addRandomVideos()
+	}
 };
 
 CytubeBot.prototype.deleteVideosFromDatabase = function(like) {
@@ -152,7 +156,7 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 		console.log("### Video is on playlist")
 		console.log("### video is at: " + utils.handle(this, "findIndexOfVideoFromVideo", data))
 		return
-	} else if (!this.playlist) {
+	} else if (this.playlist.length === 0) {
 		this.playlist = [data["item"]]
 	} else {
 		var uid = data["after"]
@@ -170,7 +174,7 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 };
 
 CytubeBot.prototype.handleChangeMedia = function(data) {
-	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia && this.playlist) {
+	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia && this.playlist.length !== 0) {
 		var id = this.currentMedia["id"]
 		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
 		var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
@@ -186,13 +190,16 @@ CytubeBot.prototype.handleDeleteMedia = function(data) {
 	var index = utils.handle(this, "findIndexOfVideoFromUID", data["uid"])
 
 	console.log("### Deleting media at index: " + index)
-	if (typeof index !== undefined)
+	if (typeof index !== undefined) {
 		this.playlist.splice(index, 1)
+		if (this.playlist.length === 0 && this.stats["managing"])
+			bot.addRandomVideos()
+	}
 };
 
 CytubeBot.prototype.handleMediaUpdate = function(data) {
 	console.log("### Current video time: " + data["currentTime"] + " Paused: " + data["paused"])
-	var doSomething = (this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length == 1 && this.stats["managing"];
+	var doSomething = (this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length === 1 && this.stats["managing"];
 	if (doSomething) {
 		console.log("Shit son, we gotta do something, the video is ending")
 		this.addRandomVideos()
@@ -257,6 +264,14 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 CytubeBot.prototype.handlePlaylist = function(playlist) {
 	var bot = this
 	this.playlist = playlist
+	if (this.playlist.length === 0 && this.stats["managing"]) {
+		if (this.doneInit) {
+			this.addRandomVideos()
+		} else {
+			this.addRandomVideos()
+		}
+	}
+
 	for (var i in playlist) {
 		this.validateVideo(playlist[i], function(block, uid) {
 			if (block)
@@ -376,6 +391,9 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 		var rank = 0
 	}
 
+	if (nick.toLowerCase() !== this.username)
+		bot.db.insertVideo(type, id, title, dur, nick)
+
 	this.db.getVideoFlag(type, id, function(row) {
 		if (row["flags"] === 2) {
 			if (rank < 2) {
@@ -397,7 +415,7 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 				var blocked = false
 				var allowed = {}
 				var shouldDelete = false
-				
+
 				try {
 					blocked = vidInfo["contentDetails"]["regionRestriction"]["blocked"]
 				} catch (e) {
@@ -431,9 +449,6 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 			})
 		}
 	})
-
-	if (nick.toLowerCase() !== this.username)
-		bot.db.insertVideo(type, id, title, dur, nick)
 }
 
 CytubeBot.prototype.writePersistentSettings = function() {

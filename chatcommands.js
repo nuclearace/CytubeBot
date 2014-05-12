@@ -361,11 +361,15 @@ var chatHandlers = {
 			bot.stats["managing"] = false
 			bot.writePersistentSettings()
 		}
+
+		if (bot.playlist.length === 0 && bot.stats["managing"])
+			bot.addRandomVideos()
+
 	},
 
 	"deletevideos": function(bot, username, data) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank <= 5)
+		if (rank < 5)
 			return
 
 		bot.deleteVideosFromDatabase(data)
