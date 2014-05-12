@@ -267,7 +267,6 @@ CytubeBot.prototype.handlePlaylist = function(playlist) {
 	if (this.playlist.length === 0 && this.stats["managing"])
 		this.addRandomVideos()
 
-
 	for (var i in playlist) {
 		this.validateVideo(playlist[i], function(block, uid) {
 			if (block)
@@ -294,6 +293,16 @@ CytubeBot.prototype.handleSetTemp = function(data) {
 	var index = utils.handle(this, "findIndexOfVideoFromUID", uid)
 	console.log("### Setting temp: " + temp + " on video at index " + index)
 	this.playlist[index]["temp"] = temp
+};
+
+CytubeBot.prototype.handleSetUserRank = function(data) {
+	for (var i = 0; i < this.userlist.length; i++) {
+		if (this.userlist[i]["name"].toLowerCase() === data["name"].toLowerCase()) {
+			this.userlist[i]["rank"] = data["rank"]
+			console.log("Setting rank: " + data["rank"] + " on " + data["name"])
+			break
+		}
+	}
 };
 
 CytubeBot.prototype.handleUserLeave = function(user) {

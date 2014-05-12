@@ -58,5 +58,9 @@ Config.load(function(config) {
 		bot.handleSetTemp(data)
 	})
 
+	bot.socket.on("setUserRank", function(data) {
+		bot.handleSetUserRank(data)
+	})
+
 	bot.start();
 });
