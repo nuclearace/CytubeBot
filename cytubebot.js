@@ -216,11 +216,12 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 
 	var change = permission.substring(0, 1)
 	permission = permission.substring(1, permission.length).trim()
+
 	console.log(change)
 	console.log(permission)
 
 	if (!(name in this.stats["hybridMods"]) && change === "+") {
-		this.stats["hybridMods"][name] = [permission]
+		this.stats["hybridMods"][name] = permission
 		this.writePersistentSettings()
 		return
 	}
@@ -232,18 +233,26 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 	var hasPermission = utils.handle(this, "userHasPermission", permissionData)
 
 	if (hasPermission["hasPermission"]) {
+		var permissions = hasPermission["permissions"]
 		if (change === "-") {
-			this.stats["hybridMods"][name].splice(hasPermission["index"], 1)
+			for (var i = 0; i < permissions.length; i++) {
+				console.log(permissions[i])
+				this.stats["hybridMods"][name] = this.stats["hybridMods"][name].replace(permissions[i], "")
+			}
 		}
 	} else if (change === "+") {
 		if (permission === "ALL") {
-			this.stats["hybridMods"][name] = []
-			this.stats["hybridMods"][name] = [permission]
+			this.stats["hybridMods"][name] = ""
+			this.stats["hybridMods"][name] = permission
+		} else {
+			this.stats["hybridMods"][name] += permission
 		}
 	}
 
-	if (this.stats["hybridMods"][name] && this.stats["hybridMods"][name].length === 0)
+	if (this.stats["hybridMods"][name] === "" && this.stats["hybridMods"][name].length === 0) {
+		console.log("deleting user")
 		delete this.stats["hybridMods"][name]
+	}
 
 	this.writePersistentSettings()
 	console.log(this.stats["hybridMods"])

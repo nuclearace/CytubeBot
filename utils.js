@@ -75,31 +75,25 @@ var utilHandlers = {
 		var name = permissionData["name"]
 		var permission = permissionData["permission"]
 		var returnData = {
-			hasPermission: false
+			hasPermission: false,
+			permissions: []
 		}
 
 		if (!bot.stats["hybridMods"])
 			return returnData
 
 		if (name in bot.stats["hybridMods"]) {
-			for (var i = 0; i < bot.stats["hybridMods"][name].length; i++) {
-				if (bot.stats["hybridMods"][name][i] === permission) {
-					console.log("user has permission userHasPermission")
-					returnData = {
-						hasPermission: true,
-						index: i,
-						hasAll: false
-					}
-					return returnData
-				} else if (bot.stats["hybridMods"][name][i] === "ALL") { // User has all
-					returnData = {
-						hasPermission: true,
-					}
-
-					return returnData
+			for (var i = 0; i < permission.length; i++) {
+				if (bot.stats["hybridMods"][name].match(permission[i])) {
+					returnData["permissions"].push(permission[i])
 				}
 			}
-			return returnData
+			if (returnData["permissions"].length !== 0) {
+				returnData["hasPermission"] = true
+				return returnData
+			} else {
+				return returnData
+			}
 		} else { // User is not in list
 			console.log("user is not in hybridmod list userHasPermission")
 			return returnData

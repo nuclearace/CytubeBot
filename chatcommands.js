@@ -392,8 +392,9 @@ var chatHandlers = {
 		// 		name = name.split(" ")[1].toLowerCase()
 		// 	}
 		// }
-		console.log(permission)
-		console.log(name)
+		// console.log(permission)
+		// console.log(name)
+		
 		if (permission)
 			permission = permission.toUpperCase()
 
