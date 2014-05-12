@@ -396,10 +396,10 @@ var chatHandlers = {
 		console.log(name)
 		if (permission)
 			permission = permission.toUpperCase()
+
 		if (permission === "ALL") {
 			bot.handleHybridModPermissionChange(permission, name)
 		} else {
-			permission = permission
 			bot.handleHybridModPermissionChange(permission, name)
 		}
 

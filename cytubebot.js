@@ -218,7 +218,7 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 	permission = permission.substring(1, permission.length).trim()
 	console.log(change)
 	console.log(permission)
-	// Individual permission
+
 	if (!(name in this.stats["hybridMods"]) && change === "+") {
 		this.stats["hybridMods"][name] = [permission]
 		this.writePersistentSettings()
