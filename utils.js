@@ -95,7 +95,6 @@ var utilHandlers = {
 				return returnData
 			}
 		} else { // User is not in list
-			console.log("user is not in hybridmod list userHasPermission")
 			return returnData
 		}
 	},

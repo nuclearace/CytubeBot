@@ -217,9 +217,6 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 	var change = permission.substring(0, 1)
 	permission = permission.substring(1, permission.length).trim()
 
-	console.log(change)
-	console.log(permission)
-
 	if (!(name in this.stats["hybridMods"]) && change === "+") {
 		this.stats["hybridMods"][name] = permission
 		this.writePersistentSettings()
@@ -236,7 +233,6 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 		var permissions = hasPermission["permissions"]
 		if (change === "-") {
 			for (var i = 0; i < permissions.length; i++) {
-				console.log(permissions[i])
 				this.stats["hybridMods"][name] = this.stats["hybridMods"][name].replace(permissions[i], "")
 			}
 		}
@@ -249,10 +245,8 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 		}
 	}
 
-	if (this.stats["hybridMods"][name] === "" && this.stats["hybridMods"][name].length === 0) {
-		console.log("deleting user")
+	if (this.stats["hybridMods"][name] === "" && this.stats["hybridMods"][name].length === 0)
 		delete this.stats["hybridMods"][name]
-	}
 
 	this.writePersistentSettings()
 	console.log(this.stats["hybridMods"])
@@ -409,7 +403,8 @@ CytubeBot.prototype.sendChatMsg = function(message) {
 };
 
 CytubeBot.prototype.sendHybridModPermissions = function(name) {
-	// body...
+	if (name)
+		this.sendChatMsg(name + ": " + this.stats["hybridMods"][name])
 };
 
 CytubeBot.prototype.sendStatus = function() {

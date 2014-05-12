@@ -383,17 +383,6 @@ var chatHandlers = {
 		var match = data.trim().match(/^((\+|\-)((ALL)|(.*)) )?(.*)$/)
 		var permission = match[1]
 		var name = match[6].toLowerCase()
-
-		// The regex isn't perfect and doesn't work right if you have things
-		// after where the name should be
-		// if (!permission) {
-		// 	if (name) {
-		// 		permission = name.split(" ")[0]
-		// 		name = name.split(" ")[1].toLowerCase()
-		// 	}
-		// }
-		// console.log(permission)
-		// console.log(name)
 		
 		if (permission)
 			permission = permission.toUpperCase()
