@@ -115,9 +115,9 @@ CytubeBot.prototype.blockVideo = function() {
 CytubeBot.prototype.deleteVideo = function(uid) {
 	console.log("!~~~! Sending delete frame for uid: " + uid)
 	this.socket.emit("delete", uid)
-	if (this.playlist.length === 0 && this.stats["managing"]) {
+	if (this.playlist.length === 0 && this.stats["managing"])
 		this.addRandomVideos()
-	}
+
 };
 
 CytubeBot.prototype.deleteVideosFromDatabase = function(like) {
@@ -199,7 +199,7 @@ CytubeBot.prototype.handleDeleteMedia = function(data) {
 
 CytubeBot.prototype.handleMediaUpdate = function(data) {
 	console.log("### Current video time: " + data["currentTime"] + " Paused: " + data["paused"])
-	var doSomething = (this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length === 1 && this.stats["managing"];
+	var doSomething = (this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length === 1 && this.stats["managing"]
 	if (doSomething) {
 		console.log("Shit son, we gotta do something, the video is ending")
 		this.addRandomVideos()
@@ -264,13 +264,9 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 CytubeBot.prototype.handlePlaylist = function(playlist) {
 	var bot = this
 	this.playlist = playlist
-	if (this.playlist.length === 0 && this.stats["managing"]) {
-		if (this.doneInit) {
-			this.addRandomVideos()
-		} else {
-			this.addRandomVideos()
-		}
-	}
+	if (this.playlist.length === 0 && this.stats["managing"])
+		this.addRandomVideos()
+
 
 	for (var i in playlist) {
 		this.validateVideo(playlist[i], function(block, uid) {
