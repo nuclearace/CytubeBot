@@ -245,7 +245,7 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 		}
 	}
 
-	if (this.stats["hybridMods"][name] === "" && this.stats["hybridMods"][name].length === 0)
+	if (this.stats["hybridMods"][name] === "")
 		delete this.stats["hybridMods"][name]
 
 	this.writePersistentSettings()
