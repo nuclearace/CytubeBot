@@ -92,6 +92,8 @@ var utilHandlers = {
 				returnData["hasPermission"] = true
 				return returnData
 			} else {
+				if (bot.stats["hybridMods"][name].match("ALL"))
+					returnData["hasPermission"] = true
 				return returnData
 			}
 		} else { // User is not in list
