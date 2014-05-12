@@ -174,6 +174,16 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 	})
 };
 
+CytubeBot.prototype.handleAddUser = function(data) {
+	var inList = utils.handle(this, "userInUserlist", data["name"])
+	this.db.insertUser(data["name"])
+	if (!inList) {
+		this.userlist.push(data);
+		console.log("Added User: " + data["name"])
+		console.log("Userlist has : " + this.userlist.length + " users")
+	}
+};
+
 CytubeBot.prototype.handleChangeMedia = function(data) {
 	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia && this.playlist.length !== 0) {
 		var id = this.currentMedia["id"]
@@ -198,6 +208,49 @@ CytubeBot.prototype.handleDeleteMedia = function(data) {
 	}
 };
 
+CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name) {
+	if (!permission) {
+		this.sendHybridModPermissions(name)
+		return
+	}
+
+	var change = permission.substring(0, 1)
+	permission = permission.substring(1, permission.length).trim()
+	console.log(change)
+	console.log(permission)
+	// Individual permission
+	if (!(name in this.stats["hybridMods"]) && change === "+") {
+		this.stats["hybridMods"][name] = [permission]
+		this.writePersistentSettings()
+		return
+	}
+
+	var permissionData = {
+		permission: permission,
+		name: name
+	}
+	var hasPermission = utils.handle(this, "userHasPermission", permissionData)
+
+	if (hasPermission["hasPermission"]) {
+		if (change === "-") {
+			this.stats["hybridMods"][name].splice(hasPermission["index"], 1)
+		}
+	} else if (change === "+") {
+		if (permission === "ALL") {
+			this.stats["hybridMods"][name] = []
+			this.stats["hybridMods"][name] = [permission]
+		} else if (!hasPermission["hasAll"]) {
+			this.stats["hybridMods"][name].push(permission)
+		}
+	}
+
+	if (this.stats["hybridMods"][name] && this.stats["hybridMods"][name].length === 0)
+		delete this.stats["hybridMods"][name]
+
+	this.writePersistentSettings()
+	console.log(this.stats["hybridMods"])
+};
+
 CytubeBot.prototype.handleMediaUpdate = function(data) {
 	console.log("### Current video time: " + data["currentTime"] + " Paused: " + data["paused"])
 	var doSomething = (this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length === 1 && this.stats["managing"]
@@ -220,16 +273,6 @@ CytubeBot.prototype.handleMoveMedia = function(data) {
 	this.playlist.splice(afterIndex + 1, 0, removedVideo[0])
 
 	console.log("### Moving video from: " + fromIndex + " after " + afterIndex)
-};
-
-CytubeBot.prototype.handleAddUser = function(data) {
-	var inList = utils.handle(this, "userInUserlist", data["name"])
-	this.db.insertUser(data["name"])
-	if (!inList) {
-		this.userlist.push(data);
-		console.log("Added User: " + data["name"])
-		console.log("Userlist has : " + this.userlist.length + " users")
-	}
 };
 
 CytubeBot.prototype.handleChatMsg = function(data) {
@@ -356,6 +399,10 @@ CytubeBot.prototype.sendChatMsg = function(message) {
 			})
 		}
 	}
+};
+
+CytubeBot.prototype.sendHybridModPermissions = function(name) {
+	// body...
 };
 
 CytubeBot.prototype.sendStatus = function() {

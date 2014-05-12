@@ -59,6 +59,56 @@ var utilHandlers = {
 		}
 	},
 
+	"findVideosAddedByUser": function(bot, name) {
+		if (!name)
+			return
+		var returnUIDs = []
+		for (var i = 0; i < bot.playlist.length; i++) {
+			if (bot.playlist[i]["queueby"].toLowerCase() === name.toLowerCase()) {
+				returnUIDs.push(bot.playlist[i]["uid"])
+			}
+		}
+		return returnUIDs
+	},
+
+	"userHasPermission": function(bot, permissionData) {
+		var name = permissionData["name"]
+		var permission = permissionData["permission"]
+		if (!bot.stats["hybridMods"])
+			return {
+				hasPermission: false
+			}
+
+		var returnData = {
+			hasPermission: false
+		}
+
+		if (name in bot.stats["hybridMods"]) {
+			for (var i = 0; i < bot.stats["hybridMods"][name].length; i++) {
+				if (bot.stats["hybridMods"][name][i] === permission) {
+					console.log("user has permission userHasPermission")
+					returnData = {
+						hasPermission: true,
+						index: i,
+						hasAll: false
+					}
+					return returnData
+				} else if (bot.stats["hybridMods"][name][i] === "ALL") { // User has all
+					returnData = {
+						hasPermission: true,
+						hasAll: true
+					}
+
+					return returnData
+				}
+			}
+			return returnData
+		} else { // User is not in list
+			console.log("user is not in hybridmod list userHasPermission")
+			return returnData
+		}
+	},
+
 	"parseMediaLink": function(bot, url) {
 		if (typeof url != "string") {
 			return {
@@ -171,18 +221,6 @@ var utilHandlers = {
 			id: null,
 			type: null
 		}
-	},
-
-	"findVideosAddedByUser": function(bot, name) {
-		if (!name)
-			return
-		var returnUIDs = []
-		for (var i = 0; i < bot.playlist.length; i++) {
-			if (bot.playlist[i]["queueby"].toLowerCase() === name.toLowerCase()) {
-				returnUIDs.push(bot.playlist[i]["uid"])
-			}
-		}
-		return returnUIDs
 	}
 }
 

@@ -373,6 +373,36 @@ var chatHandlers = {
 			return
 
 		bot.deleteVideosFromDatabase(data)
+	},
+
+	"permissions": function(bot, username, data) {
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+		if (rank < 3)
+			return
+
+		var match = data.trim().match(/^((\+|\-)((ALL)|(.*)) )?(.*)$/)
+		var permission = match[1]
+		var name = match[6].toLowerCase()
+
+		// The regex isn't perfect and doesn't work right if you have things
+		// after where the name should be
+		// if (!permission) {
+		// 	if (name) {
+		// 		permission = name.split(" ")[0]
+		// 		name = name.split(" ")[1].toLowerCase()
+		// 	}
+		// }
+		console.log(permission)
+		console.log(name)
+		if (permission)
+			permission = permission.toUpperCase()
+		if (permission === "ALL") {
+			bot.handleHybridModPermissionChange(permission, name)
+		} else {
+			permission = permission
+			bot.handleHybridModPermissionChange(permission, name)
+		}
+
 	}
 }
 
