@@ -277,9 +277,9 @@ CytubeBot.prototype.handleMoveMedia = function(data) {
 };
 
 CytubeBot.prototype.handleChatMsg = function(data) {
-	var username = data.username;
-	var msg = data.msg;
-	var time = data.time;
+	var username = data.username
+	var msg = data.msg
+	var time = data.time
 
 	msg = msg.replace(/&#39;/g, "'")
 	msg = msg.replace(/&amp;/g, "&")
@@ -299,7 +299,7 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 		return
 
 	if (msg.indexOf("$") === 0 && username != this.username && this.doneInit) {
-		commands.handle(this, username, msg);
+		commands.handle(this, username, msg)
 		return
 	}
 
@@ -327,7 +327,7 @@ CytubeBot.prototype.handleNeedPassword = function(data) {
 		this.roomPassword = null
 	} else {
 		console.log("\n!~~~! No room password in config.json or password is wrong. Killing bot!\n")
-		process.exit(1);
+		process.exit(1)
 	}
 };
 
@@ -353,7 +353,7 @@ CytubeBot.prototype.handleSetUserRank = function(data) {
 CytubeBot.prototype.handleUserLeave = function(user) {
 	var index = utils.handle(this, "findUser", user)
 	if (index) {
-		this.userlist.splice(index, 1);
+		this.userlist.splice(index, 1)
 		console.log("Removed user: " + user)
 		console.log("Userlist has : " + bot.userlist.length + " users")
 	}
@@ -420,10 +420,10 @@ CytubeBot.prototype.sendStatus = function() {
 
 CytubeBot.prototype.start = function() {
 	var bot = this
-	this.socket.emit("initChannelCallbacks");
+	this.socket.emit("initChannelCallbacks")
 	this.socket.emit("joinChannel", {
 		name: this.room
-	});
+	})
 	this.socket.emit("login", {
 		name: this.username,
 		pw: this.pw

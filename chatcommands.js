@@ -39,8 +39,14 @@ var chatHandlers = {
 	},
 
 	"mute": function(bot, username) {
+		var permissionData = {
+			permission: "M",
+			name: username.toLowerCase()
+		}
+		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
+
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank >= 2 && !bot.stats["muted"]) {
+		if ((rank >= 2 && !bot.stats["muted"]) || hasPermission["hasPermission"] && !bot.stats["muted"]) {
 			bot.stats["muted"] = !bot.stats["muted"]
 			console.log(username + " muted bot")
 			bot.writePersistentSettings()
@@ -48,8 +54,13 @@ var chatHandlers = {
 	},
 
 	"unmute": function(bot, username) {
+		var permissionData = {
+			permission: "M",
+			name: username.toLowerCase()
+		}
+		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank >= 2 && bot.stats["muted"]) {
+		if (rank >= 2 && bot.stats["muted"] || hasPermission["hasPermission"] && bot.stats["muted"]) {
 			bot.stats["muted"] = !bot.stats["muted"]
 			console.log(username + " unmuted bot")
 			bot.writePersistentSettings()
@@ -377,15 +388,16 @@ var chatHandlers = {
 
 	"permissions": function(bot, username, data) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank < 3)
-			return
 
 		var match = data.trim().match(/^((\+|\-)((ALL)|(.*)) )?(.*)$/)
 		var permission = match[1]
 		var name = match[6].toLowerCase()
 
-		if (permission)
+		if (permission && rank < 3) {
+			return
+		} else if (permission) {
 			permission = permission.toUpperCase()
+		}
 
 		bot.handleHybridModPermissionChange(permission, name)
 	}
