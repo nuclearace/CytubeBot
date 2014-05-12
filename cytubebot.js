@@ -2,6 +2,7 @@ var io = require("socket.io-client")
 var commands = require("./chatcommands")
 var utils = require("./utils")
 var Database = require("./database")
+var api = require("./apiclient")
 var fs = require("fs")
 
 module.exports = {
@@ -26,6 +27,8 @@ module.exports = {
 		this.weatherunderground = config["weatherunderground"]
 		this.mstranslateclient = config["mstranslateclient"]
 		this.mstranslatesecret = config["mstranslatesecret"]
+		this.youtubeapi = config["youtubev3"]
+		this.deleteIfBlockedIn = config["deleteIfBlockedIn"].toUpperCase()
 		this.firstChangeMedia = true
 		this.timeSinceLastWeather = 0
 		this.timeSinceLastSquee = 0
@@ -217,7 +220,7 @@ CytubeBot.prototype.handleAddUser = function(data) {
 	if (!inList) {
 		this.userlist.push(data);
 		console.log("Added User: " + data["name"])
-		console.log("Userlist has : " + bot.userlist.length + " users")
+		console.log("Userlist has : " + this.userlist.length + " users")
 	}
 };
 
@@ -381,6 +384,51 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 				return
 			}
 			return
+		}
+
+		if (type === "yt" && bot.youtubeapi) {
+			api.APICall(id, "youtubelookup", bot.youtubeapi, function(status, vidInfo) {
+				if (status !== true) {
+					bot.sendChatMsg("Invaled video: " + id)
+					callback(true, uid)
+					return
+				}
+
+				var blocked = false
+				var allowed = {}
+				var shouldDelete = false
+				
+				try {
+					blocked = vidInfo["contentDetails"]["regionRestriction"]["blocked"]
+				} catch (e) {
+					blocked = false
+				}
+
+				try {
+					allowed = vidInfo["contentDetails"]["regionRestriction"]["allowed"]
+				} catch (e) {
+					allowed = false
+				}
+
+				if (bot.deleteIfBlockedIn) {
+					if (allowed && allowed.indexOf(bot.deleteIfBlockedIn) === -1) {
+						shouldDelete = true
+					} else if (blocked && blocked.indexOf(bot.deleteIfBlockedIn) !== -1) {
+						shouldDelete = true
+					}
+				}
+
+				if (!vidInfo["status"]["embeddable"]) {
+					bot.sendChatMsg("Embedding disabled: " + id)
+					callback(true, uid)
+					return
+				} else if (shouldDelete) {
+					bot.sendChatMsg("Video blocked in: " + bot.deleteIfBlockedIn +
+						" id: " + id)
+					callback(true, uid)
+					return
+				}
+			})
 		}
 	})
 

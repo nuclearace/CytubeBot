@@ -162,7 +162,10 @@ Database.prototype.getVideoFlag = function(type, id, callback) {
 	stmt = this.db.prepare("SELECT flags FROM videos videos WHERE type = ? AND id = ?", [type, id])
 
 	stmt.get(function(err, row) {
-		if (row)
+		if (row) {
 			callback(row)
+		} else {
+			callback(0)
+		}
 	})
 };
