@@ -247,7 +247,7 @@ var chatHandlers = {
 			return
 
 		var id = bot.currentMedia["id"]
-		var uid = utils.handle(bot, "findIndexOfVideoFromID", id)
+		var uid = utils.handle(bot, "findUIDOfVideoFromID", id)
 
 		bot.deleteVideo(uid)
 	},
