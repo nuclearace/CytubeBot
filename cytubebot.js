@@ -326,14 +326,11 @@ CytubeBot.prototype.readPersistentSettings = function(callback) {
 			return callback(true)
 		} else {
 			bot.stats = JSON.parse(data)
-			console.log(bot.stats)
-			console.log("!~~~! Read persistent settings")
 			if (!bot.stats["hybridMods"]) {
-				console.log("adding hybridmods")
 				bot.stats["hybridMods"] = {}
 				bot.writePersistentSettings()
 			}
-			console.log(bot.stats)
+			console.log("!~~~! Read persistent settings")
 			callback(false)
 		}
 	})
