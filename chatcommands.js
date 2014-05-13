@@ -4,6 +4,8 @@ var custom = require("./custom")
 
 var chatHandlers = {
 
+	// See readme for chat commands
+	
 	"anagram": function(bot, username, msg) {
 		if ((new Date().getTime() - bot.timeSinceLastAnagram) / 1000 < 5) {
 			console.log("!~~~! Anagram cooldown")

@@ -13,6 +13,7 @@ module.exports = {
 	}
 }
 
+// Constructor
 	function CytubeBot(config) {
 		var bot = this
 		this.socket = io.connect(config["serverio"])
@@ -53,6 +54,8 @@ module.exports = {
 		this.db = Database.init();
 	};
 
+// Adds random videos using the database
+// num - Number of random videos to add
 CytubeBot.prototype.addRandomVideos = function(num) {
 	var bot = this
 	if (this.db)
@@ -66,6 +69,11 @@ CytubeBot.prototype.addRandomVideos = function(num) {
 		})
 };
 
+// Sends a queue frame to the server
+// type - the type of media ie. yt
+// duration - the duration of the video, in seconds. Not really used atm
+// temp - whether to add the media as temporary or not
+// parsedLink - param used when $add is called
 CytubeBot.prototype.addVideo = function(type, id, duration, temp, parsedLink) {
 	if (!temp) {
 		temp = false
@@ -93,6 +101,8 @@ CytubeBot.prototype.addVideo = function(type, id, duration, temp, parsedLink) {
 	}
 };
 
+// Used by $blacklist
+// Blacklists the current video
 CytubeBot.prototype.blacklistVideo = function() {
 	var type = this.currentMedia["type"]
 	var id = this.currentMedia["id"]
@@ -102,6 +112,8 @@ CytubeBot.prototype.blacklistVideo = function() {
 	this.db.blacklistVideo(type, id, flags, title)
 };
 
+// Used by $autodelete
+// Makes it so the current video cannot be added by non-mods
 CytubeBot.prototype.blockVideo = function() {
 	var type = this.currentMedia["type"]
 	var id = this.currentMedia["id"]
@@ -113,6 +125,9 @@ CytubeBot.prototype.blockVideo = function() {
 	this.deleteVideo(uid)
 };
 
+// Used by various methods
+// Sends a delete frame to the server
+// uid - The uid of the video to delete
 CytubeBot.prototype.deleteVideo = function(uid) {
 	console.log("!~~~! Sending delete frame for uid: " + uid)
 	this.socket.emit("delete", uid)
@@ -121,6 +136,10 @@ CytubeBot.prototype.deleteVideo = function(uid) {
 
 };
 
+// WARNING - This is experimental
+// Deletes videos from the database that are like like
+// like - What to match. Example: %skrillex% will delete all videos
+// with the word "skrillex" in it
 CytubeBot.prototype.deleteVideosFromDatabase = function(like) {
 	var bot = this
 	this.db.deleteVideos(like, function(num) {
@@ -128,6 +147,10 @@ CytubeBot.prototype.deleteVideosFromDatabase = function(like) {
 	})
 };
 
+// Used by $quote
+// Fetches a quote from database. If no nick is given, it will
+// get a random quote.
+// nick - the nickname of the user to get quotes from
 CytubeBot.prototype.getQuote = function(nick) {
 	var bot = this
 	this.db.getQuote(nick, function(row) {
@@ -151,6 +174,8 @@ CytubeBot.prototype.getQuote = function(nick) {
 	})
 };
 
+// Handles queue frams from the server
+// data - the queue data
 CytubeBot.prototype.handleAddMedia = function(data) {
 	var bot = this
 	if (utils.handle(this, "isOnPlaylist", data)) {
@@ -174,6 +199,8 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 	})
 };
 
+// Handles addUser frames from the server
+// data - addUser data
 CytubeBot.prototype.handleAddUser = function(data) {
 	var inList = utils.handle(this, "userInUserlist", data["name"])
 	this.db.insertUser(data["name"])
@@ -184,11 +211,16 @@ CytubeBot.prototype.handleAddUser = function(data) {
 	}
 };
 
+// Handles changeMedia frames from the server
+// If the bot is managing the playlist and the last video was not
+// temporary it sends a delete frame.
+// data - changeMedia data
 CytubeBot.prototype.handleChangeMedia = function(data) {
 	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia && this.playlist.length !== 0) {
 		var temp = false
 		var id = this.currentMedia["id"]
 		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
+
 		// If typeof uid is undefined, the server probably sent a
 		// delete frame before the changeMedia frame
 		// So our playlist doesn't contain the current media anymore 
@@ -202,6 +234,8 @@ CytubeBot.prototype.handleChangeMedia = function(data) {
 	console.log("### Current Video now " + this.currentMedia["title"])
 };
 
+// Handles delete frames from the server
+// data - delete data
 CytubeBot.prototype.handleDeleteMedia = function(data) {
 	var index = utils.handle(this, "findIndexOfVideoFromUID", data["uid"])
 
@@ -213,6 +247,11 @@ CytubeBot.prototype.handleDeleteMedia = function(data) {
 	}
 };
 
+// Used by $permissions
+// Handles a change in hybridMods or calls sendHybridModPermissions if no permission
+// is given.
+// permission - The permission we are changing, or undefined if there is none
+// name - name of the user we want to change permissions for, or look up 
 CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name) {
 	if (!permission) {
 		this.sendHybridModPermissions(name)
@@ -260,6 +299,9 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 	this.writePersistentSettings()
 };
 
+// Handles mediaUpdate frames from the server
+// If we are managing and the playlist only has one item
+// and the video is about to end, we add a random video 
 CytubeBot.prototype.handleMediaUpdate = function(data) {
 	console.log("### Current video time: " + data["currentTime"] + " Paused: " + data["paused"])
 	var doSomething = (this.currentMedia["seconds"] - data["currentTime"]) < 10 && this.playlist.length === 1 && this.stats["managing"]
@@ -269,6 +311,8 @@ CytubeBot.prototype.handleMediaUpdate = function(data) {
 	}
 };
 
+// Handles moveVideo frames from the server
+// data - moveMedia data
 CytubeBot.prototype.handleMoveMedia = function(data) {
 	var from = data["from"]
 	var after = data["after"]
@@ -284,6 +328,10 @@ CytubeBot.prototype.handleMoveMedia = function(data) {
 	console.log("### Moving video from: " + fromIndex + " after " + afterIndex)
 };
 
+// Handles chatMsg frames from the server
+// If the first character of the msg is $, we interpet it as a command.
+// We ignore chat from before the bot was started, in order to avoid old
+// commands. 
 CytubeBot.prototype.handleChatMsg = function(data) {
 	var username = data.username
 	var msg = data.msg
@@ -314,6 +362,8 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	this.db.insertChat(msg, time, username, this.room)
 };
 
+// Handles playlist frames from the server and validates the videos
+// playlist - playlist data
 CytubeBot.prototype.handlePlaylist = function(playlist) {
 	var bot = this
 	this.playlist = playlist
@@ -328,6 +378,8 @@ CytubeBot.prototype.handlePlaylist = function(playlist) {
 	}
 };
 
+// Handles needPassword frames from the server
+// needPasswords are sent when the room we are trying to join has a password
 CytubeBot.prototype.handleNeedPassword = function(data) {
 	if (this.roomPassword) {
 		console.log("!~~~! Room has password, sending password")
@@ -339,6 +391,8 @@ CytubeBot.prototype.handleNeedPassword = function(data) {
 	}
 };
 
+// Handles setTemp frames from the server
+// data - setTemp data
 CytubeBot.prototype.handleSetTemp = function(data) {
 	var temp = data["temp"]
 	var uid = data["uid"]
@@ -348,6 +402,8 @@ CytubeBot.prototype.handleSetTemp = function(data) {
 	this.playlist[index]["temp"] = temp
 };
 
+// Handles setUserRank frames from the server
+// data - setUserRank data
 CytubeBot.prototype.handleSetUserRank = function(data) {
 	for (var i = 0; i < this.userlist.length; i++) {
 		if (this.userlist[i]["name"].toLowerCase() === data["name"].toLowerCase()) {
@@ -358,6 +414,8 @@ CytubeBot.prototype.handleSetUserRank = function(data) {
 	}
 };
 
+// Handles userLeave frames from the server
+// user - userLeave data
 CytubeBot.prototype.handleUserLeave = function(user) {
 	var index = utils.handle(this, "findUser", user)
 	if (index) {
@@ -367,10 +425,15 @@ CytubeBot.prototype.handleUserLeave = function(user) {
 	}
 };
 
+// Handles userlist frames from the server
+// userlistData - userlist data
 CytubeBot.prototype.handleUserlist = function(userlistData) {
 	this.userlist = userlistData;
 };
 
+// Reads the persistent settings or has the callback write the defaults
+// callback - callback function, used to write the persistent settings
+// if they don't exist 
 CytubeBot.prototype.readPersistentSettings = function(callback) {
 	var bot = this
 	fs.readFile("persistent.json", function(err, data) {
@@ -388,6 +451,9 @@ CytubeBot.prototype.readPersistentSettings = function(callback) {
 	})
 };
 
+// Sends a chatMsg frame to the server
+// If we are using modflair it will try and send meta for it
+// message - message to be sent
 CytubeBot.prototype.sendChatMsg = function(message) {
 	var rank = 0
 	if (this.doneInit)
@@ -410,11 +476,15 @@ CytubeBot.prototype.sendChatMsg = function(message) {
 	}
 };
 
+// Sends the hybridmod permissions for name
+// name - name to send hybridmod permissions for
 CytubeBot.prototype.sendHybridModPermissions = function(name) {
 	if (name)
 		this.sendChatMsg(name + ": " + this.stats["hybridMods"][name])
 };
 
+// Sends a chatMsg with the status of the bot
+// ie. is the bot muted and managing
 CytubeBot.prototype.sendStatus = function() {
 	var status = "[Muted: "
 	status += this.stats["muted"]
@@ -426,6 +496,8 @@ CytubeBot.prototype.sendStatus = function() {
 	})
 };
 
+// Used to start the process of joining a channel
+// Called after we have initialized the bot and set socket listeners
 CytubeBot.prototype.start = function() {
 	var bot = this
 	this.socket.emit("initChannelCallbacks")
@@ -444,6 +516,11 @@ CytubeBot.prototype.start = function() {
 	}, 5000)
 };
 
+// Validates a given video to ensure that it hasn't been blocked
+// or that it can be played in the country specified in deleteIfBlockedIn (if given)
+// Optionally uses youtube look up if we have the apikey
+// video - The video we want to validate
+// callback - the callback function, usually used to initiate a deleteVideo
 CytubeBot.prototype.validateVideo = function(video, callback) {
 	var bot = this
 	var type = video["media"]["type"]
@@ -501,6 +578,7 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 					allowed = false
 				}
 
+				// Should we delete the video
 				if (bot.deleteIfBlockedIn) {
 					if (allowed && allowed.indexOf(bot.deleteIfBlockedIn) === -1) {
 						shouldDelete = true
@@ -526,6 +604,8 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 	})
 }
 
+// Writes the persistent settings
+// Used by various methods
 CytubeBot.prototype.writePersistentSettings = function() {
 	console.log("!~~~! Writing persistent settings")
 	var stringyJSON = JSON.stringify(this.stats)

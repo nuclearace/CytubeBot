@@ -7,6 +7,8 @@ var WunderNodeClient = require("wundernode")
 var MsTranslator = require('mstranslator')
 
 var APIs = {
+
+	// API call to anagramgenius.com
 	anagram: function(msg, apikey, callback) {
 		var options = {
 			host: "anagramgenius.com",
@@ -20,6 +22,7 @@ var APIs = {
 		});
 	},
 
+	// API call to cleverbot.com
 	talk: function(msg, apikey, callback) {
 		var bot = new Cleverbot
 		var msg = {
@@ -30,6 +33,7 @@ var APIs = {
 		})
 	},
 
+	// API call to wolframalpha.com
 	wolfram: function(query, apikey, callback) {
 		var client = Wolfram.createClient(apikey);
 		client.query(query, function(err, result) {
@@ -38,6 +42,7 @@ var APIs = {
 		});
 	},
 
+	// API call to weatherunderground.com for weather
 	weather: function(data, apikey, callback) {
 		var wunder = new WunderNodeClient(apikey, false, 10, 'seconds')
 
@@ -82,6 +87,9 @@ var APIs = {
 		}
 	}, // end weather
 
+	// API call to weatherunderground.com for forecast
+	// Has to make two calls, one for location, and another for the
+	// forecast
 	"forecast": function(data, apikey, callback) {
 		var wunder = new WunderNodeClient(apikey, false, 10, 'seconds')
 		if (data.split(" ").length == 0) {
@@ -125,6 +133,7 @@ var APIs = {
 
 	}, // End forecast
 
+	// API call to Microsoft Translate
 	"translate": function(query, apiKeys, callback) {
 		var mst_id = apiKeys["clientid"]
 		var mst_secret = apiKeys["secret"]
@@ -144,6 +153,8 @@ var APIs = {
 		})
 	},
 
+	// API call for YouTube videos
+	// Used to validate videos
 	"youtubelookup": function(id, apiKey, callback) {
 		console.log("!~~~! Looking up youtube info for: " + id)
 		var params = [
