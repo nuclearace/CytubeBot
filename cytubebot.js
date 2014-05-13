@@ -186,10 +186,14 @@ CytubeBot.prototype.handleAddUser = function(data) {
 
 CytubeBot.prototype.handleChangeMedia = function(data) {
 	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia && this.playlist.length !== 0) {
+		var temp = false
 		var id = this.currentMedia["id"]
 		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
-		if (typeof uid !== "undefined")
-			var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
+		// If typeof uid is undefined, the server probably sent a
+		// delete frame before the changeMedia frame
+		// So our playlist doesn't contain the current media anymore 
+		if (uid)
+			temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
 		if (uid && !temp)
 			this.deleteVideo(uid)
 	}
@@ -481,12 +485,14 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 				var allowed = {}
 				var shouldDelete = false
 
+				// See what countries are blocked
 				try {
 					blocked = vidInfo["contentDetails"]["regionRestriction"]["blocked"]
 				} catch (e) {
 					blocked = false
 				}
 
+				// See what countries are allowed to embed the video
 				try {
 					allowed = vidInfo["contentDetails"]["regionRestriction"]["allowed"]
 				} catch (e) {
