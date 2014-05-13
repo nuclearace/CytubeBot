@@ -23,7 +23,7 @@ Config
 - `mstranslatesecret` [optional] - Microsoft secret key
 - `youtubev3` [optional] - Youtubev3 api key. See https://developers.google.com/youtube/v3/
 - `deleteIfBlockedIn` [optional] - If given youtubev3 and you would like to delete videos blocked in a specific country, put the 2 letter country code of it here
-- `usemodflair` - weather to use modflair or not.
+- `usemodflair` - whether to use modflair or not.
 
 
 
