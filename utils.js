@@ -83,7 +83,7 @@ var utilHandlers = {
 			return returnData
 
 		if (name in bot.stats["hybridMods"]) {
-			// Loop through the permissions for that user, looking matching ones
+			// Loop through the permissions for that user, looking for matching ones
 			for (var i = 0; i < permission.length; i++) {
 				if (bot.stats["hybridMods"][name].match(permission[i])) {
 					returnData["permissions"].push(permission[i])

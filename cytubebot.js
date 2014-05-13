@@ -192,9 +192,9 @@ CytubeBot.prototype.handleChangeMedia = function(data) {
 		// If typeof uid is undefined, the server probably sent a
 		// delete frame before the changeMedia frame
 		// So our playlist doesn't contain the current media anymore 
-		if (uid)
+		if (typeof uid !== "undefined")
 			temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
-		if (uid && !temp)
+		if (typeof uid !== "undefined" && !temp)
 			this.deleteVideo(uid)
 	}
 	this.currentMedia = data
@@ -249,6 +249,8 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 		} else {
 			this.stats["hybridMods"][name] += permission
 		}
+	} else if (change === "-" && permission === "ALL") {
+		this.stats["hybridMods"][name] = ""
 	}
 
 	if (this.stats["hybridMods"][name] === "")
