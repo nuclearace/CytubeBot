@@ -51,14 +51,14 @@ module.exports = {
 		})
 
 
-		this.db = Database.init();
+		this.db = Database.init()
 	};
 
 // Adds random videos using the database
 // num - Number of random videos to add
 CytubeBot.prototype.addRandomVideos = function(num) {
 	var bot = this
-	if (this.db)
+	if (this.db) {
 		this.db.getVideos(num, function(rows) {
 			for (var i in rows) {
 				var type = rows[i]["type"]
@@ -67,6 +67,7 @@ CytubeBot.prototype.addRandomVideos = function(num) {
 				bot.addVideo(type, id, duration)
 			}
 		})
+	}
 };
 
 // Sends a queue frame to the server
@@ -130,10 +131,9 @@ CytubeBot.prototype.blockVideo = function() {
 // uid - The uid of the video to delete
 CytubeBot.prototype.deleteVideo = function(uid) {
 	console.log("!~~~! Sending delete frame for uid: " + uid)
-	this.socket.emit("delete", uid)
-	if (this.playlist.length === 0 && this.stats["managing"])
+	if (this.playlist.length === 1 && this.stats["managing"])
 		this.addRandomVideos()
-
+	this.socket.emit("delete", uid)
 };
 
 // WARNING - This is experimental
@@ -235,15 +235,17 @@ CytubeBot.prototype.handleChangeMedia = function(data) {
 };
 
 // Handles delete frames from the server
+// If there are no more videos in the playlist and
+// we are managing, add a random video
 // data - delete data
 CytubeBot.prototype.handleDeleteMedia = function(data) {
 	var index = utils.handle(this, "findIndexOfVideoFromUID", data["uid"])
 
-	console.log("### Deleting media at index: " + index)
 	if (typeof index !== undefined) {
+		console.log("### Deleting media at index: " + index)
 		this.playlist.splice(index, 1)
 		if (this.playlist.length === 0 && this.stats["managing"])
-			bot.addRandomVideos()
+			this.addRandomVideos()
 	}
 };
 
@@ -408,7 +410,7 @@ CytubeBot.prototype.handleSetUserRank = function(data) {
 	for (var i = 0; i < this.userlist.length; i++) {
 		if (this.userlist[i]["name"].toLowerCase() === data["name"].toLowerCase()) {
 			this.userlist[i]["rank"] = data["rank"]
-			console.log("Setting rank: " + data["rank"] + " on " + data["name"])
+			console.log("!~~~! Setting rank: " + data["rank"] + " on " + data["name"])
 			break
 		}
 	}
