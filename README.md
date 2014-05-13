@@ -13,7 +13,7 @@ You can make it persistant with `screen node index.js`. To have it restart shoul
 
 Config
 ------
-- `serverio` - socketIO url, you can find the server IO port by typing http://nameofcytubeserver.com/sioconfig and copying the IO_UR.
+- `serverio` - socketIO url, you can find the server IO port by typing http://nameofcytubeserver.com/sioconfig and copying the IO_URL.
 - `username` - Name of the bot
 - `pw` [optional] - Password for the bot, blank logs in as guest
 - `room` - Room password if there is one
