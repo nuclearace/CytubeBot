@@ -188,8 +188,9 @@ CytubeBot.prototype.handleChangeMedia = function(data) {
 	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia && this.playlist.length !== 0) {
 		var id = this.currentMedia["id"]
 		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
-		var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
-		if (!temp)
+		if (typeof uid !== "undefined")
+			var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
+		if (uid && !temp)
 			this.deleteVideo(uid)
 	}
 	this.currentMedia = data
@@ -471,6 +472,7 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 			api.APICall(id, "youtubelookup", bot.youtubeapi, function(status, vidInfo) {
 				if (status !== true) {
 					bot.sendChatMsg("Invaled video: " + id)
+					bot.db.blacklistVideo(type, id, 1, title)
 					callback(true, uid)
 					return
 				}
@@ -501,11 +503,13 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 
 				if (!vidInfo["status"]["embeddable"]) {
 					bot.sendChatMsg("Embedding disabled: " + id)
+					bot.db.blacklistVideo(type, id, 1, title)
 					callback(true, uid)
 					return
 				} else if (shouldDelete) {
 					bot.sendChatMsg("Video blocked in: " + bot.deleteIfBlockedIn +
 						" id: " + id)
+					bot.db.blacklistVideo(type, id, 1, title)
 					callback(true, uid)
 					return
 				}
