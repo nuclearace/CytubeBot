@@ -310,7 +310,7 @@ var chatHandlers = {
 			return
 
 		var permissionData = {
-			permission: "A",
+			permission: "D",
 			name: username.toLowerCase()
 		}
 		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
