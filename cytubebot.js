@@ -40,7 +40,8 @@ module.exports = {
 		this.doneInit = false
 		this.stats = {
 			"managing": false,
-			"muted": false
+			"muted": false,
+			"hybridMods": {}
 		}
 
 		this.readPersistentSettings(function(err) {
@@ -173,12 +174,27 @@ CytubeBot.prototype.handleAddMedia = function(data) {
 	})
 };
 
+CytubeBot.prototype.handleAddUser = function(data) {
+	var inList = utils.handle(this, "userInUserlist", data["name"])
+	this.db.insertUser(data["name"])
+	if (!inList) {
+		this.userlist.push(data);
+		console.log("Added User: " + data["name"])
+		console.log("Userlist has : " + this.userlist.length + " users")
+	}
+};
+
 CytubeBot.prototype.handleChangeMedia = function(data) {
 	if (this.stats["managing"] && this.doneInit && !this.firstChangeMedia && this.playlist.length !== 0) {
+		var temp = false
 		var id = this.currentMedia["id"]
 		var uid = utils.handle(this, "findUIDOfVideoFromID", id)
-		var temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
-		if (!temp)
+		// If typeof uid is undefined, the server probably sent a
+		// delete frame before the changeMedia frame
+		// So our playlist doesn't contain the current media anymore 
+		if (typeof uid !== "undefined")
+			temp = utils.handle(this, "getVideoFromUID", uid)["temp"]
+		if (typeof uid !== "undefined" && !temp)
 			this.deleteVideo(uid)
 	}
 	this.currentMedia = data
@@ -195,6 +211,53 @@ CytubeBot.prototype.handleDeleteMedia = function(data) {
 		if (this.playlist.length === 0 && this.stats["managing"])
 			bot.addRandomVideos()
 	}
+};
+
+CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name) {
+	if (!permission) {
+		this.sendHybridModPermissions(name)
+		return
+	}
+
+	var change = permission.substring(0, 1)
+	permission = permission.substring(1, permission.length).trim()
+
+	if (!(name in this.stats["hybridMods"]) && change === "+") {
+		this.stats["hybridMods"][name] = permission
+		this.sendHybridModPermissions(name)
+		this.writePersistentSettings()
+		return
+	}
+
+	var permissionData = {
+		permission: permission,
+		name: name
+	}
+	var hasPermission = utils.handle(this, "userHasPermission", permissionData)
+
+	if (hasPermission["hasPermission"]) {
+		var permissions = hasPermission["permissions"]
+		if (change === "-") {
+			for (var i = 0; i < permissions.length; i++) {
+				this.stats["hybridMods"][name] = this.stats["hybridMods"][name].replace(permissions[i], "")
+			}
+		}
+	} else if (change === "+") {
+		if (permission === "ALL") {
+			this.stats["hybridMods"][name] = ""
+			this.stats["hybridMods"][name] = permission
+		} else {
+			this.stats["hybridMods"][name] += permission
+		}
+	} else if (change === "-" && permission === "ALL") {
+		this.stats["hybridMods"][name] = ""
+	}
+
+	if (this.stats["hybridMods"][name] === "")
+		delete this.stats["hybridMods"][name]
+
+	this.sendHybridModPermissions(name)
+	this.writePersistentSettings()
 };
 
 CytubeBot.prototype.handleMediaUpdate = function(data) {
@@ -221,20 +284,10 @@ CytubeBot.prototype.handleMoveMedia = function(data) {
 	console.log("### Moving video from: " + fromIndex + " after " + afterIndex)
 };
 
-CytubeBot.prototype.handleAddUser = function(data) {
-	var inList = utils.handle(this, "userInUserlist", data["name"])
-	this.db.insertUser(data["name"])
-	if (!inList) {
-		this.userlist.push(data);
-		console.log("Added User: " + data["name"])
-		console.log("Userlist has : " + this.userlist.length + " users")
-	}
-};
-
 CytubeBot.prototype.handleChatMsg = function(data) {
-	var username = data.username;
-	var msg = data.msg;
-	var time = data.time;
+	var username = data.username
+	var msg = data.msg
+	var time = data.time
 
 	msg = msg.replace(/&#39;/g, "'")
 	msg = msg.replace(/&amp;/g, "&")
@@ -254,7 +307,7 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 		return
 
 	if (msg.indexOf("$") === 0 && username != this.username && this.doneInit) {
-		commands.handle(this, username, msg);
+		commands.handle(this, username, msg)
 		return
 	}
 
@@ -282,7 +335,7 @@ CytubeBot.prototype.handleNeedPassword = function(data) {
 		this.roomPassword = null
 	} else {
 		console.log("\n!~~~! No room password in config.json or password is wrong. Killing bot!\n")
-		process.exit(1);
+		process.exit(1)
 	}
 };
 
@@ -308,7 +361,7 @@ CytubeBot.prototype.handleSetUserRank = function(data) {
 CytubeBot.prototype.handleUserLeave = function(user) {
 	var index = utils.handle(this, "findUser", user)
 	if (index) {
-		this.userlist.splice(index, 1);
+		this.userlist.splice(index, 1)
 		console.log("Removed user: " + user)
 		console.log("Userlist has : " + bot.userlist.length + " users")
 	}
@@ -321,10 +374,17 @@ CytubeBot.prototype.handleUserlist = function(userlistData) {
 CytubeBot.prototype.readPersistentSettings = function(callback) {
 	var bot = this
 	fs.readFile("persistent.json", function(err, data) {
-		if (err)
+		if (err) {
 			return callback(true)
-		bot.stats = JSON.parse(data)
-		console.log("!~~~! Read persistent settings")
+		} else {
+			bot.stats = JSON.parse(data)
+			if (!bot.stats["hybridMods"]) {
+				bot.stats["hybridMods"] = {}
+				bot.writePersistentSettings()
+			}
+			console.log("!~~~! Read persistent settings")
+			callback(false)
+		}
 	})
 };
 
@@ -350,6 +410,11 @@ CytubeBot.prototype.sendChatMsg = function(message) {
 	}
 };
 
+CytubeBot.prototype.sendHybridModPermissions = function(name) {
+	if (name)
+		this.sendChatMsg(name + ": " + this.stats["hybridMods"][name])
+};
+
 CytubeBot.prototype.sendStatus = function() {
 	var status = "[Muted: "
 	status += this.stats["muted"]
@@ -363,10 +428,10 @@ CytubeBot.prototype.sendStatus = function() {
 
 CytubeBot.prototype.start = function() {
 	var bot = this
-	this.socket.emit("initChannelCallbacks");
+	this.socket.emit("initChannelCallbacks")
 	this.socket.emit("joinChannel", {
 		name: this.room
-	});
+	})
 	this.socket.emit("login", {
 		name: this.username,
 		pw: this.pw
@@ -413,6 +478,7 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 			api.APICall(id, "youtubelookup", bot.youtubeapi, function(status, vidInfo) {
 				if (status !== true) {
 					bot.sendChatMsg("Invaled video: " + id)
+					bot.db.blacklistVideo(type, id, 1, title)
 					callback(true, uid)
 					return
 				}
@@ -421,12 +487,14 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 				var allowed = {}
 				var shouldDelete = false
 
+				// See what countries are blocked
 				try {
 					blocked = vidInfo["contentDetails"]["regionRestriction"]["blocked"]
 				} catch (e) {
 					blocked = false
 				}
 
+				// See what countries are allowed to embed the video
 				try {
 					allowed = vidInfo["contentDetails"]["regionRestriction"]["allowed"]
 				} catch (e) {
@@ -443,11 +511,13 @@ CytubeBot.prototype.validateVideo = function(video, callback) {
 
 				if (!vidInfo["status"]["embeddable"]) {
 					bot.sendChatMsg("Embedding disabled: " + id)
+					bot.db.blacklistVideo(type, id, 1, title)
 					callback(true, uid)
 					return
 				} else if (shouldDelete) {
 					bot.sendChatMsg("Video blocked in: " + bot.deleteIfBlockedIn +
 						" id: " + id)
+					bot.db.blacklistVideo(type, id, 1, title)
 					callback(true, uid)
 					return
 				}
