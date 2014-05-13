@@ -219,6 +219,7 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 
 	if (!(name in this.stats["hybridMods"]) && change === "+") {
 		this.stats["hybridMods"][name] = permission
+		this.sendHybridModPermissions(name)
 		this.writePersistentSettings()
 		return
 	}
@@ -248,8 +249,8 @@ CytubeBot.prototype.handleHybridModPermissionChange = function(permission, name)
 	if (this.stats["hybridMods"][name] === "")
 		delete this.stats["hybridMods"][name]
 
+	this.sendHybridModPermissions(name)
 	this.writePersistentSettings()
-	console.log(this.stats["hybridMods"])
 };
 
 CytubeBot.prototype.handleMediaUpdate = function(data) {

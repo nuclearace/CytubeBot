@@ -83,6 +83,7 @@ var utilHandlers = {
 			return returnData
 
 		if (name in bot.stats["hybridMods"]) {
+			// Loop through the permissions for that user, looking matching ones
 			for (var i = 0; i < permission.length; i++) {
 				if (bot.stats["hybridMods"][name].match(permission[i])) {
 					returnData["permissions"].push(permission[i])
@@ -90,14 +91,14 @@ var utilHandlers = {
 			}
 			if (returnData["permissions"].length !== 0) {
 				returnData["hasPermission"] = true
-				return returnData
+				return returnData // If we found matching permissions
 			} else {
 				if (bot.stats["hybridMods"][name].match("ALL"))
 					returnData["hasPermission"] = true
-				return returnData
+				return returnData // If we didn't, or we found all
 			}
-		} else { // User is not in list
-			return returnData
+		} else {
+			return returnData // We didn't find the user
 		}
 	},
 

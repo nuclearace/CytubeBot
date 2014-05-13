@@ -231,8 +231,13 @@ var chatHandlers = {
 	},
 
 	"addrandom": function(bot, username, data) {
+		var permissionData = {
+			permission: "R",
+			name: username.toLowerCase()
+		}
+		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (data <= 20 && rank >= 2)
+		if (data <= 20 && rank >= 2 || hasPermission["hasPermission"] && data <= 20)
 			bot.addRandomVideos(data)
 	},
 
@@ -253,8 +258,13 @@ var chatHandlers = {
 	},
 
 	"skip": function(bot, username, data) {
+		var permissionData = {
+			permission: "S",
+			name: username.toLowerCase()
+		}
+		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank < 2)
+		if (rank < 2 && !hasPermission["hasPermission"])
 			return
 
 		var id = bot.currentMedia["id"]
@@ -280,8 +290,14 @@ var chatHandlers = {
 	"add": function(bot, username, data) {
 		if (!data)
 			return
+
+		var permissionData = {
+			permission: "A",
+			name: username.toLowerCase()
+		}
+		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank >= 2)
+		if (rank >= 2 || hasPermission["hasPermission"])
 			bot.addVideo(null, null, null, null, utils.handle(bot, "parseMediaLink", data))
 	},
 
@@ -293,6 +309,11 @@ var chatHandlers = {
 		if (!data[0])
 			return
 
+		var permissionData = {
+			permission: "A",
+			name: username.toLowerCase()
+		}
+		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
 		var name = data[0]
 		var num = data[data.length - 1]
 		var uids = utils.handle(bot, "findVideosAddedByUser", name)
@@ -309,7 +330,7 @@ var chatHandlers = {
 			for (var i = 0; i < num; i++) {
 				bot.deleteVideo(uids[i])
 			}
-		} else if (rank >= 2) {
+		} else if (rank >= 2 || hasPermission["hasPermission"]) {
 			uids.reverse()
 			for (var i = 0; i < num; i++) {
 				bot.deleteVideo(uids[i])
@@ -363,11 +384,16 @@ var chatHandlers = {
 
 	"management": function(bot, username, data) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-		if (rank >= 2 && data.indexOf("on") == 0) {
+		var permissionData = {
+			permission: "G",
+			name: username.toLowerCase()
+		}
+		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
+		if (rank >= 2 && data.indexOf("on") == 0 || hasPermission["hasPermission"] && data.indexOf("on")) {
 			console.log("!~~~! Bot is now managing the playlist")
 			bot.stats["managing"] = true
 			bot.writePersistentSettings()
-		} else if (rank >= 2 && data.indexOf("off") == 0) {
+		} else if (rank >= 2 && data.indexOf("off") == 0 || hasPermission["hasPermission"] && data.indexOf("off")) {
 			console.log("!~~~! The bot is no longer managing the playlist")
 			bot.stats["managing"] = false
 			bot.writePersistentSettings()
