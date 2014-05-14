@@ -356,6 +356,10 @@ CytubeBot.prototype.handleChatMsg = function(data) {
 	var msg = data.msg
 	var time = data.time
 
+	// Ignore server messages
+	if (username === "[server]")
+		return
+
 	msg = msg.replace(/&#39;/g, "'")
 	msg = msg.replace(/&amp;/g, "&")
 	msg = msg.replace(/&lt;/g, "<")

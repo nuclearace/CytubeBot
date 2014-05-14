@@ -237,7 +237,6 @@ var chatHandlers = {
 
 		if (bot.playlist.length === 0 && bot.stats["managing"])
 			bot.addRandomVideos()
-
 	},
 
 	"mute": function(bot, username) {
@@ -246,8 +245,8 @@ var chatHandlers = {
 			name: username.toLowerCase()
 		}
 		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
-
 		var rank = utils.handle(bot, "getUser", username)["rank"]
+
 		if ((rank >= 2 && !bot.stats["muted"]) || hasPermission["hasPermission"] && !bot.stats["muted"]) {
 			bot.stats["muted"] = !bot.stats["muted"]
 			console.log(username + " muted bot")
@@ -271,7 +270,6 @@ var chatHandlers = {
 
 	"permissions": function(bot, username, data) {
 		var rank = utils.handle(bot, "getUser", username)["rank"]
-
 		var match = data.trim().match(/^((\+|\-)((ALL)|(.*)) )?(.*)$/)
 		var permission = match[1]
 		var name = match[6].toLowerCase()
@@ -302,7 +300,6 @@ var chatHandlers = {
 			name: username.toLowerCase()
 		}
 		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
-
 		var rank = utils.handle(bot, "getUser", username)["rank"]
 
 		if (rank < 2 && !hasPermission["hasPermission"])
@@ -334,7 +331,6 @@ var chatHandlers = {
 			name: username.toLowerCase()
 		}
 		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
-
 		var rank = utils.handle(bot, "getUser", username)["rank"]
 
 		if (rank < 2 && !hasPermission["hasPermission"])
