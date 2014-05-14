@@ -49,7 +49,7 @@ Commands
     Translates the given string from aa, which defaults to detecting the language, to bb, which defaults to en, using Microsoft Translate.
     The languages aa and bb must be specified as an ISO two letter language code. Requires Microsoft Translate api. See http://www.microsofttranslator.com/dev/ and http://msdn.microsoft.com/en-us/library/hh454950.aspx
 - `$permissions` example: `$permissions +x bob` gives permission x to bob. To take away use `$permissions -x bob`. To list permissions just do `$permissions bob`. To give or take away all permissions do `$permissions +all bob`/`$permissions -all bob`.
-- `$poll the name of the poll.option1. option 2.etc.[true]` - Opens a poll, use . to seperate options, the last option, if "true", makes it an obscured poll (votes are hidden to non-mods). Requires mod or "P" permission
+- `$poll the name of the poll.option1. option 2.etc.[true]` - Opens a poll, use . to seperate options. The last option, if "true", makes it an obscured poll (votes are hidden to non-mods). Requires mod or "P" permission
 - `$endpoll` - Ends a poll. Requires mod or "P" permission
 
 
