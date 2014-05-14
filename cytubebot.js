@@ -128,6 +128,14 @@ CytubeBot.prototype.blockVideo = function() {
 	this.deleteVideo(uid)
 };
 
+// Used by $poll
+// Sends a newPoll frame to the server
+// This will create a new poll
+// poll - Poll object
+CytubeBot.prototype.createPoll = function(poll) {
+	this.socket.emit("newPoll", poll)
+};
+
 // Used by various methods
 // Sends a delete frame to the server
 // uid - The uid of the video to delete
@@ -147,6 +155,13 @@ CytubeBot.prototype.deleteVideosFromDatabase = function(like) {
 	this.db.deleteVideos(like, function(num) {
 		bot.sendChatMsg("Deleted: " + num + " videos")
 	})
+};
+
+// Used by $endpoll
+// Sends a closePoll frame to the server
+// Closing a poll
+CytubeBot.prototype.endPoll = function() {
+	this.socket.emit("closePoll")
 };
 
 // Used by $quote

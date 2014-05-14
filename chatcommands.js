@@ -428,6 +428,56 @@ var chatHandlers = {
 		}
 
 		bot.handleHybridModPermissionChange(permission, name)
+	},
+
+	"poll": function(bot, username, data) {
+		if (!data)
+			return
+
+		var permissionData = {
+			permission: "P",
+			name: username.toLowerCase()
+		}
+		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
+
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+
+		if (rank < 2 && !hasPermission["hasPermission"])
+			return
+
+		var hidden = false
+		var splitData = data.split(".")
+		if (splitData[splitData.length - 1].toLowerCase().match("true")) {
+			hidden = true
+			splitData.splice(splitData.length - 1, 1)
+		}
+
+		var title = splitData[0]
+		splitData.splice(0, 1)
+
+		var pollData = {
+			title: title,
+			opts: splitData,
+			obscured: hidden
+		}
+
+		bot.createPoll(pollData)
+
+	},
+
+	"endpoll": function(bot, username, data) {
+		var permissionData = {
+			permission: "P",
+			name: username.toLowerCase()
+		}
+		var hasPermission = utils.handle(bot, "userHasPermission", permissionData)
+
+		var rank = utils.handle(bot, "getUser", username)["rank"]
+
+		if (rank < 2 && !hasPermission["hasPermission"])
+			return
+
+		bot.endPoll()
 	}
 }
 

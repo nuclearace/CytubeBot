@@ -31,24 +31,26 @@ Commands
 --------
 - `$anagram message` Anagrams a message
 - `$talk message` Cleverbot talk bot
-- `$mute/$unmute` Mutes/Unmutes the bot. Requires mod on the channel
+- `$mute/$unmute` Mutes/Unmutes the bot. Requires mod on the channel or "M" permission.
 - `$wolfram query` Requires a [WolframAlpha API key](http://products.wolframalpha.com/api/)
 - `$processinfo` Shows basic node process memory usage
 - `$quote [username]` Fetches a quote from the user given, otherwise fetches a random quote
 - `$weather (US zip code | city/town country)` Looks up current conditions. Requires [WeatherUnderground API key](http://www.wunderground.com/weather/api/)
 - `$forecast (US zip code | city/town country) [tomorrow]` Looks up forecast for that day, or if tomorrow is given, the next day. [Requires WeatherUnderground API key](http://www.wunderground.com/weather/api/)
 - `$status` Sends status ie. if the bot is muted
-- `$addrandom [n]` Adds n random videos from database. Requires mod on channel
+- `$addrandom [n]` Adds n random videos from database. Requires mod on channel or "R" permission.
 - `$blacklist` Blacklists currently playing video so that the bot doesn't add it randomly. Users can still add video. See $autodelete. Irreversible  without going into database. Requires admin on the channel.
 - `$autodelete` Makes it so non-mods cannot add currently playing video. Irreversible without going into database. Requires owner on channel.
-- `$skip` Skips the current video. Requires mod on channel. 
-- `$delete username [all | n]` Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video. Requires mod on channel
+- `$skip` Skips the current video. Requires mod on channel or "S" permission.
+- `$delete username [all | n]` Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video. Requires mod on channel or "D" permission
 - `$add link` Adds link, requires mod because of potential for media limit abuse.
 - `$choose (choice1 choice2...)` Chooses a random item from the choices given.
 - `$translate [[bb] | [aa>bb] | [aa->bb]] string`
     Translates the given string from aa, which defaults to detecting the language, to bb, which defaults to en, using Microsoft Translate.
     The languages aa and bb must be specified as an ISO two letter language code. Requires Microsoft Translate api. See http://www.microsofttranslator.com/dev/ and http://msdn.microsoft.com/en-us/library/hh454950.aspx
 - `$permissions` example: `$permissions +x bob` gives permission x to bob. To take away use `$permissions -x bob`. To list permissions just do `$permissions bob`. To give or take away all permissions do `$permissions +all bob`/`$permissions -all bob`.
+- `$poll the name of the poll.option1. option 2.etc.[true]` - Opens a poll, use . to seperate options, the last option, if "true", makes it an obscured poll (votes are hidden to non-mods). Requires mod or "P" permission
+- `$endpoll` - Ends a poll. Requires mod or "P" permission
 
 
 Custom Commands
