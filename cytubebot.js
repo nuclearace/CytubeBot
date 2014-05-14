@@ -159,7 +159,7 @@ CytubeBot.prototype.deleteVideosFromDatabase = function(like) {
 
 // Used by $endpoll
 // Sends a closePoll frame to the server
-// Closing a poll
+// Closes a poll
 CytubeBot.prototype.endPoll = function() {
 	this.socket.emit("closePoll")
 };
