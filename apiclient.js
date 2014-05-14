@@ -2,7 +2,6 @@ var http = require("http")
 var https = require("https")
 var domain = require("domain")
 var Wolfram = require("wolfram-alpha")
-var Cleverbot = require("cleverbot-node")
 var WunderNodeClient = require("wundernode")
 var MsTranslator = require('mstranslator')
 
@@ -20,17 +19,6 @@ var APIs = {
 			data = data.match(/.*<span class=\"black-18\">'(.*)'<\/span>/)
 			callback(data)
 		});
-	},
-
-	// API call to cleverbot.com
-	talk: function(msg, apikey, callback) {
-		var bot = new Cleverbot
-		var msg = {
-			message: msg
-		}
-		bot.write(msg["message"], function(resp) {
-			callback(resp)
-		})
 	},
 
 	// API call to wolframalpha.com

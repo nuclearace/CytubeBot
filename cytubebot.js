@@ -1,9 +1,10 @@
 var io = require("socket.io-client")
+var Cleverbot = require("cleverbot-node")
+var fs = require("fs")
 var commands = require("./chatcommands")
 var utils = require("./utils")
 var Database = require("./database")
 var api = require("./apiclient")
-var fs = require("fs")
 
 module.exports = {
 	init: function(cfg) {
@@ -51,6 +52,7 @@ module.exports = {
 		})
 
 
+		this.talkBot = new Cleverbot
 		this.db = Database.init()
 	};
 
@@ -516,6 +518,17 @@ CytubeBot.prototype.start = function() {
 		console.log("!~~~! Now handling commands")
 		bot.doneInit = true
 	}, 5000)
+};
+
+// Interacts with CleverBot
+// This is being from api.js in order to store the sessionId of cleverbot
+// This lets it hold a conversation better
+// message - Message we are sending to Cleverbot
+// callback - Callback function
+CytubeBot.prototype.talk = function(message, callback) {
+	this.talkBot.write(message, function(resp) {
+		callback(resp)
+	})
 };
 
 // Validates a given video to ensure that it hasn't been blocked
