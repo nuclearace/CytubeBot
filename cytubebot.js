@@ -521,7 +521,7 @@ CytubeBot.prototype.start = function() {
 };
 
 // Interacts with CleverBot
-// This is being from api.js in order to store the sessionId of cleverbot
+// This is being moved from api.js in order to store the sessionId of cleverbot
 // This lets it hold a conversation better
 // message - Message we are sending to Cleverbot
 // callback - Callback function
