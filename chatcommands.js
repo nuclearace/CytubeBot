@@ -344,7 +344,7 @@ var chatHandlers = {
 		if (!data)
 			return
 
-		var choices = data.split(" ")
+		var choices = data.trim().split(" ")
 		var choice = choices[Math.floor(Math.random() * choices.length)]
 		bot.sendChatMsg("[Choose: " + choices.join(" ") + "] " + choice)
 	},
