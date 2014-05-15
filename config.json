@@ -10,5 +10,8 @@
 	"mstranslatesecret": "",
 	"youtubev3": "",
 	"deleteIfBlockedIn": "",
+	"webURL": "http://localhost",
+	"webPort": 8080,
+	"socketPort": 8090,
 	"usemodflair": true
 }

@@ -6,6 +6,9 @@
     "sqlite3": "",
     "wundernode": "",
     "cleverbot-node": "",
-    "mstranslator": ""
+    "mstranslator": "",
+    "express": "",
+    "socket.io": "",
+    "jade": ""
   }
 }

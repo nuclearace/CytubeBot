@@ -1,0 +1,41 @@
+html
+  head
+    link(href='/css/bot.css', rel='stylesheet')
+    script(type='text/javascript', src='//www.google.com/jsapi')
+    script(src=serverIO)
+    script(type='text/javascript', src='/sioconfig')
+    script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script(type='text/javascript', src='/js/bot.js')
+  body
+    h1 {{room}} Statistics
+    table.main
+      tr
+        td
+          h2
+            | Videos by User
+        td.popular_video_td
+          h2
+            | Popular Videos
+        td
+          h2
+            | Chat by User
+      tr
+        td
+          #user_video_div
+        td.popular_video_td
+          #popular_video_div
+            table#popular_video_table
+              thead
+                tr
+                  td Videos
+                  td Frequency
+              tbody
+        td
+          #user_chat_div
+      tr
+        td(colspan='3')
+          h2
+            | Users Connected
+        tr
+          td(colspan='3')
+            #average_user_div

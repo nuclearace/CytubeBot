@@ -2,7 +2,7 @@ var sqlite3 = require('sqlite3')
 
 module.exports = {
 	init: function() {
-		var db = new Database();
+		var db = new Database()
 		return db
 	}
 }
@@ -18,6 +18,7 @@ Database.prototype.createTables = function() {
 	this.db.run("CREATE TABLE IF NOT EXISTS " +
 		"videos(type TEXT, id TEXT, duration_ms INTEGER, title TEXT, flags INTEGER, primary key(type, id))")
 	this.db.run("CREATE TABLE IF NOT EXISTS video_stats(type TEXT, id TEXT, uname TEXT)")
+	this.db.run("CREATE TABLE IF NOT EXISTS user_count(timestamp INTEGER, count INTEGER, primary key(timestamp, count))")
 };
 
 Database.prototype.blacklistVideo = function(type, id, flags, title) {
@@ -84,13 +85,6 @@ Database.prototype.deleteVideos = function(like, callback) {
 	this.db.serialize(start())
 };
 
-Database.prototype.insertUser = function(username) {
-	var stmt = this.db.prepare("INSERT OR IGNORE INTO users VALUES (?, 'false', 'false')", [username])
-	stmt.run()
-
-	stmt.finalize()
-};
-
 Database.prototype.insertChat = function(msg, time, nick, room) {
 	var stmt = this.db.prepare("INSERT INTO chat VALUES(?, ?, ?, ?)", [time, nick, msg, room])
 	stmt.run()
@@ -111,13 +105,82 @@ Database.prototype.insertVideo = function(site, vid, title, dur, nick) {
 	stmt2.finalize()
 };
 
-Database.prototype.getVideosCount = function(callback) {
-	this.db.get("SELECT count(*) AS count FROM videos", function(err, row) {
-		if (err) {
-			console.log(err)
+Database.prototype.insertUser = function(username) {
+	var stmt = this.db.prepare("INSERT OR IGNORE INTO users VALUES (?, 'false', 'false')", [username])
+	stmt.run()
+
+	stmt.finalize()
+};
+
+Database.prototype.insertUsercount = function(count, timestamp) {
+	var stmt = this.db.prepare("INSERT INTO user_count VALUES(?, ?)", [timestamp, count])
+	stmt.run()
+};
+
+Database.prototype.getAverageUsers = function(callback) {
+	var select_cls = "SELECT STRFTIME('%s', STRFTIME('%Y-%m-%dT%H:00', timestamp/1000, 'UNIXEPOCH'))*1000 AS timestamp," +
+		" CAST(ROUND(AVG(count)) AS INTEGER) AS count FROM user_count "
+	var group_cls = " GROUP BY STRFTIME('%Y%m%d%H', timestamp/1000, 'UNIXEPOCH')"
+	var sql = select_cls + group_cls
+
+	var stmt = this.db.prepare(sql)
+	var returnData = new Array()
+
+	stmt.all(function(err, rows) {
+		if (err)
 			return
+
+		// Format data for google charts
+		for (var i = 0; i < rows.length; i++) {
+			console.log(rows)
+			returnData.push([rows[i]["timestamp"], rows[i]["count"]])
 		}
-		callback(row["count"])
+		callback(returnData)
+	})
+};
+
+Database.prototype.getChatStats = function(callback) {
+	var select_cls = "SELECT username, count(*) as count FROM chat "
+	var group_cls = " GROUP BY username ORDER BY count(*) DESC"
+	var sql = select_cls + group_cls
+	var stmt = this.db.prepare(sql)
+	var returnData = new Array()
+
+	stmt.all(function(err, rows) {
+		if (err)
+			return
+
+		// Format data for google charts
+		for (var i = 0; i < rows.length; i++) {
+			if (rows[i]["username"] !== "")
+				returnData.push([rows[i]["username"], rows[i]["count"]])
+		}
+		callback(returnData)
+	})
+};
+
+Database.prototype.getPopularVideos = function(callback) {
+	var select_cls = "SELECT videos.type, videos.id, videos.title, videos.flags & 1, count(*) AS count FROM videos, video_stats"
+	var where_cls = " WHERE video_stats.type = videos.type AND video_stats.id = videos.id AND NOT videos.flags & 2 "
+	var group_cls = " GROUP BY videos.type, videos.id ORDER BY count(*) DESC LIMIT 10"
+	var sql = select_cls + where_cls + group_cls
+
+	var stmt = this.db.prepare(sql)
+
+	var returnData = new Array()
+
+	stmt.all(function(err, rows) {
+		if (err)
+			return
+
+		// Format data for google charts
+		for (var i = 0; i < rows.length; i++) {
+			returnData.push([rows[i]["type"], rows[i]["id"], rows[i]["title"],
+				rows[i]["flags"], rows[i]["count"]
+			])
+		}
+
+		callback(returnData)
 	})
 };
 
@@ -146,6 +209,29 @@ Database.prototype.getQuote = function(nick, callback) {
 
 };
 
+Database.prototype.getStats = function(room, callback) {
+	var self = this
+	var returnData = {
+		room: room
+	}
+	// Lets go on another ride
+	this.db.serialize()
+	this.getVideoStats(function(data) {
+		returnData["userVideoStats"] = data
+		self.getChatStats(function(data) {
+			returnData["userChatStats"] = data
+			self.getPopularVideos(function(data) {
+				returnData["popularVideos"] = data
+				self.getAverageUsers(function(data) {
+					returnData["averageUsers"] = data
+					callback(returnData)
+					self.db.parallelize()
+				})
+			})
+		})
+	})
+};
+
 Database.prototype.getVideos = function(num, callback) {
 	if (!num)
 		num = 1
@@ -155,6 +241,37 @@ Database.prototype.getVideos = function(num, callback) {
 
 	stmt.all(function(err, rows) {
 		callback(rows)
+	})
+};
+
+Database.prototype.getVideosCount = function(callback) {
+	this.db.get("SELECT count(*) AS count FROM videos", function(err, row) {
+		if (err) {
+			console.log(err)
+			return
+		}
+		callback(row["count"])
+	})
+};
+
+Database.prototype.getVideoStats = function(callback) {
+	var select_cls = "SELECT uname, count(*) AS count FROM video_stats vs, videos v "
+	var where_cls = " WHERE vs.type = v.type AND vs.id = v.id AND NOT v.flags & 2 "
+	var group_cls = " GROUP BY uname ORDER BY count(*) DESC"
+	var sql = select_cls + where_cls + group_cls
+	var stmt = this.db.prepare(sql)
+	var returnData = new Array()
+
+	stmt.all(function(err, rows) {
+		if (err)
+			return
+
+		// Format data for google charts
+		for (var i = 0; i < rows.length; i++) {
+			if (rows[i]["uname"] !== "")
+				returnData.push([rows[i]["uname"], rows[i]["count"]])
+		}
+		callback(returnData)
 	})
 };
 
