@@ -215,7 +215,6 @@ Database.prototype.getStats = function(room, callback) {
 		room: room
 	}
 	// Lets go on another ride
-	this.db.serialize()
 	this.getVideoStats(function(data) {
 		returnData["userVideoStats"] = data
 		self.getChatStats(function(data) {
@@ -225,7 +224,6 @@ Database.prototype.getStats = function(room, callback) {
 				self.getAverageUsers(function(data) {
 					returnData["averageUsers"] = data
 					callback(returnData)
-					self.db.parallelize()
 				})
 			})
 		})
