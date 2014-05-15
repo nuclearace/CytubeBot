@@ -10,6 +10,7 @@
 	"mstranslatesecret": "",
 	"youtubev3": "",
 	"deleteIfBlockedIn": "",
+	"enableWebServer": false,
 	"webURL": "http://localhost",
 	"webPort": 8080,
 	"socketPort": 8090,

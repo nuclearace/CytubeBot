@@ -53,14 +53,16 @@ module.exports = {
 				bot.writePersistentSettings()
 		})
 
-
+		this.enableWebServer = config["enableWebServer"]
 		this.webURL = config["webURL"]
 		this.webPort = config["webPort"]
 		this.socketPort = config["socketPort"]
 		this.talkBot = new Cleverbot
 		this.db = Database.init()
-		this.server = Server.init(this)
-		this.ioServer = IOServer.init(this.socketPort, this)
+		if (this.enableWebServer) {
+			this.server = Server.init(this)
+			this.ioServer = IOServer.init(this.socketPort, this)
+		}
 	};
 
 // Adds random videos using the database
