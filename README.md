@@ -23,6 +23,10 @@ Config
 - `mstranslatesecret` [optional] - Microsoft secret key
 - `youtubev3` [optional] - Youtubev3 api key. See https://developers.google.com/youtube/v3/
 - `deleteIfBlockedIn` [optional] - If given youtubev3 and you would like to delete videos blocked in a specific country, put the 2 letter country code of it here
+- `enableWebServer` - Turns on/off the webserver
+- `webURL` - The domain/ip you would use to connect to the webserver example: http://google.com or http://192.76.32.222
+- `webPort` - The port for the webserver. Anything below 1000 requires root.
+- `socketPort` - The port for socketIO. Anything below 1000 requires root.
 - `usemodflair` - whether to use modflair or not.
 
 
