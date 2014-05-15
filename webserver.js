@@ -24,5 +24,9 @@ module.exports = {
 		this.webServer.get("/sioconfig", function(req, res) {
 			res.send("var IO_URL =" + "'" + io_URL + "'")
 		})
-		this.webServer.listen(8080)
+
+		if (!bot.webPort)
+			this.webServer.listen(8080)
+		
+		this.webServer.listen(bot.webPort)
 	}
