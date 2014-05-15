@@ -53,8 +53,14 @@ google.setOnLoadCallback(function() {
                 default:
                     link = "#"
             }
+            var title = ""
+            if (popularVideos[i][2].length > 50) {
+                title = popularVideos[i][2].substring(0, 50)
+            } else {
+                title = popularVideos[i][2]
+            }
             row.children('.video').append($("<a></a>", {
-                text: popularVideos[i][2],
+                text: title,
                 href: link,
                 class: (popularVideos[i][3] ? "invalid" : ""),
             }))
