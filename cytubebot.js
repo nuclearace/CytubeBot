@@ -5,6 +5,8 @@ var commands = require("./chatcommands")
 var utils = require("./utils")
 var Database = require("./database")
 var api = require("./apiclient")
+var Server = require("./webserver")
+var IOServer = require("./ioserver")
 
 module.exports = {
 	init: function(cfg) {
@@ -51,9 +53,16 @@ module.exports = {
 				bot.writePersistentSettings()
 		})
 
-
+		this.enableWebServer = config["enableWebServer"]
+		this.webURL = config["webURL"]
+		this.webPort = config["webPort"]
+		this.socketPort = config["socketPort"]
 		this.talkBot = new Cleverbot
 		this.db = Database.init()
+		if (this.enableWebServer) {
+			this.server = Server.init(this)
+			this.ioServer = IOServer.init(this.socketPort, this)
+		}
 	};
 
 // Adds random videos using the database
@@ -188,6 +197,13 @@ CytubeBot.prototype.getQuote = function(nick) {
 		var timestamp = new Date(time).toDateString() + " " +
 			new Date(time).toTimeString().split(" ")[0]
 		bot.sendChatMsg("[" + nick + " " + timestamp + "] " + msg)
+	})
+};
+
+// Gets the required stats 
+CytubeBot.prototype.getStats = function(callback) {
+	this.db.getStats(this.room, function(data) {
+		callback(data)
 	})
 };
 
@@ -537,6 +553,12 @@ CytubeBot.prototype.start = function() {
 		console.log("!~~~! Now handling commands")
 		bot.doneInit = true
 	}, 5000)
+};
+
+// Inserts the usercount into the database
+// count - The number of users
+CytubeBot.prototype.storeUsercount = function(count) {
+	this.db.insertUsercount(count, new Date().getTime())
 };
 
 // Interacts with CleverBot

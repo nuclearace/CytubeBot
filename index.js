@@ -62,5 +62,9 @@ Config.load(function(config) {
 		bot.handleSetUserRank(data)
 	})
 
+	bot.socket.on("usercount", function(data) {
+		bot.storeUsercount(data)
+	})
+
 	bot.start();
 });
