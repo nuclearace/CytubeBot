@@ -1,5 +1,5 @@
-var CytubeBot = require("./cytubebot")
-var Config = require("./config")
+var CytubeBot = require("./lib/cytubebot")
+var Config = require("./lib/config")
 var fs = require("fs")
 
 process.on("exit", function() {
@@ -44,6 +44,10 @@ Config.load(function(config) {
 
 	bot.socket.on("changeMedia", function(data) {
 		bot.handleChangeMedia(data)
+	})
+
+	bot.socket.on("setCurrent", function(data) {
+		bot.handleSetCurrent(data)
 	})
 
 	bot.socket.on("mediaUpdate", function(data) {
