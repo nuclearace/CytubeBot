@@ -132,7 +132,6 @@ Database.prototype.getAverageUsers = function(callback) {
 
 		// Format data for google charts
 		for (var i = 0; i < rows.length; i++) {
-			console.log(rows)
 			returnData.push([rows[i]["timestamp"], rows[i]["count"]])
 		}
 		callback(returnData)

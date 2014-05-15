@@ -1,7 +1,7 @@
 socket = io.connect(IO_URL)
 setTimeout(function() {
     socket.emit("getStats")
-}, 500)
+}, 1000)
 
 google.load('visualization', '1', {
     'packages': ['corechart', 'annotatedtimeline']
@@ -42,7 +42,6 @@ google.setOnLoadCallback(function() {
                     link = "http://vimeo.com/" + popularVideos[i][1]
                     break
                 case "sc":
-                    // Special case. Will have to use soundcloud's api from python to find the track url. TODO later
                     link = "#"
                     break
                 case "bt":
