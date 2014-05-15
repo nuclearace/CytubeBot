@@ -106,7 +106,7 @@ google.setOnLoadCallback(function() {
         var averageUserTimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('average_user_div'))
         averageUserTimeline.draw(averageUserData, {
             'displayAnnotations': true,
-            colors: ['black', 'green', 'cyan'],
+            colors: ['black', 'green', 'orange'],
             max: 50
         })
     })
