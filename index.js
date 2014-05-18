@@ -1,74 +1,16 @@
-var CytubeBot = require("./lib/cytubebot")
-var Config = require("./lib/config")
-var fs = require("fs")
+ var forever = require("forever-monitor")
 
-process.on("exit", function() {
-	console.log("\n!~~~! CytubeBot is shutting down\n")
-})
+ var child = new(forever.Monitor)("./lib/start.js", {
+ 	max: 10,
+ 	silent: false,
+ })
 
-Config.load(function(config) {
-	bot = CytubeBot.init(config);
+ child.on("exit", function() {
+ 	console.log("$~~~$ CytubeBot has exited after 10 restarts\nShutting down")
+ })
 
-	// Socket handlers
-	bot.socket.on("chatMsg", function(data) {
-		bot.handleChatMsg(data)
-	});
+ child.on("restart", function() {
+ 	console.log("$~~~$ CytubeBot is restarting after a close\n")
+ })
 
-	bot.socket.on("userlist", function(data) {
-		bot.handleUserlist(data)
-	});
-
-	bot.socket.on("userLeave", function(data) {
-		bot.handleUserLeave(data["name"])
-	});
-
-	bot.socket.on("addUser", function(data) {
-		bot.handleAddUser(data)
-	});
-
-	bot.socket.on("playlist", function(data) {
-		bot.handlePlaylist(data)
-	})
-
-	bot.socket.on("queue", function(data) {
-		bot.handleAddMedia(data)
-	})
-
-	bot.socket.on("delete", function(data) {
-		bot.handleDeleteMedia(data)
-	})
-
-	bot.socket.on("moveVideo", function(data) {
-		bot.handleMoveMedia(data)
-	})
-
-	bot.socket.on("changeMedia", function(data) {
-		bot.handleChangeMedia(data)
-	})
-
-	bot.socket.on("setCurrent", function(data) {
-		bot.handleSetCurrent(data)
-	})
-
-	bot.socket.on("mediaUpdate", function(data) {
-		bot.handleMediaUpdate(data)
-	})
-
-	bot.socket.on("needPassword", function(data) {
-		bot.handleNeedPassword(data)
-	})
-
-	bot.socket.on("setTemp", function(data) {
-		bot.handleSetTemp(data)
-	})
-
-	bot.socket.on("setUserRank", function(data) {
-		bot.handleSetUserRank(data)
-	})
-
-	bot.socket.on("usercount", function(data) {
-		bot.storeUsercount(data)
-	})
-
-	bot.start();
-});
+ child.start()

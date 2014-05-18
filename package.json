@@ -9,6 +9,8 @@
     "mstranslator": "",
     "express": "",
     "socket.io": "",
-    "jade": ""
+    "jade": "",
+    "forever": "",
+    "forever-monitor": ""
   }
 }
