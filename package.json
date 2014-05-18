@@ -1,5 +1,9 @@
 {
   "author": "nuclearace",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nuclearace/CytubeBot.git"
+  },
   "dependencies": {
     "socket.io-client": ">=0.9",
     "wolfram-alpha": "",
