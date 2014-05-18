@@ -3,10 +3,12 @@
  var child = new(forever.Monitor)("./lib/start.js", {
  	max: 10,
  	silent: false,
+ 	minUptime: 5000
  })
 
  child.on("exit", function() {
- 	console.log("$~~~$ CytubeBot has exited after 10 restarts\nShutting down")
+ 	console.log("$~~~$ CytubeBot has exited after 10 restarts or there was a problem\n")
+ 	console.log("$~~~$ Shutting down")
  })
 
  child.on("restart", function() {
