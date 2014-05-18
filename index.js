@@ -3,7 +3,9 @@
  var child = new(forever.Monitor)("./lib/start.js", {
  	max: 10,
  	silent: false,
- 	minUptime: 5000
+ 	minUptime: 5000,
+ 	outFile: "./lastrun.log",
+ 	errFile: "./err.log"
  })
 
  child.on("exit", function() {
