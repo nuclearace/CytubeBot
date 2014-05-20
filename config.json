@@ -17,5 +17,6 @@
 	"useIRC": false,
 	"ircNick": "CytubeBot",
 	"ircPass": "",
+	"ircChannel": "",
 	"usemodflair": true
 }
