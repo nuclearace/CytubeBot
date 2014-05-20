@@ -47,6 +47,7 @@ Commands
 - `$autodelete` Makes it so non-mods cannot add currently playing video. Irreversible without going into database. Requires owner on channel.
 - `$skip` Skips the current video. Requires mod on channel or "S" permission.
 - `$delete username [all | n]` Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video. Requires mod on channel or "D" permission
+- `$bump -(user|title) (username| title to be matched) [all|n]` Bumps all or n videos by username, or bumps videos matching the given title. Ex: `$bump -title the dog 2` Will bump the last two videos matching `.*the dog.*`.
 - `$add link` Adds link, requires mod because of potential for media limit abuse.
 - `$choose (choice1 choice2...)` Chooses a random item from the choices given.
 - `$translate [[bb] | [aa>bb] | [aa->bb]] string`
