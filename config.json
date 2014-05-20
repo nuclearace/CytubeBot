@@ -15,6 +15,7 @@
 	"webPort": 8080,
 	"socketPort": 8090,
 	"useIRC": false,
+	"ircServer": "",
 	"ircNick": "CytubeBot",
 	"ircPass": "",
 	"ircChannel": "",
