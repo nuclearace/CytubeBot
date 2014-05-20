@@ -27,7 +27,7 @@ Config
 - `webURL` - The domain/ip you would use to connect to the webserver example: http://google.com or http://192.76.32.222
 - `webPort` - The port for the webserver. Anything below 1000 requires root.
 - `socketPort` - The port for socketIO. Anything below 1000 requires root.
-- `useIRC` - Whether or not to bridge to IRC. Note: All mods on the cytube channel should be registered with nickserv on IRC to avoid someone from using their name to have the bot execute commands.
+- `useIRC` - Whether or not to bridge to IRC. Note: All commands that require rank will not work
 - `ircServer` - the IRC server address. ex: "irc.6irc.net"
 - `ircNick` - The nickname of the bot on irc.
 - `ircPass` - Password for the IRC nick (If needed).
