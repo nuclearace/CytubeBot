@@ -61,6 +61,7 @@ Commands
 - `$poll the name of the poll.option1. option 2.etc.[true]` - Opens a poll, use . to seperate options. The last option, if "true", makes it an obscured poll (votes are hidden to non-mods). Requires mod or "P" permission
 - `$endpoll` - Ends a poll. Requires mod or "P" permission
 - `$userlimit (true|false) | n` Limits the number of videos users can add. Mods are not exempt. Ex: `$userlimit true 5`
+- `$shuffle` Shuffles the playlist. Requries mod or permission
 
 
 Custom Commands
