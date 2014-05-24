@@ -1,7 +1,7 @@
  var forever = require("forever-monitor")
 
  var child = new(forever.Monitor)("./lib/start.js", {
- 	max: 10,
+ 	max: 20,
  	silent: false,
  	minUptime: 5000,
  	errFile: "./err.log"
