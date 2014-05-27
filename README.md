@@ -62,6 +62,8 @@ Commands
 - `$endpoll` - Ends a poll. Requires mod or "P" permission
 - `$userlimit (true|false) | n` Limits the number of videos users can add. Mods are not exempt. Ex: `$userlimit true 5`
 - `$shuffle` Shuffles the playlist. Requries mod or permission
+- `$blockuser username [true|false]` Stops username from adding videos. Requires owner rank to use
+- `$blockedusers` Lists the blocked users
 
 
 Custom Commands
