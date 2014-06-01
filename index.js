@@ -8,7 +8,7 @@
  })
 
  child.on("exit", function() {
- 	console.log("$~~~$ CytubeBot has exited after 10 restarts or there was a problem\n")
+ 	console.log("$~~~$ CytubeBot has exited after 20 restarts or there was a problem\n")
  	console.log("$~~~$ Shutting down")
  })
 
