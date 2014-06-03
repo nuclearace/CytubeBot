@@ -11,6 +11,8 @@ Install
 
 You can make it persistant with `screen node index.js`. To have it restart should it crash make run.sh executable and do `[screen] sh run.sh`
 
+Note: If you plan on using the bot with Windows, you'll have to do more work installing node.js and npm, since some of the dependencies require compiling C and C++ code.
+
 Config
 ------
 - `cytubeServer` - URL of the server. Ex "cytu.be"
