@@ -16,7 +16,8 @@ Config
 - `cytubeServer` - URL of the server. Ex "cytu.be"
 - `username` - Name of the bot
 - `pw` [optional] - Password for the bot, blank logs in as guest
-- `room` - Room password if there is one
+- `room` - Room the bot should join
+- `roompassword` [optional] - Room password if there is one
 - `wolfram` [optional] - WolframAlpha apikey. See http://products.wolframalpha.com/api/
 - `weatherunderground` [optional] - WeatherUnderground apikey. see http://www.wunderground.com/weather/api/
 - `mstranslateclient` [optional] - Microsoft client name. See http://www.microsofttranslator.com/dev/ and http://msdn.microsoft.com/en-us/library/hh454950.aspx 
