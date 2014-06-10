@@ -9,12 +9,12 @@ Install
 4. Add required info into config.json. See config section.
 5. run `node index.js`
 
-Note: If you plan on using the bot with Windows, you'll have to do more work installing node.js and npm, since some of the dependencies require compiling C and C++ code.
+Note: If you plan on using the bot with Windows, you'll have to do more work installing node.js and npm, since some of the dependencies require compiling C++ code.
 
 Config
 ------
-- `cytubeServer` - URL of the server. Ex "cytu.be"
-- `username` - Name of the bot
+- `cytubeServer` - URL of the server. Ex "cytu.be" or "http://somecytubeserver.com:socketport" where socketport is replaced by the socketIO port
+- `username` - Account name the bot uses on the Cytube server
 - `pw` [optional] - Password for the bot, blank logs in as guest
 - `room` - Room the bot should join
 - `roompassword` [optional] - Room password if there is one
@@ -70,3 +70,7 @@ Commands
 Custom Commands
 ---------------
 You can add custom commands inside custom.js, this will help you avoid merge conflicts when I update the bot.
+
+Contact
+-------
+You can contact me either by creating an issue (if you believe there is a bug or you have an idea for an improvement) or by emailing at nuclearace@cytu.be. I can also be found on the Cytube support [irc](http://webchat.6irc.net/?channels=cytube), just ask for nuclearace.
