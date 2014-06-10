@@ -1,19 +1,32 @@
- var forever = require("forever-monitor")
+var forever = require("forever-monitor")
+var fs = require("fs")
 
- var child = new(forever.Monitor)("./lib/start.js", {
- 	max: 20,
- 	silent: false,
- 	minUptime: 5000,
- 	errFile: "./err.log"
- })
+var child = new(forever.Monitor)("./lib/start.js", {
+	max: 20,
+	silent: false,
+	minUptime: 5000,
+	errFile: "./err.log"
+})
 
- child.on("exit", function() {
- 	console.log("$~~~$ CytubeBot has exited after 20 restarts or there was a problem\n")
- 	console.log("$~~~$ Shutting down")
- })
+var writeTimes = function() {
+	fs.writeFile("times", String(child.times), function(err) {
+		if (err) {
+			console.log(err)
+			process.exit(1)
+		}
+	})
+}
 
- child.on("restart", function() {
- 	console.log("$~~~$ CytubeBot is restarting after a close\n")
- })
+child.on("exit", function() {
+	console.log("$~~~$ CytubeBot has exited after 20 restarts or there was a problem\n")
+	console.log("$~~~$ Shutting down")
 
- child.start()
+})
+
+child.on("restart", function() {
+	console.log("$~~~$ CytubeBot is restarting after a close\n")
+	writeTimes()
+})
+
+child.start()
+writeTimes()
