@@ -12,6 +12,7 @@ var writeTimes = function() {
 	fs.writeFile("times", String(child.times), function(err) {
 		if (err) {
 			console.log(err)
+			child.stop()
 			process.exit(1)
 		}
 	})
