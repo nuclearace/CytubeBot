@@ -25,14 +25,14 @@ Config
 - `youtubev3` [optional] - Youtubev3 api key. See https://developers.google.com/youtube/v3/
 - `deleteIfBlockedIn` [optional] - If given youtubev3 and you would like to delete videos blocked in a specific country, put the 2 letter country code of it here
 - `enableWebServer` - Turns on/off the webserver
-- `webURL` - The domain/ip you would use to connect to the webserver example: http://google.com or http://192.76.32.222
-- `webPort` - The port for the webserver. Anything below 1000 requires root.
-- `socketPort` - The port for socketIO. Anything below 1000 requires root.
+- `webURL` [optional] - The domain/ip you would use to connect to the webserver example: http://google.com or http://192.76.32.222
+- `webPort` [optional] - The port for the webserver. Anything below 1000 requires root.
+- `socketPort` [optional] - The port for socketIO. Anything below 1000 requires root.
 - `useIRC` - Whether or not to bridge to IRC. Note: All commands that require rank will not work
-- `ircServer` - the IRC server address. ex: "irc.6irc.net"
-- `ircNick` - The nickname of the bot on irc.
-- `ircPass` - Password for the IRC nick (If needed).
-- `ircChannel` - The channel the bot should join. ex: "#testing"
+- `ircServer` [optional] - the IRC server address. ex: "irc.6irc.net"
+- `ircNick` [optional] - The nickname of the bot on irc.
+- `ircPass` [optional] - Password for the IRC nick (If needed).
+- `ircChannel` [optional] - The channel the bot should join. ex: "#testing"
 - `usemodflair` - whether to use modflair or not.
 
 
