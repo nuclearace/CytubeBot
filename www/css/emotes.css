@@ -1,12 +1,16 @@
 body {
-	background-color: black;
+	background-color: black !important;
 }
 
 h1 {
-	color: white;
+	color: white !important;
 }
 
 .channel-emote {
     max-height: 100px;
     max-width:  70px;
+}
+
+tr span {
+	color: white;
 }
