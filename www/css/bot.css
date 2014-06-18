@@ -28,6 +28,7 @@ a.invalid {text-decoration: line-through;}
 #popular_video_table tbody tr:nth-child(odd){
     background-color: #484848;
 }
+
 #average_user_div {
     height: 450px;
     width: 100%;
