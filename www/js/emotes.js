@@ -7,10 +7,18 @@ setTimeout(function() {
 var addEmote = function(emote) {
 	var name = emote["name"]
 	var image = emote["image"]
-	var emoteImg = $("<img>").attr("class", "channel-emote")
-		.attr("src", image)
-		.attr("title", name)
-		.appendTo($("#emotediv"))
+	var tbl = $("#emotediv table")
+	var tr = $("<tr/>").appendTo(tbl)
+
+	var emoteDiv = $("<span>").text(name)
+		.appendTo($("<td/>").appendTo(tr))
+
+	var popoverData = {
+		html: true,
+		trigger: "hover",
+		content: '<img src="' + image + '" class="channel-emote">'
+	}
+	emoteDiv.popover(popoverData)
 }
 
 var handleEmotes = function(emotes) {
