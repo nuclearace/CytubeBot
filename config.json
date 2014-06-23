@@ -10,14 +10,15 @@
         "mstranslatesecret": "",
         "youtubev3": "",
         "deleteIfBlockedIn": "",
-	"enableWebServer": false,
-	"webURL": "http://localhost",
-	"webPort": 8080,
-	"socketPort": 8090,
-	"useIRC": false,
+        "enableWebServer": false,
+        "webURL": "http://localhost",
+        "webPort": 8080,
+        "socketPort": 8090,
+        "useIRC": false,
         "ircServer": "",
         "ircNick": "",
         "ircPass": "",
         "ircChannel": "",
-	"usemodflair": true
+        "usemodflair": true,
+        "enableLogging": true
 }
