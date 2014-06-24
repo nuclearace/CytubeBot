@@ -9,6 +9,11 @@ h1 {
 .channel-emote {
     max-height: 100px;
     max-width:  70px;
+    background-color: black;
+}
+
+.popover {
+	background-color: black !important;
 }
 
 tr span {
