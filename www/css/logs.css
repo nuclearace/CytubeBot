@@ -1,0 +1,13 @@
+#syslog, #errlog, #cytubelog {
+	background-color: black;
+	color: white;
+}
+
+#mainwrap, body {
+	background-color: black !important;
+}
+
+#logviewer {
+	background-color: black;
+	color: #E8E8E8;
+}
