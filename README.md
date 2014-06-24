@@ -33,7 +33,8 @@ Config
 - `ircNick` [optional] - The nickname of the bot on irc.
 - `ircPass` [optional] - Password for the IRC nick (If needed).
 - `ircChannel` [optional] - The channel the bot should join. ex: "#testing"
-- `usemodflair` - whether to use modflair or not.
+- `usemodflair` - Whether to use modflair or not.
+- `enableLogging` - Whether to write log data to a file
 
 
 Commands
