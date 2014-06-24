@@ -13,7 +13,6 @@ function readErrlog() {
 }
 
 function readCytubeLog(name) {
-    console.log("reading cytube log")
     $.ajax(location.protocol + "//" + location.host + "/logs/cytubelog").done(function(data) {
         $("#logviewer").text(data)
         $("#logviewer").scrollTop($("#logviewer").prop("scrollHeight"))
