@@ -115,5 +115,6 @@ google.setOnLoadCallback(function() {
             colors: ['black', 'green', 'orange'],
             max: 50
         })
+        socket.disconnect()
     })
 })
