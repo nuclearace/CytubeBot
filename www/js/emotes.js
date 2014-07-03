@@ -2,7 +2,7 @@ socket = io.connect(IO_URL)
 setTimeout(function() {
 	socket.emit("getRoom")
 	socket.emit("getEmotes")
-}, 1000);
+}, 1000)
 
 var addEmote = function(emote) {
 	var name = emote["name"]
