@@ -58,6 +58,7 @@ Require rank/permission:
 - `$userlimit (true|false) | n` Limits the number of videos users can add. Mods are not exempt. Ex: `$userlimit true 5`
 - `$shuffle` Shuffles the playlist. Requries mod or permission
 - `$blockuser username [true|false]` Stops username from adding videos. Requires owner rank to use
+- `$settime time` Sets the time on the video to time. Whereas time is in seconds. Requires mod or "T" permission.
 
 Don't require rank/permission:
 
