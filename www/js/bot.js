@@ -1,4 +1,4 @@
-socket = io.connect(IO_URL)
+socket = io(IO_URL)
 setTimeout(function() {
     socket.emit("getStats")
 }, 1000)
