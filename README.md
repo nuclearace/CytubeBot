@@ -1,3 +1,5 @@
+Fork of CytubeBot for ManillaGorilla and Bdizzle. Readme below taken from Calzoneman.
+
 CytubeBot
 =========
 
