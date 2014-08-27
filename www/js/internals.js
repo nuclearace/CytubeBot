@@ -56,11 +56,6 @@ socket.on("botInfo", function(botInfo) {
 
 // Handle the userlist info
 socket.on("userlist", function(userlist) {
-	// Hide IP
-	for (var i = 0; i < userlist.length; i++) {
-		delete userlist[i]["meta"]["ip"]
-	}
-
 	var stringyUserlist = ""
 	userlist.forEach(function(element, index, array) {
 		stringyUserlist += JSON.stringify(element) + "<br>"
