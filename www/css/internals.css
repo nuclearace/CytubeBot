@@ -1,0 +1,29 @@
+body {
+	color: white;
+	background-color: black;
+}
+
+#botinfodiv {
+	position: relative;
+	//top: 20px;
+}
+
+#playlistdiv {
+	position: relative;
+	top: 60px;
+}
+
+#playlistdetail {
+	position: relative;
+	display: none;
+}
+
+#userlistdiv {
+	position: relative;
+	top: 40px;
+}
+
+#userlistdetail {
+	position: relative;
+	display: none;
+}
