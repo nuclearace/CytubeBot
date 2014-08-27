@@ -37,7 +37,7 @@ socket.on("botInfo", function(botInfo) {
 	var isLeader = botInfo["isLeader"]
 	var startTime = botInfo["startTime"]
 
-	botInfoString += "Cybutbe Server: " + server + "<br>"
+	botInfoString += "Cytube Server: " + server + "<br>"
 	botInfoString += "Cytube Room: " + room + "<br>"
 	botInfoString += "Cytube Username: " + username + "<br>"
 	botInfoString += "Logging: " + useLogger + "<br>"
