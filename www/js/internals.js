@@ -50,6 +50,7 @@ socket.on("botInfo", function(botInfo) {
 	botInfoString += "Current Media: " + currentMedia + "<br>"
 	botInfoString += "isLeader: " + isLeader + "<br>"
 	botInfoString += "startTime: " + startTime + "<br>"
+	botInfoString += calculateUptime(startTime) + "<br>"
 
 	$("#botinfospan").html(botInfoString)
 })
@@ -87,6 +88,37 @@ $("#userlistdetailsbutton").click(function() {
 	else
 		$("#userlistdetail").hide()
 })
+
+var calculateUptime = function(startTime) {
+	var timeNow = new Date().getTime()
+
+	var time = (timeNow - startTime) / 1000
+	var h = "0",
+		m = "",
+		s = ""
+	var returnString = "Uptime: hours: %h, minutes: %m, seconds: %s"
+
+	if (time >= 3600) {
+		h = "" + Math.floor(time / 3600)
+		if (h.length < 2)
+			h = "0" + h
+		time %= 3600
+	}
+
+	m = "" + Math.floor(time / 60)
+	if (m.length < 2)
+		m = "0" + m
+
+	s = "" + (time % 60)
+	if (s.length < 2)
+		s = "0" + s
+
+	returnString = returnString.replace("%h", h)
+	returnString = returnString.replace("%m", m)
+	returnString = returnString.replace("%s", s)
+
+	return returnString
+}
 
 setInterval(function() {
 	socket.emit("getInternals")
