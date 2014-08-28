@@ -36,6 +36,8 @@ socket.on("botInfo", function(botInfo) {
 	var currentMedia = JSON.stringify(botInfo["currentMedia"])
 	var isLeader = botInfo["isLeader"]
 	var startTime = botInfo["startTime"]
+	var heapTotal = botInfo["heapTotal"]
+	var heapUsed = botInfo["heapUsed"]
 
 	botInfoString += "Cytube Server: " + server + "<br>"
 	botInfoString += "Cytube Room: " + room + "<br>"
@@ -50,6 +52,8 @@ socket.on("botInfo", function(botInfo) {
 	botInfoString += "Current Media: " + currentMedia + "<br>"
 	botInfoString += "isLeader: " + isLeader + "<br>"
 	botInfoString += "startTime: " + startTime + "<br>"
+	botInfoString += "Memory heap total: " + heapTotal + "<br>"
+	botInfoString += "Memory heap used: " + heapUsed + "<br>"
 	botInfoString += calculateUptime(startTime) + "<br>"
 
 	$("#botinfospan").html(botInfoString)
