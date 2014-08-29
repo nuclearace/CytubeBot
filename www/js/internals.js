@@ -95,11 +95,8 @@ $("#userlistdetailsbutton").click(function() {
 
 var calculateUptime = function(startTime) {
 	var timeNow = new Date().getTime()
-
 	var time = (timeNow - startTime) / 1000
-	var h = "0",
-		m = "",
-		s = ""
+	var h = "0", m = "", s = ""
 	var returnString = "Uptime: hours: %h, minutes: %m, seconds: %s"
 
 	if (time >= 3600) {
