@@ -20,5 +20,6 @@
         "ircPass": "",
         "ircChannel": "",
         "usemodflair": true,
-        "enableLogging": true
+        "enableLogging": true,
+        "maxvideolength": 600000
 }

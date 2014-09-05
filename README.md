@@ -35,6 +35,7 @@ Config
 - `ircChannel` [optional] - The channel the bot should join. ex: "#testing"
 - `usemodflair` - Whether to use modflair or not.
 - `enableLogging` - Whether to write log data to a file
+- `maxvideolength` - Maximum length of videos to select from database
 
 
 Commands
