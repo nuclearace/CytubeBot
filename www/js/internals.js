@@ -11,12 +11,14 @@ socket.on("botStatus", function(status) {
 	var hybridMods = status["hybridMods"]
 	var userLimit = status["userLimit"]
 	var userLimitNum = status["userLimitNum"]
+	var disallowed = status["disallow"]
 
 	var statusString = "Managing: " + managing + "<br>"
 	statusString += "Muted: " + muted + "<br>"
 	statusString += "Hybrid Mods: " + JSON.stringify(hybridMods) + "<br>"
 	statusString += "Userlimit: " + userLimit + "<br>"
-	statusString += "User Limit Number: " + userLimitNum
+	statusString += "User Limit Number: " + userLimitNum + "<br>"
+	statusString += "Disallowed: " + JSON.stringify(disallowed)
 	$("#statusspan").html(statusString)
 })
 
