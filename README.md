@@ -9,7 +9,7 @@ Install
 4. Add required info into config.json. See config section.
 5. run `node index.js`
 
-Note: If you plan on using the bot with Windows, you'll have to do more work installing node.js and npm, since some of the dependencies require compiling C++ code.
+Note: I have no idea if this will run on windows. If you have any success let me know.
 
 Config
 ------
@@ -61,6 +61,7 @@ Require rank/permission:
 - `$shuffle` - Shuffles the playlist. Requries mod or permission
 - `$blockuser username [true|false]` - Stops username from adding videos. Requires owner rank to use
 - `$settime time` - Sets the time on the video to time. Whereas time is in seconds. Requires mod or "T" permission.
+- `$disallow (user) (true|false)` - Makes it so `user` cannot use the bot. Requires mod or "M" permission.
 
 Don't require rank/permission:
 
