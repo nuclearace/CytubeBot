@@ -61,7 +61,8 @@ Require rank/permission:
 - `$shuffle` - Shuffles the playlist. Requries mod or permission
 - `$blockuser username [true|false]` - Stops username from adding videos. Requires owner rank to use
 - `$settime time` - Sets the time on the video to time. Whereas time is in seconds. Requires mod or "T" permission.
-- `$disallow (user) (true|false)` - Makes it so `user` cannot use the bot. Requires mod or "M" permission.
+- `$allow (user)` - Makes it so `user` can use the bot. Requires mod or "M" permission.
+- `$disallow (user)` - Makes it so `user` cannot use the bot. Requires mod or "M" permission.
 
 Don't require rank/permission:
 
