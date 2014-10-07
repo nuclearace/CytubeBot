@@ -100,7 +100,6 @@ google.setOnLoadCallback(function() {
             sum2 += averageUsers[i][1]
             if (i >= (smaspan - 1)) {
                 row[1] = sum1 / smaspan
-                console.log(sum1)
                 sum1 -= averageUsers[i - smaspan + 1][1]
             }
             if (i >= (lmaspan - 1)) {
