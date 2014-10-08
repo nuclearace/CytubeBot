@@ -46,6 +46,7 @@ Require rank/permission:
 - `$kick user [reason]` - Kicks user. Requires mod or kick permission.
 - `$ban user [reason]` - Namebans user. Requires mod or ban permission.
 - `$ipban user [reason]` - IPbans user. Requires mod or ban permission.
+- `$unban user` - Unbans user. Requires mod or ban permission.
 - `$addrandom [n]` - Adds n random videos from database. Requires mod on channel or "R" permission.
 - `$blacklist` - Blacklists currently playing video so that the bot doesn't add it randomly. Users can still add video. See $autodelete. Irreversible  without going into database. Requires admin on the channel.
 - `$blacklistuser (username) (true|false)` - Makes it so this users videos are not randomly added if the bot is leading
