@@ -1,4 +1,4 @@
-socket = io.connect(IO_URL)
+socket = io(IO_URL)
 
 socket.on("connect", function() {
 	socket.emit("getInternals")
