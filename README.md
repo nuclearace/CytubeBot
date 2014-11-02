@@ -68,7 +68,6 @@ Require rank/permission:
 Don't require rank/permission:
 
 - `$wolfram query` - Requires a [WolframAlpha API key](http://products.wolframalpha.com/api/)
-- `$anagram message` - Anagrams a message
 - `$talk message` - Cleverbot talk bot
 - `$processinfo` - Shows basic node process memory usage
 - `$quote [username]` - Fetches a quote from the user given, otherwise fetches a random quote
