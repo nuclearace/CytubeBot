@@ -13,7 +13,7 @@ Note: I have no idea if this will run on windows. If you have any success let me
 
 Config
 ------
-- `cytubeServer` - URL of the server. Ex "cytu.be" or "http://somecytubeserver.com:socketport" where socketport is replaced by the socketIO port
+- `cytubeServer` - URL of the server. Ex "cytu.be" or "somecytubeserver.com:socketport" where socketport is replaced by the socketIO port
 - `username` - Account name the bot uses on the Cytube server
 - `pw` [optional] - Password for the bot, blank logs in as guest
 - `room` - Room the bot should join
