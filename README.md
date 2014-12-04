@@ -55,7 +55,7 @@ Require rank/permission:
 - `$delete username [all | n]` - Deletes all or n videos added by username. Deletes the videos from the botton up. Leaving out all or n deletes the last video. Requires mod on channel or "D" permission
 - `$bump -(user|title) (username| title to be matched) [all|n]` - Bumps all or n videos by username, or bumps videos matching the given title. Ex: `$bump -title the dog 2` -  Will bump the last two videos matching `.*the dog.*`.
 - `$add link [next]` -  Adds link, requires mod because of potential for media limit abuse.
-- `$permissions` - example: `$permissions +x bob` gives permission x to bob. To take away use `$permissions -x bob`. To list permissions just do `$permissions bob`. To give or take away all permissions do `$permissions +all bob`/`$permissions -all bob`. See https://github.com/nuclearace/CytubeBot/wiki/Permissions
+- `$permissions` - example: `$permissions +x bob` gives permission x to bob. To take away use `$permissions -x bob`. To give or take away all permissions do `$permissions +all bob`/`$permissions -all bob`. See https://github.com/nuclearace/CytubeBot/wiki/Permissions
 - `$poll the name of the poll.option1. option 2.etc.[true]` - Opens a poll, use . to seperate options. The last option, if "true", makes it an obscured poll (votes are hidden to non-mods). Requires mod or "P" permission
 - `$endpoll` - Ends a poll. Requires mod or "P" permission
 - `$userlimit (true|false) | n` - Limits the number of videos users can add. Mods are not exempt. Ex: `$userlimit true 5`
@@ -80,6 +80,7 @@ Don't require rank/permission:
     The languages aa and bb must be specified as an ISO two letter language code. Requires Microsoft Translate api. See http://www.microsofttranslator.com/dev/ and http://msdn.microsoft.com/en-us/library/hh454950.aspx
 - `$blockedusers` - Lists the blocked users
 - `$blacklistedusers` - Lists the blacklisted users
+- `$listpermissions [username]` - Lists the hybrid mod permissions for a user. Omitting username shows calling users permissions.
 
 
 Custom Commands
