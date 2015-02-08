@@ -19,3 +19,16 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
+node_modules
+
+# Files created by bot
+cytubebot.db
+cytubelog.log
+err.log
+error.log
+persistent.json
+sys.log
+times
