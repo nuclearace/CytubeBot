@@ -26,7 +26,6 @@ google.setOnLoadCallback(function() {
         pieSliceBorderColor: "#404040"
     }
 
-
     socket.on("roomStats", function(data) {
         console.log(data)
         $("h1").text(data["room"] + " Statistics")
