@@ -10,7 +10,7 @@ Install
 5. run `node index.js`
 
 Notes: 
-If you receive errors related to libxmljs, you need to install GCC and run `npm install` again. Getting it to work on Windows is a pain, so you're best bet is to run it on Linux or OS X.
+If you receive errors related to libxmljs, you need to install GCC and run `npm install` again. Getting it to work on Windows is a pain, so your best bet is to run it on Linux or OS X.
 
 Config
 ------
