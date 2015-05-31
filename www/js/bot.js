@@ -27,7 +27,6 @@ google.setOnLoadCallback(function() {
     }
 
     socket.on("roomStats", function(data) {
-        console.log(data)
         $("h1").text(data["room"] + " Statistics")
         var popularVideos = data["popularVideos"]
         popularVideoTable = $('#popular_video_table > tbody')
