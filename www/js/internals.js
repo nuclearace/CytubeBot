@@ -81,17 +81,19 @@ socket.on("playlist", function(playlist) {
 })
 
 $("#playlistdetailsbutton").click(function() {
-    if (!$("#playlistdetail").is(":visible"))
+    if (!$("#playlistdetail").is(":visible")) {
         $("#playlistdetail").show()
-    else
+    } else {
         $("#playlistdetail").hide()
+    }
 })
 
 $("#userlistdetailsbutton").click(function() {
-    if (!$("#userlistdetail").is(":visible"))
+    if (!$("#userlistdetail").is(":visible")) {
         $("#userlistdetail").show()
-    else
+    } else {
         $("#userlistdetail").hide()
+    }
 })
 
 var calculateUptime = function(startTime) {
@@ -104,18 +106,21 @@ var calculateUptime = function(startTime) {
 
     if (time >= 3600) {
         h = "" + Math.floor(time / 3600)
-        if (h.length < 2)
+        if (h.length < 2) {
             h = "0" + h
+        }
         time %= 3600
     }
 
     m = "" + Math.floor(time / 60)
-    if (m.length < 2)
+    if (m.length < 2) {
         m = "0" + m
+    }
 
     s = "" + (time % 60)
-    if (s.length < 2)
+    if (s.length < 2) {
         s = "0" + s
+    }
 
     returnString = returnString.replace("%h", h)
     returnString = returnString.replace("%m", m)

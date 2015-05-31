@@ -23,12 +23,13 @@ var addEmote = function(emote) {
 
 var handleEmotes = function(emotes) {
     emotes.sort(function(a, b) {
-        if (a["name"] > b["name"])
+        if (a["name"] > b["name"]) {
             return 1
-        if (a["name"] < b["name"])
+        } if (a["name"] < b["name"]) {
             return -1
-        if (a["name"] = b["name"])
+        } if (a["name"] = b["name"]) {
             return 0
+        }
     })
     emotes.forEach(function(emote) {
         addEmote(emote)
