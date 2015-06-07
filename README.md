@@ -9,7 +9,7 @@ Install
 4. Add required info into config.json. See config section.
 5. run `node index.js`
 
-Notes: 
+Notes:
 If you receive errors related to libxmljs, you need to install GCC and run `npm install` again. Getting it to work on Windows is a pain, so your best bet is to run it on Linux or OS X.
 
 Config
@@ -21,7 +21,7 @@ Config
 - `roompassword` [optional] - Room password if there is one
 - `wolfram` [optional] - WolframAlpha apikey. See http://products.wolframalpha.com/api/
 - `weatherunderground` [optional] - WeatherUnderground apikey. see http://www.wunderground.com/weather/api/
-- `mstranslateclient` [optional] - Microsoft client name. See http://www.microsofttranslator.com/dev/ and http://msdn.microsoft.com/en-us/library/hh454950.aspx 
+- `mstranslateclient` [optional] - Microsoft client name. See http://www.microsofttranslator.com/dev/ and http://msdn.microsoft.com/en-us/library/hh454950.aspx
 - `mstranslatesecret` [optional] - Microsoft secret key
 - `youtubev3` [optional] - Youtubev3 api key. See https://developers.google.com/youtube/v3/
 - `deleteIfBlockedIn` [optional] - If given youtubev3 and you would like to delete videos blocked in a specific country, put the 2 letter country code of it here
@@ -37,6 +37,8 @@ Config
 - `usemodflair` - Whether to use modflair or not.
 - `enableLogging` - Whether to write log data to a file
 - `maxvideolength` - Maximum length of videos to select from database
+- `cleverbotioUser` - API User for cleverbot.io. See https://cleverbot.io/
+- `cleverbotioKey` - API Key for cleverbot.io. See https://cleverbot.io/
 
 
 Commands
