@@ -21,7 +21,5 @@
         "ircChannel": "",
         "usemodflair": true,
         "enableLogging": true,
-        "maxvideolength": 600000,
-        "cleverbotioUser": "",
-        "cleverbotioKey": ""
+        "maxvideolength": 600000
 }
