@@ -14,7 +14,7 @@ If you receive errors related to libxmljs, you need to install GCC and run `npm 
 
 Config
 ------
-- `cytubeServer` - URL of the server. Ex "cytu.be" or "somecytubeserver.com:socketport" where socketport is replaced by the socketIO port
+- `cytubeServer` - URL of the server. Ex "cytu.be"
 - `username` - Account name the bot uses on the Cytube server
 - `pw` [optional] - Password for the bot, blank logs in as guest
 - `room` - Room the bot should join
