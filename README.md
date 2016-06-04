@@ -3,7 +3,7 @@ CytubeBot
 
 Install
 -------
-1. Install [node.js](http://nodejs.org/) (Last tested on v5.6.0)
+1. Install [node.js](http://nodejs.org/) (Last tested on v6.2.1)
 2. Either use `git clone https://github.com/nuclearace/CytubeBot` if you have git or download the zip file. (git is better since it allows easier updates via `git pull`
 3. cd into the CytubeBot directory and run `npm install`
 4. Add required info into config.json. See config section.
