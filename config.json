@@ -6,8 +6,6 @@
         "roompassword": "",
         "wolfram": "",
         "weatherunderground": "",
-        "mstranslateclient": "",
-        "mstranslatesecret": "",
         "youtubev3": "",
         "deleteIfBlockedIn": "",
         "enableWebServer": false,

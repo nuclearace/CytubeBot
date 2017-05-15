@@ -21,8 +21,6 @@ Config
 - `roompassword` [optional] - Room password if there is one
 - `wolfram` [optional] - WolframAlpha apikey. See http://products.wolframalpha.com/api/
 - `weatherunderground` [optional] - WeatherUnderground apikey. see http://www.wunderground.com/weather/api/
-- `mstranslateclient` [optional] - Microsoft client name. See http://www.microsofttranslator.com/dev/ and http://msdn.microsoft.com/en-us/library/hh454950.aspx
-- `mstranslatesecret` [optional] - Microsoft secret key
 - `youtubev3` [optional] - Youtubev3 api key. See https://developers.google.com/youtube/v3/
 - `deleteIfBlockedIn` [optional] - If given youtubev3 and you would like to delete videos blocked in a specific country, put the 2 letter country code of it here
 - `enableWebServer` - Turns on/off the webserver
@@ -84,8 +82,8 @@ Don't require rank/permission:
 - `$forecast (US zip code | city/town country) [tomorrow]` - Looks up forecast for that day, or if tomorrow is given, the next day. Requires [WeatherUnderground API key](http://www.wunderground.com/weather/api/)
 - `$choose (choice1 choice2...)` - Chooses a random item from the choices given.
 - `$translate [[bb] | [aa>bb] | [aa->bb]] string` -
-    Translates the given string from aa, which defaults to detecting the language, to bb, which defaults to en, using Microsoft Translate.
-    The languages aa and bb must be specified as an ISO two letter language code. Requires Microsoft Translate api. See http://www.microsofttranslator.com/dev/ and http://msdn.microsoft.com/en-us/library/hh454950.aspx
+    Translates the given string from aa, which defaults to detecting the language, to bb, which defaults to en, using Google Translate.
+    The languages aa and bb must be specified as an ISO two letter language code.
 
 
 Custom Commands
