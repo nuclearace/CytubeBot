@@ -2,7 +2,7 @@
 
 ## Install
 
-1. Install [node.js](http://nodejs.org/) (Last tested on v7.4.0)
+1. Install [node.js](http://nodejs.org/) (Last tested on v17.2.0)
 2. Either use `git clone https://github.com/airforce270/CytubeBot` or download the zip file.
 (git is better since it allows easier updates via `git pull`)
 3. cd into the CytubeBot directory and run `npm install`.
