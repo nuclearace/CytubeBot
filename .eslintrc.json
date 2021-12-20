@@ -12,6 +12,8 @@
     "ecmaVersion": 13
   },
   "rules": {
+    "indent": "off",
+    "no-multi-spaces": "off",
     "require-jsdoc": "off"
   }
 }
