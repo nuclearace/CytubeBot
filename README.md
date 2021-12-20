@@ -20,7 +20,7 @@ in the IDE of your choice.
 
 ## Config
 
-- `cytubeServer` - URL of the server. Ex "cytu.be"
+- `cytubeServer` - URL of the server. Ex "https://cytu.be"
 - `username` - Account name the bot uses on the Cytube server
 - `pw` [optional] - Password for the bot, blank logs in as guest
 - `room` - Room the bot should join
