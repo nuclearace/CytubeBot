@@ -6,7 +6,24 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2.1.6
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2.2.0
+        with:
+          node-version: 17
+
+      - run: npm ci
+
+      - run: npm run lint
+
       - name: Check clang-format
         uses: DoozyX/clang-format-lint-action@v0.13
         with:

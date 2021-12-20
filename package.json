@@ -4,6 +4,9 @@
     "type": "git",
     "url": "https://github.com/airforce270/CytubeBot.git"
   },
+  "scripts": {
+    "lint": "eslint ."
+  },
   "dependencies": {
     "async": "^3.2.2",
     "cleverbot-node": "^0.3.11",
