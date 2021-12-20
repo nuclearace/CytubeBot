@@ -1,4 +1,6 @@
-#syslog, #errlog, #cytubelog {
+#syslog,
+#errlog,
+#cytubelog {
 	background-color: black;
 	color: white;
 }
