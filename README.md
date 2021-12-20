@@ -19,6 +19,8 @@ Getting it to work on Windows is a pain, so your best bet is to run it on Linux 
 [clang-format](https://) is used for formatting. It's recommended to enable "format on save"
 in the IDE of your choice.
 
+ESLint is used for linting.
+
 ## Config
 
 - `cytubeServer` - URL of the server. Ex "https://cytu.be"
