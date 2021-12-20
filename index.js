@@ -6,7 +6,7 @@ const child = new (forever.Monitor)(
     {max: 21, silent: false, minUptime: 5000, errFile: './err.log'});
 
 const writeTimes = () => {
-  fs.writeFile('times', String(child.times), (err) => {
+  fs.writeFile('times', String(child.times), err => {
     if (err) {
       console.log(err);
       child.stop();

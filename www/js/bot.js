@@ -18,7 +18,7 @@ google.setOnLoadCallback(() => {
     pieSliceBorderColor: '#404040',
   };
 
-  socket.on('roomStats', (data) => {
+  socket.on('roomStats', data => {
     $('h1').text(data['room'] + ' Statistics');
     var popularVideos = data['popularVideos'];
     popularVideoTable = $('#popular_video_table > tbody');

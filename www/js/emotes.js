@@ -32,7 +32,7 @@ function handleEmotes(emotes) {
       return 0;
     }
   })
-  emotes.forEach((emote) => addEmote(emote));
+  emotes.forEach(emote => addEmote(emote));
   socket.disconnect();
 }
 
