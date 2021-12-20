@@ -1,45 +1,44 @@
-socket = io(IO_URL)
-setTimeout(function() {
-    socket.emit("getRoom")
-    socket.emit("getEmotes")
-}, 1000)
+socket = io(IO_URL);
+setTimeout(() => {
+  socket.emit('getRoom');
+  socket.emit('getEmotes');
+}, 1000);
 
-var addEmote = function(emote) {
-    var name = emote["name"]
-    var image = emote["image"]
-    var tbl = $("#emotediv table")
-    var tr = $("<tr/>").appendTo(tbl)
+function addEmote(emote) {
+  const name = emote['name'];
+  const image = emote['image'];
+  const tbl = $('#emotediv table');
+  const tr = $('<tr/>').appendTo(tbl);
 
-    var emoteDiv = $("<span>").text(name)
-        .appendTo($("<td/>").appendTo(tr))
+  const emoteDiv = $('<span>').text(name).appendTo($('<td/>').appendTo(tr));
 
-    var popoverData = {
-        html: true,
-        trigger: "hover",
-        content: '<img src="' + image + '" class="channel-emote">'
+  const popoverData = {
+    html: true,
+    trigger: 'hover',
+    content: '<img src="' + image + '" class="channel-emote">'
+  };
+  emoteDiv.popover(popoverData);
+}
+
+function handleEmotes(emotes) {
+  emotes.sort((a, b) => {
+    if (a['name'] > b['name']) {
+      return 1;
     }
-    emoteDiv.popover(popoverData)
+    if (a['name'] < b['name']) {
+      return -1;
+    }
+    if (a['name'] = b['name']) {
+      return 0;
+    }
+  })
+  emotes.forEach((emote) => addEmote(emote));
+  socket.disconnect();
 }
 
-var handleEmotes = function(emotes) {
-    emotes.sort(function(a, b) {
-        if (a["name"] > b["name"]) {
-            return 1
-        } if (a["name"] < b["name"]) {
-            return -1
-        } if (a["name"] = b["name"]) {
-            return 0
-        }
-    })
-    emotes.forEach(function(emote) {
-        addEmote(emote)
-    })
-    socket.disconnect()
+function handleRoom(room) {
+  $('h1').text(room + ' Emotes');
 }
 
-var handleRoom = function(room) {
-    $("h1").text(room + " Emotes")
-}
-
-socket.on("emotes", handleEmotes)
-socket.on("room", handleRoom)
+socket.on('emotes', handleEmotes);
+socket.on('room', handleRoom);
