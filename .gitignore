@@ -32,3 +32,6 @@ error.log
 persistent.json
 sys.log
 times
+
+# Real config file, so it's not accidentally committed
+config.json

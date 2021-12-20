@@ -6,7 +6,8 @@
 2. Either use `git clone https://github.com/airforce270/CytubeBot` or download the zip file.
 (git is better since it allows easier updates via `git pull`)
 3. cd into the CytubeBot directory and run `npm install`.
-4. Add required info into `config.json`. See config section.
+4. Copy `config.SAMPLE.json` to `config.json` and update the config values to what you need.
+   See config section.
 5. Run `node index.js`.
 
 Notes:
