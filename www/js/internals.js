@@ -2,7 +2,7 @@ socket = io(IO_URL);
 socket.on('connect', () => socket.emit('getInternals'));
 
 // Handle the bot's status info
-socket.on('botStatus', status => {
+socket.on('botStatus', (status) => {
   const managing = status['managing'];
   const muted = status['muted'];
   const hybridMods = status['hybridMods'];
@@ -20,7 +20,7 @@ socket.on('botStatus', status => {
 });
 
 // Handle bot info
-socket.on('botInfo', botInfo => {
+socket.on('botInfo', (botInfo) => {
   const server = botInfo['server'];
   const room = botInfo['room'];
   const username = botInfo['username'];
@@ -57,17 +57,17 @@ socket.on('botInfo', botInfo => {
 });
 
 // Handle the userlist info
-socket.on('userlist', userlist => {
+socket.on('userlist', (userlist) => {
   const stringyUserlist =
-      userlist.map(element => JSON.stringify(element) + '<br>').join('');
+      userlist.map((element) => JSON.stringify(element) + '<br>').join('');
   $('#userlistspan').text('Number of users: ' + userlist.length);
   $('#userlistdetail').html(stringyUserlist);
 });
 
 // Handle the playlist info
-socket.on('playlist', playlist => {
+socket.on('playlist', (playlist) => {
   const stringyPlaylist =
-      playlist.map(element => JSON.stringify(element) + '<br>').join('');
+      playlist.map((element) => JSON.stringify(element) + '<br>').join('');
   $('#playlistspan').text('Number of items on playlist: ' + playlist.length);
   $('#playlistdetail').html(stringyPlaylist);
 });
@@ -94,7 +94,7 @@ function calculateUptime(startTime) {
   let h = '0';
   let m = '';
   let s = '';
-  let returnString = 'Uptime: hours: %h, minutes: %m, seconds: %s';
+  const returnString = 'Uptime: hours: %h, minutes: %m, seconds: %s';
 
   if (time >= 3600) {
     h = '' + Math.floor(time / 3600);

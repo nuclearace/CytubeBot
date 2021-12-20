@@ -15,7 +15,7 @@ function addEmote(emote) {
   const popoverData = {
     html: true,
     trigger: 'hover',
-    content: '<img src="' + image + '" class="channel-emote">'
+    content: '<img src="' + image + '" class="channel-emote">',
   };
   emoteDiv.popover(popoverData);
 }
@@ -31,8 +31,8 @@ function handleEmotes(emotes) {
     if (a['name'] = b['name']) {
       return 0;
     }
-  })
-  emotes.forEach(emote => addEmote(emote));
+  });
+  emotes.forEach((emote) => addEmote(emote));
   socket.disconnect();
 }
 

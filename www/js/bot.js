@@ -18,9 +18,9 @@ google.setOnLoadCallback(() => {
     pieSliceBorderColor: '#404040',
   };
 
-  socket.on('roomStats', data => {
+  socket.on('roomStats', (data) => {
     $('h1').text(data['room'] + ' Statistics');
-    var popularVideos = data['popularVideos'];
+    const popularVideos = data['popularVideos'];
     popularVideoTable = $('#popular_video_table > tbody');
     for (let i = 0; i < popularVideos.length; i++) {
       const row = $('<tr><td class="video"></td><td class="freq"></td></tr>');
@@ -86,9 +86,8 @@ google.setOnLoadCallback(() => {
     let sum1 = 0;
     let sum2 = 0;
     for (i = 0; i < averageUsers.length; i++) {
-      let row;
       averageUsers[i][0] = new Date(averageUsers[i][0]);
-      row = [averageUsers[i][0], 0, 0, averageUsers[i][1]];
+      const row = [averageUsers[i][0], 0, 0, averageUsers[i][1]];
       sum1 += averageUsers[i][1];
       sum2 += averageUsers[i][1];
       if (i >= (smaspan - 1)) {
@@ -105,9 +104,9 @@ google.setOnLoadCallback(() => {
         document.getElementById('average_user_div'));
     averageUserTimeline.draw(averageUserData, {
       'displayAnnotations': true,
-      colors: ['black', 'green', 'orange'],
-      max: 50,
-    })
+      'colors': ['black', 'green', 'orange'],
+      'max': 50,
+    });
     socket.disconnect();
   });
 });

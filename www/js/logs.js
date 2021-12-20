@@ -26,4 +26,4 @@ $(document).ready(() => {
   $('#syslog').click(readSyslog);
   $('#errlog').click(readErrlog);
   $('#cytubelog').click(readCytubeLog);
-})
+});
