@@ -1,0 +1,14 @@
+name: Run linter
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check clang-format
+        uses: DoozyX/clang-format-lint-action@v0.13
+        with:
+          extensions: "js"
+          clangFormatVersion: 13
