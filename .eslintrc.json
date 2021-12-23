@@ -19,11 +19,9 @@
     "max-len": [
       "error",
       {
-        // Disable line length maximum for imports and long URLs.
-        "ignorePatterns": [
-          "^import .*",
-          "'https?.*"
-        ]
+        // Disable line length maximum for imports and URLs.
+        "ignorePattern": "^import .*",
+        "ignoreUrls": true
       }
     ]
   }
