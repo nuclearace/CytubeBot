@@ -1,12 +1,12 @@
-const forever = require('forever-monitor');
-const fs = require('fs');
+import {Monitor} from 'forever-monitor';
+import {writeFile} from 'fs';
 
-const child = new (forever.Monitor)(
+const child = new Monitor(
     './lib/start.js',
     {max: 21, silent: false, minUptime: 5000, errFile: './err.log'});
 
-const writeTimes = () => {
-  fs.writeFile('times', String(child.times), (err) => {
+function writeTimes() {
+  writeFile('times', String(child.times), (err) => {
     if (err) {
       console.log(err);
       child.stop();
