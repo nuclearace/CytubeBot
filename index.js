@@ -1,7 +1,7 @@
 import {Monitor} from 'forever-monitor';
 import {writeFile} from 'fs';
 
-const child = new (Monitor)(
+const child = new Monitor(
     './lib/start.js',
     {max: 21, silent: false, minUptime: 5000, errFile: './err.log'});
 
