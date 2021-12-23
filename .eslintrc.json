@@ -15,6 +15,14 @@
   "rules": {
     "indent": "off",
     "no-multi-spaces": "off",
-    "require-jsdoc": "off"
+    "require-jsdoc": "off",
+    "max-len": [
+      "error",
+      {
+        // Disable line length maximum for imports and URLs.
+        "ignorePattern": "^import .*",
+        "ignoreUrls": true
+      }
+    ]
   }
 }
