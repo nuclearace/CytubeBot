@@ -1,74 +1,58 @@
 socket = io(IO_URL);
+
 socket.on('connect', () => socket.emit('getInternals'));
 
 // Handle the bot's status info
 socket.on('botStatus', (status) => {
-  const managing = status['managing'];
-  const muted = status['muted'];
-  const hybridMods = status['hybridMods'];
-  const userLimit = status['userLimit'];
-  const userLimitNum = status['userLimitNum'];
-  const disallowed = status['disallow'];
+  const statusString = [
+    `Managing: ${status.managing}`,
+    `Muted: ${status.muted}`,
+    `Hybrid Mods: ${JSON.stringify(status.hybridMods)}`,
+    `Userlimit: ${status.userLimit}`,
+    `User Limit Number: ${status.userLimitNum}`,
+    `Disallowed: ${JSON.stringify(status.disallow)}`,
+  ];
 
-  const statusString = ('Managing: ' + managing + '<br>') +
-      ('Muted: ' + muted + '<br>') +
-      ('Hybrid Mods: ' + JSON.stringify(hybridMods) + '<br>') +
-      ('Userlimit: ' + userLimit + '<br>') +
-      ('User Limit Number: ' + userLimitNum + '<br>') +
-      ('Disallowed: ' + JSON.stringify(disallowed));
-  $('#statusspan').html(statusString);
+  $('#statusspan').html(statusString.join('<br>'));
 });
 
 // Handle bot info
 socket.on('botInfo', (botInfo) => {
-  const server = botInfo['server'];
-  const room = botInfo['room'];
-  const username = botInfo['username'];
-  const useLogger = botInfo['useLogger'];
-  const deleteIfBlockedIn = botInfo['deleteIfBlockedIn'];
-  const socketPort = botInfo['socketPort'];
-  const webURL = botInfo['webURL'];
-  const webPort = botInfo['webPort'];
-  const previousUID = botInfo['previousUID'];
-  const currentUID = botInfo['currentUID'];
-  const currentMedia = JSON.stringify(botInfo['currentMedia']);
-  const isLeader = botInfo['isLeader'];
-  const startTime = botInfo['startTime'];
-  const heapTotal = botInfo['heapTotal'];
-  const heapUsed = botInfo['heapUsed'];
+  const botInfoLines = [
+    `Cytube Server: ${botInfo.server}`,
+    `Cytube Room: ${botInfo.room}`,
+    `Cytube Username: ${botInfo.username}`,
+    `Logging: ${botInfo.useLogger}`,
+    `Delete videos blocked in: ${botInfo.deleteIfBlockedIn}`,
+    `Socket.io port: ${botInfo.socketPort}`,
+    `Web URL: ${botInfo.webURL}`,
+    `Web Port: ${botInfo.webPort}`,
+    `Previous UID: ${botInfo.previousUID}`,
+    `current UID: ${botInfo.currentUID}`,
+    `Current Media: ${JSON.stringify(botInfo.currentMedia)}`,
+    `isLeader: ${botInfo.isLeader}`,
+    `startTime: ${botInfo.startTime}`,
+    `Memory heap total: ${botInfo.heapTotal}`,
+    `Memory heap used: ${botInfo.heapUsed}`,
+    `${calculateUptime(botInfo.startTime)}`,
+  ];
 
-  const botInfoString = ('Cytube Server: ' + server + '<br>') +
-      ('Cytube Room: ' + room + '<br>') +
-      ('Cytube Username: ' + username + '<br>') +
-      ('Logging: ' + useLogger + '<br>') +
-      ('Delete videos blocked in: ' + deleteIfBlockedIn + '<br>') +
-      ('Socket.io port: ' + socketPort + '<br>') +
-      ('Web URL: ' + webURL + '<br>') + ('Web Port: ' + webPort + '<br>') +
-      ('Previous UID: ' + previousUID + '<br>') +
-      ('current UID: ' + currentUID + '<br>') +
-      ('Current Media: ' + currentMedia + '<br>') +
-      ('isLeader: ' + isLeader + '<br>') +
-      ('startTime: ' + startTime + '<br>') +
-      ('Memory heap total: ' + heapTotal + '<br>') +
-      ('Memory heap used: ' + heapUsed + '<br>') +
-      (calculateUptime(startTime) + '<br>');
-
-  $('#botinfospan').html(botInfoString);
+  $('#botinfospan').html(botInfoLines.join('<br />') + '<br />');
 });
 
 // Handle the userlist info
 socket.on('userlist', (userlist) => {
   const stringyUserlist =
-      userlist.map((element) => JSON.stringify(element) + '<br>').join('');
-  $('#userlistspan').text('Number of users: ' + userlist.length);
+      userlist.map((element) => `${JSON.stringify(element)}<br>`).join('');
+  $('#userlistspan').text(`Number of users: ${userlist.length}`);
   $('#userlistdetail').html(stringyUserlist);
 });
 
 // Handle the playlist info
 socket.on('playlist', (playlist) => {
   const stringyPlaylist =
-      playlist.map((element) => JSON.stringify(element) + '<br>').join('');
-  $('#playlistspan').text('Number of items on playlist: ' + playlist.length);
+      playlist.map((element) => `${JSON.stringify(element)}<br>`).join('');
+  $('#playlistspan').text(`Number of items on playlist: ${playlist.length}`);
   $('#playlistdetail').html(stringyPlaylist);
 });
 
