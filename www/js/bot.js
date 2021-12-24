@@ -1,4 +1,5 @@
 socket = io(IO_URL);
+
 setTimeout(() => socket.emit('getStats'), 1000);
 
 google.load(
@@ -19,27 +20,27 @@ google.setOnLoadCallback(() => {
   };
 
   socket.on('roomStats', (data) => {
-    $('h1').text(data['room'] + ' Statistics');
-    const popularVideos = data['popularVideos'];
+    $('h1').text(`${data.room} Statistics`);
+    const popularVideos = data.popularVideos;
     popularVideoTable = $('#popular_video_table > tbody');
     for (let i = 0; i < popularVideos.length; i++) {
       const row = $('<tr><td class="video"></td><td class="freq"></td></tr>');
       let link;
       switch (popularVideos[i][0]) {
         case 'yt':
-          link = 'http://youtube.com/watch?v=' + popularVideos[i][1];
+          link = `http://youtube.com/watch?v=${popularVideos[i][1]}`;
           break;
         case 'vm':
-          link = 'http://vimeo.com/' + popularVideos[i][1];
+          link = `http://vimeo.com/${popularVideos[i][1]}`;
           break;
         case 'sc':
           link = '#';
           break;
         case 'bt':
-          link = 'http://blip.tv/posts/' + popularVideos[i][1];
+          link = `http://blip.tv/posts/${popularVideos[i][1]}`;
           break;
         case 'dm':
-          link = 'http://www.dailymotion.com/video/' + popularVideos[i][1];
+          link = `http://www.dailymotion.com/video/${popularVideos[i][1]}`;
           break;
         default:
           link = '#';
@@ -62,7 +63,7 @@ google.setOnLoadCallback(() => {
     const userVideoData = new google.visualization.DataTable();
     userVideoData.addColumn('string', 'Topping');
     userVideoData.addColumn('number', 'Slices');
-    userVideoData.addRows(data['userVideoStats']);
+    userVideoData.addRows(data.userVideoStats);
     const userVideoChart = new google.visualization.PieChart(
         document.getElementById('user_video_div'));
     userVideoChart.draw(userVideoData, pieStyle);
@@ -70,13 +71,13 @@ google.setOnLoadCallback(() => {
     const userChatData = new google.visualization.DataTable();
     userChatData.addColumn('string', 'Topping');
     userChatData.addColumn('number', 'Slices');
-    userChatData.addRows(data['userChatStats']);
+    userChatData.addRows(data.userChatStats);
     const userChatChart = new google.visualization.PieChart(
         document.getElementById('user_chat_div'));
     userChatChart.draw(userChatData, pieStyle);
 
     const averageUserData = new google.visualization.DataTable();
-    const averageUsers = data['averageUsers'];
+    const averageUsers = data.averageUsers;
     averageUserData.addColumn('datetime', 'Time');
     averageUserData.addColumn('number', 'Short Moving average');
     averageUserData.addColumn('number', 'Long Moving average');
