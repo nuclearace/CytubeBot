@@ -20,8 +20,8 @@ function readCytubeLog() {
       });
 }
 
-$(document).ready(() => {
-  $('#syslog').click(readSyslog);
-  $('#errlog').click(readErrlog);
-  $('#cytubelog').click(readCytubeLog);
+jQuery(function() {
+  $('#syslog').on('click', readSyslog);
+  $('#errlog').on('click', readErrlog);
+  $('#cytubelog').on('click', readCytubeLog);
 });
