@@ -66,6 +66,9 @@ Require rank/permission:
 - `$rngkick (username)` - Kicks user with a random length between 5 and 30 minutes.
   Will auto-kick them again if they try to join again before the time's up.
   Requires mod or kick permission.
+- `$timedkick (username) (minutes)` - Kicks user for a set amount of time in minutes.
+  Will auto-kick them again if they try to join again before the time's up.
+  Requires mod or kick permission.
 - `$unkick (username)` - "Unkicks" a user that was kicked with a timed or RNG kick,
   allowing them to join again. Requires mod or kick permission.
 - `$ban (username) [reason]` - Namebans user. Requires mod or ban permission.
