@@ -2,13 +2,16 @@
 
 ## Install
 
+1. Install [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 1. Install [node.js](http://nodejs.org/) (Last tested on v17.2.0)
-2. Either use `git clone https://github.com/airforce270/CytubeBot` or download the zip file.
-(git is better since it allows easier updates via `git pull`)
-3. cd into the CytubeBot directory and run `npm install`.
-4. Copy `config.SAMPLE.json` to `config.json` and update the config values to what you need.
-   See config section.
-5. Run `node index.js`.
+1. Run `git clone https://github.com/airforce270/CytubeBot`
+   - This will create a directory named `CytubeBot` containing the bot code.
+     Keep this in mind when running the command.
+1. Run `cd CytubeBot`
+1. Run `npm install`
+1. Make a copy of `config.SAMPLE.json` named `config.json` and update the config values to what you need.
+   See [config section](#config).
+1. Run `npm run start`.
 
 Notes:
 If you receive errors related to libxmljs, you need to install GCC and run `npm install` again.
@@ -16,10 +19,10 @@ Getting it to work on Windows is a pain, so your best bet is to run it on Linux 
 
 ### Developing
 
-[clang-format](https://) is used for formatting. It's recommended to enable "format on save"
-in the IDE of your choice.
+[clang-format](https://clang.llvm.org/docs/ClangFormat.html) is used for formatting.
+It's recommended to enable "format on save" in the IDE of your choice.
 
-ESLint is used for linting.
+[ESLint](https://eslint.org/) is used for linting. Any issues it finds should be fixed.
 
 ## Config
 
