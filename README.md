@@ -17,6 +17,10 @@ Notes:
 If you receive errors related to libxmljs, you need to install GCC and run `npm install` again.
 Getting it to work on Windows is a pain, so your best bet is to run it on Linux or OS X.
 
+### Update
+
+To update the bot, simply run `git pull`
+
 ### Developing
 
 [clang-format](https://clang.llvm.org/docs/ClangFormat.html) is used for formatting.
