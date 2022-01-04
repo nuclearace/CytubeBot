@@ -66,6 +66,9 @@ Require rank/permission:
   Requires mod permission.
 - `$removepoints (username) (points|all)` - Removes points from a given user.
   Requires mod permission.
+- `$module (module) (on|off)` - Enable or disable a module. Requires mod permission.
+- `$moduleson` - Enable all modules. Requires mod permission.
+- `$modulesoff` - Disable all modules. Requires mod permission.
 - `$kick (username) [reason]` - Kicks user. Requires mod or kick permission.
 - `$rngkick (username)` - Kicks user with a random length between 5 and 30 minutes.
   Will auto-kick them again if they try to join again before the time's up.
