@@ -62,6 +62,10 @@ Require rank/permission:
   The last option, if "true", makes it an obscured poll (votes are hidden to non-mods).
   Requires mod or "P" permission.
 - `$endpoll` - Ends a poll. Requires mod or "P" permission.
+- `$addpoints (username) (points)` - Adds points to a given user.
+  Requires mod permission.
+- `$removepoints (username) (points|all)` - Removes points from a given user.
+  Requires mod permission.
 - `$kick (username) [reason]` - Kicks user. Requires mod or kick permission.
 - `$rngkick (username)` - Kicks user with a random length between 5 and 30 minutes.
   Will auto-kick them again if they try to join again before the time's up.
@@ -110,6 +114,7 @@ Require rank/permission:
 Don't require rank/permission:
 
 - `$cock` - Tells you your size.
+- `$p [user]` - Tells you how many points you or another user have.
 - `$choose [option1] [option2] {...}` - Chooses one of several options randomly.
 - `$pyramid [emote]` - Makes a 4-height pyramid with an emote.
 - `$blacklistedusers` - Lists the blacklisted users.
