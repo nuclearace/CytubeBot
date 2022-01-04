@@ -99,6 +99,8 @@ Require rank/permission:
   To take away use `$permissions -x bob`. To give or take away all permissions.
   do `$permissions +all bob`/`$permissions -all bob`.
   See [permissions page](https://github.com/airforce270/CytubeBot/wiki/Permissions).
+- `$restart` - Restart the bot. Requires leader or 'K' permission.
+- `$update` - Updates the bot using `git pull`. Requires leader or 'K' permission.
 - `$userlimit (true|false) | n` - Limits the number of videos users can add. Mods are not exempt.
   Ex: `$userlimit true 5`.
 - `$addrandom [n]` - Adds n random videos from database. Requires mod on channel or "R" permission.
