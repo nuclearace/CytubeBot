@@ -6,7 +6,8 @@
   },
   "type": "module",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "node index.js"
   },
   "dependencies": {
     "async": "^3.2.2",
