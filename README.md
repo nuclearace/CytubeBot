@@ -77,17 +77,13 @@ Require rank/permission:
 - `$moduleson` - Enable all modules. Requires mod permission.
 - `$modulesoff` - Disable all modules. Requires mod permission.
 - `$kick (username) [reason]` - Kicks user. Requires mod or kick permission.
-- `$rngkick (username)` - Kicks user with a random length between 5 and 30 minutes.
+- `$rngkick` - Kicks a random user. Requires mod or kick permission.
+- `$tempban (username) (minutes)` - Bans user for a set amount of time in minutes.
   Will auto-kick them again if they try to join again before the time's up.
   Requires mod or kick permission.
-- `$timedkick (username) (minutes)` - Kicks user for a set amount of time in minutes.
-  Will auto-kick them again if they try to join again before the time's up.
-  Requires mod or kick permission.
-- `$unkick (username)` - "Unkicks" a user that was kicked with a timed or RNG kick,
-  allowing them to join again. Requires mod or kick permission.
 - `$ban (username) [reason]` - Namebans user. Requires mod or ban permission.
 - `$ipban (username) [reason]` - IPbans user. Requires mod or ban permission.
-- `$unban (username)` - Unbans user. Requires mod or ban permission.
+- `$unban (username)` - Unbans user. Works for temp banned users. Requires mod or ban permission.
 - `$blacklistuser (username) (true|false)` - Makes it so this users videos are not randomly added
   if the bot is leading.
 - `$blockuser (username) [true|false]` - Stops username from adding videos. Requires mod or higher.
