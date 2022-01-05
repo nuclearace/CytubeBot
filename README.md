@@ -127,7 +127,9 @@ Don't require rank/permission:
 
 - `$cock` - Tells you your size.
 - `$p [user]` - Tells you how many points you or another user have.
-- `$roulette (points)` - Roulette some points!
+  `$points` and `$userpoints` also work.
+- `$givepoints (user) (points)` - Give away some of your points to another user.
+- `$roulette (points|n%|all)` - Roulette some points!
 - `$choose [option1] [option2] {...}` - Chooses one of several options randomly.
 - `$pyramid [emote]` - Makes a 4-height pyramid with an emote.
 - `$blacklistedusers` - Lists the blacklisted users.
