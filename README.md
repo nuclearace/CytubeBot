@@ -11,7 +11,7 @@
 1. Run `npm install`
 1. Make a copy of `config.SAMPLE.json` named `config.json` and update the config values to what you need.
    See [config section](#config).
-1. Run `npm run start`.
+1. Run `npm run start`
 
 Notes:
 If you receive errors related to libxmljs, you need to install GCC and run `npm install` again.
