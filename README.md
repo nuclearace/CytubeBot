@@ -122,6 +122,8 @@ Require rank/permission:
 Don't require rank/permission:
 
 - `$cock` - Tells you your size.
+- `$ping` - Pings you.
+- `$rngping` - Pings a random user.
 - `$p [user]` - Tells you how many points you or another user have.
   `$points` and `$userpoints` also work.
 - `$givepoints (user) (points)` - Give away some of your points to another user.
