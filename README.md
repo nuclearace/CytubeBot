@@ -19,7 +19,7 @@ Getting it to work on Windows is a pain, so your best bet is to run it on Linux 
 
 ### Update
 
-To update the bot, simply run `git pull`
+To update the bot, simply run `npm install` then `git pull`
 
 ### Developing
 
