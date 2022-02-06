@@ -117,6 +117,8 @@ Require rank/permission:
 Don't require rank/permission:
 
 - `$cock` - Tells you your size.
+- `$tuck (user)` - Tuck someone in :)
+- `$gn` - Have the bot wish you a good night :)
 - `$ping` - Pings you.
 - `$rngping` - Pings a random user.
 - `$p [user]` - Tells you how many points you or another user have.
