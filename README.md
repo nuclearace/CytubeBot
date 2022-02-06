@@ -48,11 +48,6 @@ It's recommended to enable "format on save" in the IDE of your choice.
   `http://google.com` or `http://192.76.32.222`.
 - `webPort` [optional] - The port for the webserver. Anything below 1000 requires root.
 - `socketPort` [optional] - The port for socketIO. Anything below 1000 requires root.
-- `useIRC` - Whether or not to bridge to IRC. Note: All commands that require rank will not work.
-- `ircServer` [optional] - the IRC server address. ex: "irc.6irc.net".
-- `ircNick` [optional] - The nickname of the bot on irc.
-- `ircPass` [optional] - Password for the IRC nick (If needed).
-- `ircChannel` [optional] - The channel the bot should join. ex: "#testing"
 - `usemodflair` - Whether to use modflair or not.
 - `enableLogging` - Whether to write log data to a file.
 - `maxvideolength` - Maximum length of videos to select from database.

@@ -16,7 +16,6 @@
     "forever-monitor": "^3.0.3",
     "google-translate-api": "^2.3.0",
     "humanize-duration": "^3.27.1",
-    "irc": "^0.5.2",
     "libxmljs2": "^0.29.0",
     "limiter": "2.0.1",
     "pug": "^3.0.2",
