@@ -56,65 +56,7 @@ It's recommended to enable "format on save" in the IDE of your choice.
 
 ## Commands
 
-Require rank/permission:
-
-- `$mute/$unmute` - Mutes/Unmutes the bot. Requires mod on the channel or "M" permission.
-- `$clearchat` - Clears chat. Requires mod or "M" permission.
-- `$poll title.option1.option2.etc.[true]` - Opens a poll, use . to seperate options.
-  The last option, if "true", makes it an obscured poll (votes are hidden to non-mods).
-  Requires mod or "P" permission.
-- `$endpoll` - Ends a poll. Requires mod or "P" permission.
-- `$addpoints (username) (points)` - Adds points to a given user.
-  Requires mod permission.
-- `$removepoints (username) (points|all)` - Removes points from a given user.
-  Requires mod permission.
-- `$module (module) (on|off)` - Enable or disable a module. Requires mod permission.
-- `$moduleson` - Enable all modules. Requires mod permission.
-- `$modulesoff` - Disable all modules. Requires mod permission.
-- `$kick (username) [reason]` - Kicks user. Requires mod or kick permission.
-- `$rngkick` - Kicks a random user. Requires mod or kick permission.
-- `$tempban (username) (minutes)` - Bans user for a set amount of time in minutes.
-  Will auto-kick them again if they try to join again before the time's up.
-  Requires mod or kick permission.
-- `$ban (username) [reason]` - Namebans user. Requires mod or ban permission.
-- `$ipban (username) [reason]` - IPbans user. Requires mod or ban permission.
-- `$unban (username)` - Unbans user. Works for temp banned users. Requires mod or ban permission.
-- `$blacklistuser (username) (true|false)` - Makes it so this users videos are not randomly added
-  if the bot is leading.
-- `$blockuser (username) [true|false]` - Stops username from adding videos. Requires mod or higher.
-- `$allow (username)` - Makes it so `user` can use the bot. Requires mod or "M" permission.
-  Note - This command is case-sensitive.
-- `$disallow (username)` - Makes it so `user` cannot use the bot. Requires mod or "M" permission.
-  Note - This command is case-sensitive.
-- `$permissions []` - example: `$permissions +x bob` gives permission x to bob.
-  To take away use `$permissions -x bob`. To give or take away all permissions.
-  do `$permissions +all bob`/`$permissions -all bob`.
-  See [permissions page](https://github.com/airforce270/CytubeBot/wiki/Permissions).
-- `$restart` - Restart the bot. Requires leader or 'K' permission.
-- `$update` - Updates the bot using `git pull`. Requires leader or 'K' permission.
-- `$userlimit (true|false) | n` - Limits the number of videos users can add. Mods are not exempt.
-  Ex: `$userlimit true 5`.
-- `$addrandom [n]` - Adds n random videos from database. Requires mod on channel or "R" permission.
-- `$blacklist` - Blacklists currently playing video so that the bot doesn't add it randomly.
-  Users can still add video. See $autodelete. Irreversible without going into database.
-  Requires mod or higher.
-- `$autodelete` - Makes it so non-mods cannot add currently playing video.
-  Irreversible without going into database. Requires mod or higher.
-- `$skip` - Skips the current video. Requires mod on channel or "S" permission.
-- `$delete (username) [all | n]` - Deletes all or n videos added by username.
-  Deletes the videos from the botton up. Leaving out all or n deletes the last video.
-  Requires mod on channel or "D" permission
-- `$purge (username)` - Deletes all videos added by username. Requires mod on channel or "D" permission
-- `$bump -(user|title) (username | title to be matched) [all|n]` - Bumps all or n videos by username,
-  or bumps videos matching the given title. Ex: `$bump -title the dog 2` -
-  Will bump the last two videos matching `.*the dog.*`.
-- `$add URL [next]` -  Adds link, requires mod because of potential for media limit abuse.
-- `$shuffle` - Shuffles the playlist. Requries mod or permission
-- `$settime time` - Sets the time on the video to time. Whereas time is in seconds.
-  Requires mod or "T" permission.
-- `$spam [n] message` - Spams a message several times. Requires mod or higher.
-
-Don't require rank/permission:
+Can be run by anyone:
 
 - `$cock` - Tells you your size.
 - `$tuck (user)` - Tuck someone in :)
@@ -150,6 +92,66 @@ Don't require rank/permission:
     Translates the given string from aa, which defaults to detecting the language,
     to bb, which defaults to en, using Google Translate.
     The languages aa and bb must be specified as an ISO two letter language code.
+
+Requires rank/permission:
+
+- `$mute/$unmute` - Mutes/Unmutes the bot. Requires mod on the channel or "M" permission.
+- `$clearchat` - Clears chat. Requires mod or "M" permission.
+- `$poll title.option1.option2.etc.[true]` - Opens a poll, use . to seperate options.
+  The last option, if "true", makes it an obscured poll (votes are hidden to non-mods).
+  Requires mod or "P" permission.
+- `$endpoll` - Ends a poll. Requires mod or "P" permission.
+- `$addpoints (username) (points)` - Adds points to a given user.
+  Requires mod permission.
+- `$removepoints (username) (points|all)` - Removes points from a given user.
+  Requires mod permission.
+- `$module (module) (on|off)` - Enable or disable a module. Requires mod permission.
+- `$moduleson` - Enable all modules. Requires mod permission.
+- `$modulesoff` - Disable all modules. Requires mod permission.
+- `$kick (username) [reason]` - Kicks user. Requires mod or kick permission.
+- `$rngkick` - Kicks a random user. Requires mod or kick permission.
+- `$tempban (username) (minutes)` - Bans user for a set amount of time in minutes.
+  Will auto-kick them again if they try to join again before the time's up.
+  Requires mod or kick permission.
+- `$ban (username) [reason]` - Namebans user. Requires mod or ban permission.
+- `$ipban (username) [reason]` - IPbans user. Requires mod or ban permission.
+- `$unban (username)` - Unbans user. Works for temp banned users. Requires mod or ban permission.
+- `$blacklistuser (username) (true|false)` - Makes it so this users videos are not randomly added
+  if the bot is leading.
+- `$blockuser (username) [true|false]` - Stops username from adding videos. Requires mod or higher.
+- `$allow (username)` - Makes it so `user` can use the bot. Requires mod or "M" permission.
+  Note - This command is case-sensitive.
+- `$disallow (username)` - Makes it so `user` cannot use the bot. Requires mod or "M" permission.
+  Note - This command is case-sensitive.
+- `$permissions []` - example: `$permissions +x bob` gives permission x to bob.
+  To take away use `$permissions -x bob`. To give or take away all permissions.
+  do `$permissions +all bob`/`$permissions -all bob`.
+  See [permissions page](https://github.com/airforce270/CytubeBot/wiki/Permissions).
+- `$restart` - Restart the bot. Requires leader or 'K' permission.
+- `$update` - Updates the bot using `git pull`. Requires leader or 'K' permission.
+- `$logs (error|cytubebot|sys) (last|first) (n)` - PMs you the bot logs. Requires leader or 'K' permission.
+- `$resetrestartcount` - Resets the restart count to 0. Requires leader or 'K' permission.
+- `$userlimit (true|false) | n` - Limits the number of videos users can add. Mods are not exempt.
+  Ex: `$userlimit true 5`.
+- `$addrandom [n]` - Adds n random videos from database. Requires mod on channel or "R" permission.
+- `$blacklist` - Blacklists currently playing video so that the bot doesn't add it randomly.
+  Users can still add video. See $autodelete. Irreversible without going into database.
+  Requires mod or higher.
+- `$autodelete` - Makes it so non-mods cannot add currently playing video.
+  Irreversible without going into database. Requires mod or higher.
+- `$skip` - Skips the current video. Requires mod on channel or "S" permission.
+- `$delete (username) [all | n]` - Deletes all or n videos added by username.
+  Deletes the videos from the botton up. Leaving out all or n deletes the last video.
+  Requires mod on channel or "D" permission
+- `$purge (username)` - Deletes all videos added by username. Requires mod on channel or "D" permission
+- `$bump -(user|title) (username | title to be matched) [all|n]` - Bumps all or n videos by username,
+  or bumps videos matching the given title. Ex: `$bump -title the dog 2` -
+  Will bump the last two videos matching `.*the dog.*`.
+- `$add URL [next]` - Adds link, requires mod because of potential for media limit abuse.
+- `$shuffle` - Shuffles the playlist. Requries mod or permission
+- `$settime time` - Sets the time on the video to time. Whereas time is in seconds.
+  Requires mod or "T" permission.
+- `$spam [n] message` - Spams a message several times. Requires mod or higher.
 
 ## Custom Commands
 
