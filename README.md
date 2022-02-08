@@ -129,6 +129,8 @@ Requires rank/permission:
   See [permissions page](https://github.com/airforce270/CytubeBot/wiki/Permissions).
 - `$restart` - Restart the bot. Requires leader or 'K' permission.
 - `$update` - Updates the bot using `git pull`. Requires leader or 'K' permission.
+- `$logs (error|cytubebot|sys) (last|first) (n)` - PMs you the bot logs. Requires leader or 'K' permission.
+- `$resetrestartcount` - Resets the restart count to 0. Requires leader or 'K' permission.
 - `$userlimit (true|false) | n` - Limits the number of videos users can add. Mods are not exempt.
   Ex: `$userlimit true 5`.
 - `$addrandom [n]` - Adds n random videos from database. Requires mod on channel or "R" permission.
@@ -145,7 +147,7 @@ Requires rank/permission:
 - `$bump -(user|title) (username | title to be matched) [all|n]` - Bumps all or n videos by username,
   or bumps videos matching the given title. Ex: `$bump -title the dog 2` -
   Will bump the last two videos matching `.*the dog.*`.
-- `$add URL [next]` -  Adds link, requires mod because of potential for media limit abuse.
+- `$add URL [next]` - Adds link, requires mod because of potential for media limit abuse.
 - `$shuffle` - Shuffles the playlist. Requries mod or permission
 - `$settime time` - Sets the time on the video to time. Whereas time is in seconds.
   Requires mod or "T" permission.

@@ -5,6 +5,7 @@ const child = new Monitor(
     './lib/start.js',
     {max: 21, silent: false, minUptime: 5000, errFile: './err.log'});
 
+/** Write the number of times the bot has been restarted to the file. */
 function writeTimes() {
   writeFile('times', String(child.times), (err) => {
     if (err) {
