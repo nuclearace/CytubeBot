@@ -56,7 +56,44 @@ It's recommended to enable "format on save" in the IDE of your choice.
 
 ## Commands
 
-Require rank/permission:
+Can be run by anyone:
+
+- `$cock` - Tells you your size.
+- `$tuck (user)` - Tuck someone in :)
+- `$gn` - Have the bot wish you a good night :)
+- `$ping` - Pings you.
+- `$rngping` - Pings a random user.
+- `$p [user]` - Tells you how many points you or another user have.
+  `$points` and `$userpoints` also work.
+- `$givepoints (user) (points)` - Give away some of your points to another user.
+- `$roulette (points|n%|all)` - Roulette some points!
+- `$raffle (points|n%|all)` - Raffle some points! Other users can type `$join` to join the raffle,
+  and points will be given to a random winner!
+- `$leaderboard [page]` - Show a leaderboard of the current top point holders.
+- `$choose [option1] [option2] {...}` - Chooses one of several options randomly.
+- `$pyramid [emote]` - Makes a 4-height pyramid with an emote.
+- `$blacklistedusers` - Lists the blacklisted users.
+- `$blockedusers` - Lists the blocked users.
+- `$listpermissions [username]` - Lists the hybrid mod permissions for a user.
+  Omitting username shows calling users permissions.
+- `$quote [username]` - Fetches a quote from the user given, otherwise fetches a random quote.
+- `$processinfo` - Shows basic node process memory usage.
+- `$status` - Sends status ie. if the bot is muted.
+- `$talk message` - Cleverbot talk bot.
+- `$wolfram query` - Makes a query to Wolfram.
+  Requires a [WolframAlpha API key](http://products.wolframalpha.com/api/).
+- `$weather (US zip code | city/town country)` - Looks up current conditions.
+  Requires [WeatherUnderground API key](http://www.wunderground.com/weather/api/).
+- `$forecast (US zip code | city/town country) [tomorrow]` - Looks up forecast for that day,
+  or if tomorrow is given, the next day.
+  Requires [WeatherUnderground API key](http://www.wunderground.com/weather/api/).
+- `$choose (choice1 choice2...)` - Chooses a random item from the choices given.
+- `$translate [[bb] | [aa>bb] | [aa->bb]] string` -
+    Translates the given string from aa, which defaults to detecting the language,
+    to bb, which defaults to en, using Google Translate.
+    The languages aa and bb must be specified as an ISO two letter language code.
+
+Requires rank/permission:
 
 - `$mute/$unmute` - Mutes/Unmutes the bot. Requires mod on the channel or "M" permission.
 - `$clearchat` - Clears chat. Requires mod or "M" permission.
@@ -113,43 +150,6 @@ Require rank/permission:
 - `$settime time` - Sets the time on the video to time. Whereas time is in seconds.
   Requires mod or "T" permission.
 - `$spam [n] message` - Spams a message several times. Requires mod or higher.
-
-Don't require rank/permission:
-
-- `$cock` - Tells you your size.
-- `$tuck (user)` - Tuck someone in :)
-- `$gn` - Have the bot wish you a good night :)
-- `$ping` - Pings you.
-- `$rngping` - Pings a random user.
-- `$p [user]` - Tells you how many points you or another user have.
-  `$points` and `$userpoints` also work.
-- `$givepoints (user) (points)` - Give away some of your points to another user.
-- `$roulette (points|n%|all)` - Roulette some points!
-- `$raffle (points|n%|all)` - Raffle some points! Other users can type `$join` to join the raffle,
-  and points will be given to a random winner!
-- `$leaderboard [page]` - Show a leaderboard of the current top point holders.
-- `$choose [option1] [option2] {...}` - Chooses one of several options randomly.
-- `$pyramid [emote]` - Makes a 4-height pyramid with an emote.
-- `$blacklistedusers` - Lists the blacklisted users.
-- `$blockedusers` - Lists the blocked users.
-- `$listpermissions [username]` - Lists the hybrid mod permissions for a user.
-  Omitting username shows calling users permissions.
-- `$quote [username]` - Fetches a quote from the user given, otherwise fetches a random quote.
-- `$processinfo` - Shows basic node process memory usage.
-- `$status` - Sends status ie. if the bot is muted.
-- `$talk message` - Cleverbot talk bot.
-- `$wolfram query` - Makes a query to Wolfram.
-  Requires a [WolframAlpha API key](http://products.wolframalpha.com/api/).
-- `$weather (US zip code | city/town country)` - Looks up current conditions.
-  Requires [WeatherUnderground API key](http://www.wunderground.com/weather/api/).
-- `$forecast (US zip code | city/town country) [tomorrow]` - Looks up forecast for that day,
-  or if tomorrow is given, the next day.
-  Requires [WeatherUnderground API key](http://www.wunderground.com/weather/api/).
-- `$choose (choice1 choice2...)` - Chooses a random item from the choices given.
-- `$translate [[bb] | [aa>bb] | [aa->bb]] string` -
-    Translates the given string from aa, which defaults to detecting the language,
-    to bb, which defaults to en, using Google Translate.
-    The languages aa and bb must be specified as an ISO two letter language code.
 
 ## Custom Commands
 
