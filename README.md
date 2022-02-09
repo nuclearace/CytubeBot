@@ -59,6 +59,7 @@ It's recommended to enable "format on save" in the IDE of your choice.
 Can be run by anyone:
 
 - `$cock` - Tells you your size.
+- `$iq` - Tells you your IQ.
 - `$tuck (user)` - Tuck someone in :)
 - `$gn` - Have the bot wish you a good night :)
 - `$ping` - Pings you.
