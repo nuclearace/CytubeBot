@@ -80,6 +80,7 @@ Can be run by anyone:
 - `$quote [username]` - Fetches a quote from the user given, otherwise fetches a random quote.
 - `$processinfo` - Shows basic node process memory usage.
 - `$status` - Sends status ie. if the bot is muted.
+- `$userstats [user]` - Sends some stats about a user, or you.
 - `$talk message` - Cleverbot talk bot.
 - `$wolfram query` - Makes a query to Wolfram.
   Requires a [WolframAlpha API key](http://products.wolframalpha.com/api/).
