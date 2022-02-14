@@ -112,7 +112,8 @@ Requires rank/permission:
 - `$modulesoff` - Disable all modules. Requires mod permission.
 - `$kick (username) [reason]` - Kicks user. Requires mod or kick permission.
 - `$rngkick` - Kicks a random user. Requires mod or kick permission.
-- `$tempban (username) (minutes)` - Bans user for a set amount of time in minutes.
+- `$timeout (username) (time)` - Times out a user for some period of time.
+  Examples: `$timeout user5 10s`, `$timeout user5 3d`, `$timeout user5 1h 30m`
   Will auto-kick them again if they try to join again before the time's up.
   Requires mod or kick permission.
 - `$ban (username) [reason]` - Namebans user. Requires mod or ban permission.
