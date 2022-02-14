@@ -9,8 +9,7 @@ function addEmote(emote) {
   const tbl = $('#emotediv table');
   const tr = $('<tr/>').appendTo(tbl);
 
-  const emoteDiv =
-      $('<span>').text(emote.name).appendTo($('<td/>').appendTo(tr));
+  const emoteDiv = $('<span>').text(emote.name).appendTo($('<td/>').appendTo(tr));
 
   const popoverData = {
     html: true,

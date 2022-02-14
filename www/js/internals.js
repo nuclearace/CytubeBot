@@ -42,16 +42,14 @@ socket.on('botInfo', (botInfo) => {
 
 // Handle the userlist info
 socket.on('userlist', (userlist) => {
-  const stringyUserlist =
-      userlist.map((element) => `${JSON.stringify(element)}<br>`).join('');
+  const stringyUserlist = userlist.map((element) => `${JSON.stringify(element)}<br>`).join('');
   $('#userlistspan').text(`Number of users: ${userlist.length}`);
   $('#userlistdetail').html(stringyUserlist);
 });
 
 // Handle the playlist info
 socket.on('playlist', (playlist) => {
-  const stringyPlaylist =
-      playlist.map((element) => `${JSON.stringify(element)}<br>`).join('');
+  const stringyPlaylist = playlist.map((element) => `${JSON.stringify(element)}<br>`).join('');
   $('#playlistspan').text(`Number of items on playlist: ${playlist.length}`);
   $('#playlistdetail').html(stringyPlaylist);
 });

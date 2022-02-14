@@ -13,11 +13,10 @@ function readErrlog() {
 }
 
 function readCytubeLog() {
-  $.ajax(`${location.protocol}//${location.host}/logs/cytubelog`)
-      .done((data) => {
-        $('#logviewer').text(data);
-        $('#logviewer').scrollTop($('#logviewer').prop('scrollHeight'));
-      });
+  $.ajax(`${location.protocol}//${location.host}/logs/cytubelog`).done((data) => {
+    $('#logviewer').text(data);
+    $('#logviewer').scrollTop($('#logviewer').prop('scrollHeight'));
+  });
 }
 
 jQuery(function() {
