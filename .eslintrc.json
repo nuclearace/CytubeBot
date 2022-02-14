@@ -19,6 +19,7 @@
     "max-len": [
       "error",
       {
+        "code": 100,
         // Disable line length maximum for imports and URLs.
         "ignorePattern": "^import .*",
         "ignoreUrls": true

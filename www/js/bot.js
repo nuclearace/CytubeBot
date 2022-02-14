@@ -72,8 +72,8 @@ google.setOnLoadCallback(() => {
     userVideoData.addColumn('number', 'Slices');
     userVideoData.addRows(data.userVideoStats);
 
-    const userVideoChart = new google.visualization.PieChart(
-        document.getElementById('user_video_div'));
+    const userVideoChart =
+        new google.visualization.PieChart(document.getElementById('user_video_div'));
     userVideoChart.draw(userVideoData, pieStyle);
 
     const userChatData = new google.visualization.DataTable();
@@ -81,8 +81,8 @@ google.setOnLoadCallback(() => {
     userChatData.addColumn('number', 'Slices');
     userChatData.addRows(data.userChatStats);
 
-    const userChatChart = new google.visualization.PieChart(
-        document.getElementById('user_chat_div'));
+    const userChatChart =
+        new google.visualization.PieChart(document.getElementById('user_chat_div'));
     userChatChart.draw(userChatData, pieStyle);
 
     const averageUserData = new google.visualization.DataTable();
@@ -113,8 +113,8 @@ google.setOnLoadCallback(() => {
       averageUserData.addRow(row);
     }
 
-    const averageUserTimeline = new google.visualization.AnnotatedTimeLine(
-        document.getElementById('average_user_div'));
+    const averageUserTimeline =
+        new google.visualization.AnnotatedTimeLine(document.getElementById('average_user_div'));
     averageUserTimeline.draw(averageUserData, {
       displayAnnotations: true,
       colors: ['black', 'green', 'orange'],
