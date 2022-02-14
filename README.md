@@ -116,6 +116,7 @@ Requires rank/permission:
   Examples: `$timeout user5 10s`, `$timeout user5 3d`, `$timeout user5 1h 30m`
   Will auto-kick them again if they try to join again before the time's up.
   Requires mod or kick permission.
+- `$timeouts` - Lists the currently timed out users and how long they're timed out for.
 - `$ban (username) [reason]` - Namebans user. Requires mod or ban permission.
 - `$ipban (username) [reason]` - IPbans user. Requires mod or ban permission.
 - `$unban (username)` - Unbans user. Works for temp banned users. Requires mod or ban permission.
