@@ -110,6 +110,13 @@ Requires rank/permission:
 - `$module (module) (on|off)` - Enable or disable a module. Requires mod permission.
 - `$moduleson` - Enable all modules. Requires mod permission.
 - `$modulesoff` - Disable all modules. Requires mod permission.
+- `$timeout (username) (duration)` - Times out (mutes) a user for some period of time.
+  Examples: `$timeout user5 10s`, `$timeout user5 3d`, `$timeout user5 1h 30m`
+  Requires mod permission.
+- `$rngtimeout (duration)` - Times out a random user for some period of time.
+  Requires mod permission.
+- `$timeouts` - Lists the currently timed out users and how long they're timed out for.
+  Requires mod permission.
 - `$kick (username) [reason]` - Kicks user. Requires mod or kick permission.
 - `$rngkick` - Kicks a random user. Requires mod or kick permission.
 - `$tempban (username) (duration)` - Bans a user for some period of time.
@@ -132,7 +139,7 @@ Requires rank/permission:
 - `$permissions []` - example: `$permissions +x bob` gives permission x to bob.
   To take away use `$permissions -x bob`. To give or take away all permissions.
   do `$permissions +all bob`/`$permissions -all bob`.
-  See [permissions page](https://github.com/airforce270/CytubeBot/wiki/Permissions).
+  See [permissions](#permissions).
 - `$restart` - Restart the bot. Requires leader or 'K' permission.
 - `$update` - Updates the bot using `git pull`. Requires leader or 'K' permission.
 - `$logs (error|cytubebot|sys) (last|first) (n)` - PMs you the bot logs. Requires leader or 'K' permission.
@@ -158,6 +165,24 @@ Requires rank/permission:
 - `$settime time` - Sets the time on the video to time. Whereas time is in seconds.
   Requires mod or "T" permission.
 - `$spam [n] message` - Spams a message several times. Requires mod or higher.
+
+## Permissions
+
+| Code | Usage                    |
+|------|--------------------------|
+| `A`  | Add ($add)               |
+| `D`  | Delete ($delete)         |
+| `G`  | Management ($management) |
+| `I`  | Kick ($kick)             |
+| `K`  | Restart ($restart)       |
+| `L`  | Userlimit ($userlimit)   |
+| `M`  | Mute ($mute/$unmute)     |
+| `N`  | Ban ($ban)               |
+| `P`  | Poll ($poll)             |
+| `R`  | Add random ($addrandom)  |
+| `S`  | Skip ($skip)             |
+| `T`  | Set Time ($settime)      |
+| `U`  | Shuffle ($shuffle)       |
 
 ## Custom Commands
 
