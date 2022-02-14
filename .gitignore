@@ -1,37 +1,34 @@
+node_modules
+
+# Files created by bot
+audit.log
+cytubebot.db
+info.log
+monitor_error.log
+error.log
+persistent.json
+times_restarted.txt
+
+# Real config file, so it's not accidentally committed
+config.json
+
+# Legacy files created by previous versions of the bot
+err.log
+cytubelog.log
+sys.log
+times
+
+# Random garbage
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# Icon must end with two \r
 Icon
-
-
 # Thumbnails
 ._*
-
-# Files that might appear on external disk
 .Spotlight-V100
 .Trashes
-
-# Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
-
-# Dependency directory
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
-node_modules
-
-# Files created by bot
-cytubebot.db
-cytubelog.log
-err.log
-error.log
-persistent.json
-sys.log
-times
-
-# Real config file, so it's not accidentally committed
-config.json
