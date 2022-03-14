@@ -4,7 +4,7 @@ node_modules
 audit.log
 cytubebot.db
 info.log
-monitor_error.log
+monitor_error*.log
 error.log
 persistent.json
 times_restarted.txt
