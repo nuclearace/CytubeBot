@@ -68,6 +68,7 @@ Can be run by anyone:
   `$points` and `$userpoints` also work.
 - `$givepoints (user) (points)` - Give away some of your points to another user.
 - `$roulette (points|n%|all)` - Roulette some points!
+- `$smp (points|n%|all)` - Do a slot machine pull for some points!
 - `$raffle (points|n%|all)` - Raffle some points! Other users can type `$join` to join the raffle,
   and points will be given to a random winner!
 - `$leaderboard [page]` - Show a leaderboard of the current top point holders.
@@ -85,7 +86,7 @@ Can be run by anyone:
   If a user is provided, it will show how many times that user has used that emote.
   `$ecount` works as well.
 - `$userstats [user]` - Sends some stats about a user, or you.
-- `$talk message` - Cleverbot talk bot.
+- `$cleverbot message` - Cleverbot talk bot. Required a [paid API plan](https://www.cleverbot.com/api/).
 - `$wolfram query` - Makes a query to Wolfram.
   Requires a [WolframAlpha API key](http://products.wolframalpha.com/api/).
 - `$weather (US zip code | city/town country)` - Looks up current conditions.
