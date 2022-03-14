@@ -71,6 +71,7 @@ Can be run by anyone:
 - `$raffle (points|n%|all)` - Raffle some points! Other users can type `$join` to join the raffle,
   and points will be given to a random winner!
 - `$leaderboard [page]` - Show a leaderboard of the current top point holders.
+- `$rank [user]` - Shows your rank (or another user's rank) on the leaderboard.
 - `$choose [option1] [option2] {...}` - Chooses one of several options randomly.
 - `$pyramid [emote]` - Makes a 4-height pyramid with an emote.
 - `$blacklistedusers` - Lists the blacklisted users.
