@@ -81,6 +81,9 @@ Can be run by anyone:
 - `$quote [username]` - Fetches a quote from the user given, otherwise fetches a random quote.
 - `$processinfo` - Shows basic node process memory usage.
 - `$status` - Sends status ie. if the bot is muted.
+- `$emotecount [user] (emote)` - Shows how many times an emote has been used.
+  If a user is provided, it will show how many times that user has used that emote.
+  `$ecount` works as well.
 - `$userstats [user]` - Sends some stats about a user, or you.
 - `$talk message` - Cleverbot talk bot.
 - `$wolfram query` - Makes a query to Wolfram.
