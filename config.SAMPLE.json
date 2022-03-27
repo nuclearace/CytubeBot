@@ -8,6 +8,8 @@
   "wolfram": "",
   "weatherunderground": "",
   "youtubev3": "",
+  "twitchClientId": "",
+  "twitchClientSecret": "",
   "deleteIfBlockedIn": "",
   "enableWebServer": false,
   "webURL": "http://localhost",

@@ -41,6 +41,10 @@ It's recommended to enable "format on save" in the IDE of your choice.
   See [Wunderground docs](http://www.wunderground.com/weather/api/)
 - `youtubev3` [optional] - YouTube API v3 API key.
   See [YouTube docs](https://developers.google.com/youtube/v3/).
+- `twitchClientId` - Twitch API client ID.
+  See [Twitch API docs](https://dev.twitch.tv/docs/api/).
+- `twitchClientSecret` - Twitch API client secret.
+  See [Twitch API docs](https://dev.twitch.tv/docs/api/).
 - `deleteIfBlockedIn` [optional] - If given youtubev3 and you would like to delete videos
   blocked in a specific country, put the 2 letter country code of it here.
 - `enableWebServer` - Turns on/off the webserver.
@@ -115,6 +119,9 @@ Requires rank/permission:
 - `$module (module) (on|off)` - Enable or disable a module. Requires mod permission.
 - `$moduleson` - Enable all modules. Requires mod permission.
 - `$modulesoff` - Disable all modules. Requires mod permission.
+- `$notifylive (channel)` - Notify chat when a Twitch channel goes live.
+- `$nonotifylive (channel)` - Stop notifying chat when a Twitch channel goes live.
+- `$notifylivelist (channel)` - Lists which channels will notify chat when they go live.
 - `$timeout (username) (duration)` - Times out (mutes) a user for some period of time.
   Examples: `$timeout user5 10s`, `$timeout user5 3d`, `$timeout user5 1h 30m`
   Requires mod permission.

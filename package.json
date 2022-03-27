@@ -10,6 +10,8 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "@twurple/api": "5.0.18",
+    "@twurple/auth": "5.0.18",
     "async": "3.2.3",
     "cleverbot-node": "0.3.11",
     "express": "4.17.3",
