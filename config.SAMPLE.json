@@ -10,7 +10,6 @@
   "youtubev3": "",
   "twitchClientId": "",
   "twitchClientSecret": "",
-  "twitchChannelsToMonitor": [],
   "deleteIfBlockedIn": "",
   "enableWebServer": false,
   "webURL": "http://localhost",
