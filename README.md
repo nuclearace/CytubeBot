@@ -89,6 +89,7 @@ Can be run by anyone:
 - `$emotecount [user] (emote)` - Shows how many times an emote has been used.
   If a user is provided, it will show how many times that user has used that emote.
   `$ecount` works as well.
+- `$title (channel)` - Tells you the current title of a Twitch channel.
 - `$userstats [user]` - Sends some stats about a user, or you.
 - `$cleverbot message` - Cleverbot talk bot. Required a [paid API plan](https://www.cleverbot.com/api/).
 - `$wolfram query` - Makes a query to Wolfram.
