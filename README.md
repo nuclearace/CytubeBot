@@ -119,6 +119,9 @@ Requires rank/permission:
 - `$module (module) (on|off)` - Enable or disable a module. Requires mod permission.
 - `$moduleson` - Enable all modules. Requires mod permission.
 - `$modulesoff` - Disable all modules. Requires mod permission.
+- `$notifylive (channel)` - Notify chat when a Twitch channel goes live.
+- `$nonotifylive (channel)` - Stop notifying chat when a Twitch channel goes live.
+- `$notifylivelist (channel)` - Lists which channels will notify chat when they go live.
 - `$timeout (username) (duration)` - Times out (mutes) a user for some period of time.
   Examples: `$timeout user5 10s`, `$timeout user5 3d`, `$timeout user5 1h 30m`
   Requires mod permission.
