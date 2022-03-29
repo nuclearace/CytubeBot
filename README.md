@@ -94,11 +94,8 @@ Can be run by anyone:
 - `$cleverbot message` - Cleverbot talk bot. Required a [paid API plan](https://www.cleverbot.com/api/).
 - `$wolfram query` - Makes a query to Wolfram.
   Requires a [WolframAlpha API key](http://products.wolframalpha.com/api/).
-- `$weather (US zip code | city/town country)` - Looks up current conditions.
-  Requires [WeatherUnderground API key](http://www.wunderground.com/weather/api/).
-- `$forecast (US zip code | city/town country) [tomorrow]` - Looks up forecast for that day,
-  or if tomorrow is given, the next day.
-  Requires [WeatherUnderground API key](http://www.wunderground.com/weather/api/).
+- `$weather (US zip code | city,state,country)` - Looks up current conditions.
+  Requires [OpenWeather API key](https://home.openweathermap.org/api_keys).
 - `$choose (choice1 choice2...)` - Chooses a random item from the choices given.
 - `$translate [[bb] | [aa>bb] | [aa->bb]] string` - Translates the given string from `aa`
   (which defaults to detecting the language) to `bb` using Google Translate.
