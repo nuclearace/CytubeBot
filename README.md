@@ -100,10 +100,9 @@ Can be run by anyone:
   or if tomorrow is given, the next day.
   Requires [WeatherUnderground API key](http://www.wunderground.com/weather/api/).
 - `$choose (choice1 choice2...)` - Chooses a random item from the choices given.
-- `$translate [[bb] | [aa>bb] | [aa->bb]] string` -
-    Translates the given string from aa, which defaults to detecting the language,
-    to bb, which defaults to en, using Google Translate.
-    The languages aa and bb must be specified as an ISO two letter language code.
+- `$translate [[bb] | [aa>bb] | [aa->bb]] string` - Translates the given string from `aa`
+  (which defaults to detecting the language) to `bb` using Google Translate.
+  The languages `aa` and `bb` must be specified as an ISO two letter language code.
 
 Requires rank/permission:
 
