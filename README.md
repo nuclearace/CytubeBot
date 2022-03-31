@@ -100,6 +100,7 @@ Can be run by anyone:
 - `$translate [[bb] | [aa>bb] | [aa->bb]] string` - Translates the given string from `aa`
   (which defaults to detecting the language) to `bb` using Google Translate.
   The languages `aa` and `bb` must be specified as an ISO two letter language code.
+- `$lasttweet (user)` - Gets a Twitter user's last tweet.
 
 Requires rank/permission:
 
