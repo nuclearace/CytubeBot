@@ -103,6 +103,7 @@ Can be run by anyone:
   (which defaults to detecting the language) to `bb` using Google Translate.
   The languages `aa` and `bb` must be specified as an ISO two letter language code.
 - `$lasttweet (user)` - Gets a Twitter user's last tweet.
+- `$randomchat (channel) (user)` - Gets a random chat message from a user in a Twitch channel.
 
 Requires rank/permission:
 
