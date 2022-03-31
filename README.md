@@ -35,16 +35,19 @@ It's recommended to enable "format on save" in the IDE of your choice.
 - `pw` [optional] - Password for the bot, blank logs in as guest.
 - `room` - Room the bot should join.
 - `roompassword` [optional] - Room password, if there is one.
+- `cleverbot` - API Key for cleverbot.io. See [Cleverbot docs](https://cleverbot.io/).
 - `wolfram` [optional] - WolframAlpha API key.
   See [WolframAlpha docs](http://products.wolframalpha.com/api/)
-- `weatherunderground` [optional] - WeatherUnderground API key.
-  See [Wunderground docs](http://www.wunderground.com/weather/api/)
+- `openWeatherApiKey` [optional] - OpenWeather API key..
+  See [OpenWeather docs](https://home.openweathermap.org/api_keys)
 - `youtubev3` [optional] - YouTube API v3 API key.
   See [YouTube docs](https://developers.google.com/youtube/v3/).
 - `twitchClientId` - Twitch API client ID.
   See [Twitch API docs](https://dev.twitch.tv/docs/api/).
 - `twitchClientSecret` - Twitch API client secret.
   See [Twitch API docs](https://dev.twitch.tv/docs/api/).
+- `twitterBearerToken` - Twitter API bearer token.
+  See [Twitter API docs](https://developer.twitter.com/en/portal/dashboard).
 - `deleteIfBlockedIn` [optional] - If given youtubev3 and you would like to delete videos
   blocked in a specific country, put the 2 letter country code of it here.
 - `enableWebServer` - Turns on/off the webserver.
@@ -55,8 +58,7 @@ It's recommended to enable "format on save" in the IDE of your choice.
 - `usemodflair` - Whether to use modflair or not.
 - `enableLogging` - Whether to write log data to a file.
 - `maxvideolength` - Maximum length of videos to select from database.
-- `cleverbotioUser` - API User for cleverbot.io. See [Cleverbot docs](https://cleverbot.io/).
-- `cleverbotioKey` - API Key for cleverbot.io. See [Cleverbot docs](https://cleverbot.io/).
+- `rouletteWinPercentage` - Percent of the time, on average, $roulette should result in a win.
 
 ## Commands
 
@@ -100,6 +102,7 @@ Can be run by anyone:
 - `$translate [[bb] | [aa>bb] | [aa->bb]] string` - Translates the given string from `aa`
   (which defaults to detecting the language) to `bb` using Google Translate.
   The languages `aa` and `bb` must be specified as an ISO two letter language code.
+- `$lasttweet (user)` - Gets a Twitter user's last tweet.
 
 Requires rank/permission:
 
