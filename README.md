@@ -77,6 +77,9 @@ Can be run by anyone:
 - `$smp (points|n%|all)` - Do a slot machine pull for some points!
 - `$raffle (points|n%|all)` - Raffle some points! Other users can type `$join` to join the raffle,
   and points will be given to a random winner!
+- `$duel (user) (points)` - Duel another user for some points!
+- `$acceptduel` - Accept a duel.
+- `$declineduel` - Decline a duel.
 - `$leaderboard [page]` - Show a leaderboard of the current top point holders.
 - `$rank [user]` - Shows your rank (or another user's rank) on the leaderboard.
 - `$choose [option1] [option2] {...}` - Chooses one of several options randomly.
