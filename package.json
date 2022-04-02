@@ -23,6 +23,7 @@
     "libxmljs2": "0.29.0",
     "limiter": "2.0.1",
     "line-reader": "0.4.0",
+    "luxon": "^2.3.1",
     "moment": "2.29.1",
     "parse-duration": "1.0.2",
     "pug": "3.0.2",
