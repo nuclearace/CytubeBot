@@ -68,6 +68,8 @@ Can be run by anyone:
 - `$iq` - Tells you your IQ.
 - `$tuck (user)` - Tuck someone in :)
 - `$gn` - Have the bot wish you a good night :)
+- `$cookie` - Claims a cookie (or multiple). Cooldown of 2 hours.
+- `$cookies` - Shows how many cookies another user has.
 - `$ping` - Pings you.
 - `$rngping` - Pings a random user.
 - `$p [user]` - Tells you how many points you or another user have.
