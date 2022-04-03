@@ -82,8 +82,11 @@ Can be run by anyone:
 - `$duel (user) (points)` - Duel another user for some points!
 - `$acceptduel` - Accept a duel.
 - `$declineduel` - Decline a duel.
-- `$leaderboard [page]` - Show a leaderboard of the current top point holders.
-- `$rank [user]` - Shows your rank (or another user's rank) on the leaderboard.
+- `$leaderboard [page]` - Show a leaderboard of the top point holders.
+- `$rank [user]` - Shows your rank (or another user's rank) on the points leaderboard.
+- `$chatleaderboard [page]` - Show a leaderboard of the users with the highest number of chats.
+- `$chatrank [user]` - Shows your rank (or another user's rank) on the chat leaderboard.
+- `$chats [user]` - Tells you how many chats you or another user have sent.
 - `$choose [option1] [option2] {...}` - Chooses one of several options randomly.
 - `$pyramid [emote]` - Makes a 4-height pyramid with an emote.
 - `$blacklistedusers` - Lists the blacklisted users.
