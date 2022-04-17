@@ -167,7 +167,9 @@ Requires rank/permission:
 - `$resetrestartcount` - Resets the restart count to 0. Requires leader or 'K' permission.
 - `$userlimit (true|false) | n` - Limits the number of videos users can add. Mods are not exempt.
   Ex: `$userlimit true 5`.
-- `$addrandom [n]` - Adds n random videos from database. Requires mod on channel or "R" permission.
+- `$addrandom (n) [user]` - Adds `n` random videos from database.
+  If `user` is provided, will only include videos that they queued.
+  Requires mod on channel or "R" permission.
 - `$blacklist` - Blacklists currently playing video so that the bot doesn't add it randomly.
   Users can still add video. See $autodelete. Irreversible without going into database.
   Requires mod or higher.
