@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@cicciosgamino/openweather-apis": "5.2.0",
-    "@twurple/api": "5.0.18",
-    "@twurple/auth": "5.0.18",
+    "@twurple/api": "5.0.19",
+    "@twurple/auth": "5.0.19",
     "@vitalets/google-translate-api": "8.0.0",
     "async": "3.2.3",
     "axios": "0.26.1",
@@ -29,11 +29,11 @@
     "random": "3.0.6",
     "socket.io": "4.4.1",
     "socket.io-client": "4.4.1",
-    "sqlite3": "5.0.2",
-    "twitter-api-v2": "1.11.2"
+    "sqlite3": "5.0.3",
+    "twitter-api-v2": "1.12.0"
   },
   "devDependencies": {
-    "eslint": "8.12.0",
+    "eslint": "8.13.0",
     "eslint-config-google": "0.14.0"
   }
 }
